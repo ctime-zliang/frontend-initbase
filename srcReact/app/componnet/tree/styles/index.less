@@ -1,0 +1,194 @@
+// 扩展按钮包裹层样式类名标记符
+@tree-extend: .tree-extends;
+// 空白占位标记符
+@tree-blank: .tree-blank;
+// 层级指示线样式类名标记符
+@tree-tline: .tree-usertips-line;
+
+.tree-container {
+	width: 100%;
+}
+
+// Tree 单行样式
+.tree-rowline {
+	display: flex;
+	min-height: 26px;
+	height: 26px;
+	.tree-content {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		align-content: center;
+		word-break: break-all;
+		white-space: nowrap;
+		flex: 1;
+		font-size: 12px;
+		cursor: pointer;
+	}
+	.tree-content-selected {
+		color: #1890ff;
+		background-color: rgba(230, 247, 255, 1);
+	}
+	.tree-content-underline {
+		border-bottom: 1px solid rgba(220, 220, 220, 1);
+	}
+	&-selected {
+		color: #1890ff;
+		background-color: rgba(230, 247, 255, 1);
+	}
+	&:hover {
+		background-color: rgba(230, 247, 255, 0.75);
+	}
+}
+// 层级指示线样式
+.tree-rowline {
+	@{tree-extend} {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: var(--tree-widget-item-width);
+		height: initial;
+		padding: 0;
+		flex-shrink: 0;
+	}
+	@{tree-blank} {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: var(--tree-widget-item-width);
+		height: initial;
+		padding: 0;
+		flex-shrink: 0;
+	}
+}
+// 层级指示线样式
+.tree-rowline {
+	@{tree-tline},
+	@{tree-tline}-middle,
+	@{tree-tline}-turn,
+	@{tree-tline}-fork {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: var(--tree-widget-item-width);
+		height: initial;
+		padding: 0;
+		flex-shrink: 0;
+	}
+	@{tree-tline}-middle {
+		width: calc(var(--tree-widget-item-width) * 0.5);
+	}
+
+	@{tree-tline}::before,
+	@{tree-tline}-middle::before,
+	@{tree-tline}-turn::before,
+	@{tree-tline}-turn::after,
+	@{tree-tline}-fork::before,
+	@{tree-tline}-fork::after {
+		display: inline-block;
+		background-color: rgba(0, 0, 0, 0.4);
+		content: '';
+	}
+
+	@{tree-tline}::before {
+		width: 1px;
+		height: 100%;
+	}
+	@{tree-tline}-middle::before {
+		width: 100%;
+		height: 1px;
+	}
+
+	@{tree-tline}-turn {
+		position: relative;
+	}
+
+	@{tree-tline}-turn::before {
+		position: absolute;
+		top: 0%;
+		left: calc(50% - 0.5px);
+		width: 1px;
+		height: 50%;
+	}
+	@{tree-tline}-turn::after {
+		position: absolute;
+		top: calc(50% - 0.5px);
+		left: 50%;
+		width: 50%;
+		height: 1px;
+	}
+
+	@{tree-tline}-fork {
+		position: relative;
+	}
+	@{tree-tline}-fork::before {
+		position: absolute;
+		top: 0%;
+		left: calc(50% - 0.5px);
+		width: 1px;
+		height: 100%;
+	}
+	@{tree-tline}-fork::after {
+		position: absolute;
+		top: calc(50% - 0.5px);
+		left: 50%;
+		width: 50%;
+		height: 1px;
+	}
+}
+
+// 扩展按钮样式
+@{tree-extend}-box {
+	width: 14px;
+	height: 14px;
+	box-sizing: border-box;
+	position: relative;
+	cursor: pointer;
+	border: 1px solid rgba(0, 0, 0, 0.4);
+	&::before,
+	&::after {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		line-height: 100%;
+		content: '';
+		background-color: rgba(0, 0, 0, 0.4);
+		transition: transform 0.3s;
+	}
+	&::before {
+		width: 60%;
+		height: 1px;
+	}
+	&::after {
+		width: 1px;
+		height: 60%;
+	}
+}
+@{tree-extend}-box-active {
+	&::after {
+		transform: translate(-50%, -50%) rotate(90deg);
+	}
+}
+
+// @{tree-extend}-triangle {
+// 	&::before {
+// 		position: absolute;
+// 		top: 50%;
+// 		left: 50%;
+// 		transform: translate(-50%, -50%);
+// 		line-height: 100%;
+// 		content: '';
+// 		border-radius: 3px;
+// 		border-left: 5px solid var(--rtt-expand-color);
+// 		border-right: 5px solid transparent;
+// 		border-top: 5px solid transparent;
+// 		border-bottom: 5px solid transparent;
+// 		transition: transform 0.3s;
+// 	}
+// }
+// @{tree-extend}-triangle-active {
+// 	&::before {
+// 		transform: translate(-50%, -25%) rotate(90deg);
+// 	}
+// }
