@@ -1,6 +1,6 @@
 import React from 'react'
+import { TRouteItem } from '../../../Router'
 import { TReduxStore } from '../../../../store/public/types'
-import { TRouteItem } from '../../../../utils/hoc/renderRoutes/renderRoutes'
 import Index from '.'
 /* ... */
 import { createReducer as counter_createReducer } from './store/counter/reducer'

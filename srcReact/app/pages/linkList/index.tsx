@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 import { Layout, Card, Col, Row } from 'antd'
 import { Link } from 'react-router-dom'
 import styles from './index.module.less'
-import { TLinkListItem } from 'srcReact/app/store/globalDefault/types'
-import { TCommonComponentBaseProps } from 'srcReact/app/types/comm.types'
-import { TCombineState } from 'srcReact/app/store/redux'
+import { TLinkListItem } from '../../store/globalDefault/types'
+import { TCommonComponentBaseProps } from '../../types/comm.types'
+import { TCombineState } from '../../store/redux'
 
 const { Content } = Layout
 

@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 import { TStore } from './types'
-import { globalConfig } from 'srcReact/app/config/config'
+import { globalConfig } from '../../config/config'
 
 export const createInitialState = (): TStore => {
 	return {

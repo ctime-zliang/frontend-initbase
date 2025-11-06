@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 import { AttrStore } from './Attr'
 import { InfoStore } from './Info'
-import { EdaAbstractStore } from 'srcReact/app/store/edaStore/EdaAbstractStore'
+import { EdaAbstractStore } from '../../../../../store/edaStore/EdaAbstractStore'
 
 export async function createStoreInstance(): Promise<MainStore> {
 	const store: MainStore = new MainStore()

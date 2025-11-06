@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { createLongData } from './data'
+import { Tree } from '../../../../componnet/tree'
 
 const clickAction = (a: any, b: any, c: any) => {
 	console.log(a, b, c)
@@ -18,7 +19,7 @@ function TreeNormal(props: any): React.ReactElement {
 		<section style={{ padding: `5px 5px 15px 5px` }}>
 			<h3>$. 大数据展示{tips}</h3>
 			<div style={{ height: `${containerHeight}px`, overflow: 'auto' }}>
-				<ReactTree
+				<Tree
 					isVirtualList={isVirtualList}
 					containerHeight={`${containerHeight}px`}
 					contentUnderline={false}
@@ -28,7 +29,7 @@ function TreeNormal(props: any): React.ReactElement {
 					onExpand={expandAction}
 					onClick={clickAction}
 					data={dataLine}
-				></ReactTree>
+				></Tree>
 			</div>
 		</section>
 	)

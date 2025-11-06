@@ -2,7 +2,7 @@ import React from 'react'
 import { Helmet } from 'react-helmet-async'
 import VariableHeightListScrollingRoot from './variableHeightListScrolling'
 import FixedHeightListScrollingRoot from './fixedHeightListScrolling'
-import { useContentBgColor } from 'srcReact/app/utils/hooks/useContentBgColor'
+import { useContentBgColor } from '../../../utils/hooks/useContentBgColor'
 
 function VirtualScrollingRoot(props: any): React.ReactElement {
 	console.log(`VirtualScrolling ☆☆☆`, props)

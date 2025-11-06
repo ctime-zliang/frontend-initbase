@@ -1,24 +1,24 @@
 import Layout from '../pages/layout'
-import { TRouteItem } from '../utils/hoc/renderRoutes/renderRoutes'
 import { TReduxStore } from '../store/public/types'
 /* ... */
-import { homeRoute } from './home/route'
-import { error404Route } from './errorPage/route'
-import { linkListRoute } from './linkList/route'
-import { articleListRoute } from './article/list/route'
-import { articleDetailRoute } from './article/detail/route'
-import { articleErrorRoute } from './article/error/route'
-import { componentPaginationRoute } from './baseComponentList/pagination/route'
-import { componentTreeRoute } from './baseComponentList/tree/route'
-import { componentVirtualScrollingRoute } from './baseComponentList/virtualScrolling/route'
-import { componentContextmenuRoute } from './baseComponentList/contextmenu/route'
-import { testpageCommonRoute, testpageErrorRoute } from './testpage/route'
-import { storeTestValtioCommonRoute } from './storeTest/valtio/commonCase/route'
-import { storeTestErrorRoute } from './storeTest/error/route'
-import { storeTestReduxCommonRoute } from './storeTest/redux/commonCase/route'
-import { storeTestEdaAbstractStoreCommonRoute } from './storeTest/edaStore/commonCase/route'
-import { storeTestJotaiCommonRoute } from './storeTest/jotai/commonCase/route'
-import { storeTestProxyStoreCommonRoute } from './storeTest/proxyStore/commonCase/route'
+import { homeRoute } from '../pages/home/route'
+import { error404Route } from '../pages/errorPage/route'
+import { linkListRoute } from '../pages/linkList/route'
+import { articleListRoute } from '../pages/article/list/route'
+import { articleDetailRoute } from '../pages/article/detail/route'
+import { articleErrorRoute } from '../pages/article/error/route'
+import { componentPaginationRoute } from '../pages/baseComponentList/pagination/route'
+import { componentTreeRoute } from '../pages/baseComponentList/tree/route'
+import { componentVirtualScrollingRoute } from '../pages/baseComponentList/virtualScrolling/route'
+import { componentContextmenuRoute } from '../pages/baseComponentList/contextmenu/route'
+import { testpageCommonRoute, testpageErrorRoute } from '../pages/testpage/route'
+import { storeTestValtioCommonRoute } from '../pages/storeTest/valtio/commonCase/route'
+import { storeTestErrorRoute } from '../pages/storeTest/error/route'
+import { storeTestReduxCommonRoute } from '../pages/storeTest/redux/commonCase/route'
+import { storeTestEdaAbstractStoreCommonRoute } from '../pages/storeTest/edaStore/commonCase/route'
+import { storeTestJotaiCommonRoute } from '../pages/storeTest/jotai/commonCase/route'
+import { storeTestProxyStoreCommonRoute } from '../pages/storeTest/proxyStore/commonCase/route'
+import { TRouteItem } from '../pages/Router'
 
 export const createRoutes = (reduxStore: TReduxStore): Array<TRouteItem> => {
 	return [
@@ -68,7 +68,6 @@ export const filterRoutes = (routes: Array<TRouteItem> = []): Array<TRouteItem> 
 			}
 			path = prefixPath + routeItem.path
 			routeItem.path = path
-			routeItem.layout = Layout
 		}
 	}
 }

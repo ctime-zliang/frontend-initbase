@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { TCommonComponentBaseProps } from 'srcReact/app/types/comm.types'
+import { TCommonComponentBaseProps } from '../../../types/comm.types'
 
 let count: number = 0
 export function AddLongChild(props: TCommonComponentBaseProps): React.ReactElement {

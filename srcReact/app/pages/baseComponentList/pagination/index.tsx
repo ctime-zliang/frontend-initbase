@@ -2,7 +2,7 @@ import React from 'react'
 import { Helmet } from 'react-helmet-async'
 import PaginationNoraml from './normal'
 import PaginationSimplify from './simplify'
-import { useContentBgColor } from 'srcReact/app/utils/hooks/useContentBgColor'
+import { useContentBgColor } from '../../../utils/hooks/useContentBgColor'
 
 function PaginationRoot(props: any): React.ReactElement {
 	console.log(`PaginationRoot ☆☆☆`, props)

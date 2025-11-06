@@ -1,11 +1,11 @@
 import React from 'react'
-import { Route, Routes, Navigate } from 'react-router-dom'
-import { TCommonComponentBaseProps } from 'srcReact/app/types/comm.types'
+import { Route, Routes } from 'react-router-dom'
+import { TCommonComponentBaseProps } from '../types/comm.types'
+import Layout from './layout'
 
 export type TRouteItem = {
 	path: string
 	element?: React.ReactElement | React.FC | any
-	layout?: React.ReactElement | React.FC | any
 	render?: (...r: any[]) => {}
 	requiresAuth?: boolean
 	routes?: TRouteItem[]
@@ -38,9 +38,9 @@ const createRouteComponentList = (routes: Array<TRouteItem>, profile: { [key: st
 			<Route
 				path={item.path}
 				element={
-					<item.layout {...props}>
+					<Layout {...props}>
 						<item.element {...props}></item.element>
-					</item.layout>
+					</Layout>
 				}
 				key={index}
 			></Route>

@@ -1,5 +1,5 @@
-import { TReduxStore } from 'srcReact/app/store/public/types'
-import { TRouteItem } from 'srcReact/app/utils/hoc/renderRoutes/renderRoutes'
+import { TReduxStore } from '../../../../store/public/types'
+import { TRouteItem } from '../../../Router'
 import Index from '.'
 
 export const storeTestJotaiCommonRoute = (reduxStore: TReduxStore): TRouteItem => {

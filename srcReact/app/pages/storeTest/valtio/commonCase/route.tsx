@@ -1,5 +1,5 @@
 import { TReduxStore } from '../../../../store/public/types'
-import { TRouteItem } from '../../../../utils/hoc/renderRoutes/renderRoutes'
+import { TRouteItem } from '../../../Router'
 import Index from '.'
 
 export const storeTestValtioCommonRoute = (reduxStore: TReduxStore): TRouteItem => {

@@ -6,7 +6,7 @@ import PageRange from './PageRange'
 import PageSelect from './PageSelect'
 import '../styles/index.less'
 
-function PaginationRoot(props: TPagination): React.ReactElement {
+export function PaginationRoot(props: TPagination): React.ReactElement {
 	// console.log(`Component: PaginationRoot`, props)
 	const globalProfile: TPagination = { ...defaultProfile, ...props }
 	const {
@@ -154,5 +154,3 @@ function PaginationRoot(props: TPagination): React.ReactElement {
 		</ul>
 	)
 }
-
-export default PaginationRoot

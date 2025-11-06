@@ -1,7 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet-async'
 import ContextmenuNoraml from './normal'
-import { useContentBgColor } from 'srcReact/app/utils/hooks/useContentBgColor'
+import { useContentBgColor } from '../../../utils/hooks/useContentBgColor'
 
 function ContextmenuRoot(props: any): React.ReactElement {
 	console.log(`ContextmenuRoot ☆☆☆`, props)

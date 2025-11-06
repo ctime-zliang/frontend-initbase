@@ -1,5 +1,5 @@
 import React from 'react'
-import useDervStore, { Store } from 'srcReact/app/utils/hooks/useDervStore'
+import useDervStore, { Store } from '../../../../utils/hooks/useDervStore'
 
 type TModuleState = {
 	counter: number

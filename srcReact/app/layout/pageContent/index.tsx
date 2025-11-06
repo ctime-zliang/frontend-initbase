@@ -1,6 +1,6 @@
 import React from 'react'
 import './index.less'
-import { TCommonComponentBaseProps } from 'srcReact/app/types/comm.types'
+import { TCommonComponentBaseProps } from '../../types/comm.types'
 
 const appPageContentStyle: { [key: string]: string | number } = {
 	height: `calc(100vh - 95px)`,

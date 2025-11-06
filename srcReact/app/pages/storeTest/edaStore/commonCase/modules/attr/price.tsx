@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { MainStore, MainStoreContext } from '../../store/Main'
-import { useProxyDependencies } from 'srcReact/app/store/edaStore/useProxyDependencies'
+import { useProxyDependencies } from '../../../../../../store/edaStore/useProxyDependencies'
 
 export function PriceView(): React.ReactElement {
 	console.log(`Component: PriceView`)

@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
 import contextmenuData from './config'
 import styles from '../index.module.less'
-import { TContextMenuItem } from 'srcReact/app/componnet/contextmenu/types/type'
-import { EContextMenuType } from 'srcReact/app/componnet/contextmenu/config/enum'
-import ContextMenu from 'srcReact/app/componnet/contextmenu'
+import { TContextMenuItem } from '../../../../componnet/contextmenu/types/type'
+import { EContextMenuType } from '../../../../componnet/contextmenu/config/enum'
+import { ContextMenu } from '../../../../componnet/contextmenu'
 
 function ContextmenuNoraml(props: any): React.ReactElement {
 	const elementRef: { current: any } = useRef<HTMLElement>(null)

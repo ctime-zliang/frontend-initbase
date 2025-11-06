@@ -1,5 +1,5 @@
 import React from 'react'
-import Overlay from 'srcReact/app/utils/hoc/overlay/overlay'
+import Overlay from '../../../utils/hoc/overlay/overlay'
 
 function OverlayTestRoot(props: any): React.ReactElement {
 	console.log(`OverlayTestRoot ☆☆☆`, props)

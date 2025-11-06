@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { MainStore, MainStoreContext } from '../../store/Main'
-import { useSnapshot } from 'srcReact/app/store/proxyStore'
+import { useSnapshot } from '../../../../../../store/proxyStore'
 
 export function CountView(): React.ReactElement {
 	console.log(`Component: CountView`)

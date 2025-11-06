@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Pagination from 'srcReact/app/componnet/pagination'
+import { Pagination } from '../../../../componnet/pagination'
 
 const pageToggle = (action: string, value: number): void => {
 	console.log('pageToggle', action, value)

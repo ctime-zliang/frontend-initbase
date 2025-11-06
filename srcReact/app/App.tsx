@@ -2,9 +2,9 @@ import React from 'react'
 import { Helmet } from 'react-helmet-async'
 import './assets/style/prefix.less'
 import '../../node_modules/antd/dist/antd.css'
-import Root from './pages/root'
 import favicon from './assets/images/log.jpg'
 import { TCommonComponentBaseProps } from './types/comm.types'
+import Root from './pages/Root'
 
 export default function App(props: TCommonComponentBaseProps): React.ReactElement {
 	console.log(`App ☆☆☆`, props)

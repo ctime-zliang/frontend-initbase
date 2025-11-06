@@ -1,7 +1,7 @@
 import React from 'react'
-import { createRoutes, filterRoutes } from './router'
+import { createRoutes, filterRoutes } from '../router/RouteList'
 import { TCommonComponentBaseProps } from '../types/comm.types'
-import { renderRoutes, TRouteItem } from '../utils/hoc/renderRoutes/renderRoutes'
+import { renderRoutes, TRouteItem } from './Router'
 
 function Root(props: TCommonComponentBaseProps): React.ReactElement {
 	console.log(`Root ☆☆☆`, props)

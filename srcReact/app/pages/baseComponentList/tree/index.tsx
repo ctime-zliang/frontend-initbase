@@ -4,7 +4,7 @@ import TreeNormal from './normal'
 import TreeAyncSetData from './asyncSetData'
 import TreeAutoExpandAllLevel from './autoExpandAllLevel'
 import LongData from './longData'
-import { useContentBgColor } from 'srcReact/app/utils/hooks/useContentBgColor'
+import { useContentBgColor } from '../../../utils/hooks/useContentBgColor'
 
 function TreeRoot(props: any): React.ReactElement {
 	console.log(`TreeRoot ☆☆☆`, props)

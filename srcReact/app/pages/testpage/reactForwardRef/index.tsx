@@ -3,8 +3,8 @@
  */
 
 import React, { useEffect, useImperativeHandle, useState, useRef, useMemo, useCallback } from 'react'
-import { TCommonComponentBaseProps } from 'srcReact/app/types/comm.types'
-import { useReactive } from 'srcReact/app/utils/hooks/useReactive/useReactive'
+import { TCommonComponentBaseProps } from '../../../types/comm.types'
+import { useReactive } from '../../../utils/hooks/useReactive/useReactive'
 
 export function Parent(props: TCommonComponentBaseProps): React.ReactElement {
 	const [count, setCount] = useState(0)

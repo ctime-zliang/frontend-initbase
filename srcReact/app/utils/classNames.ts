@@ -5,7 +5,6 @@ export function classNames(...args: TClassNameList): string {
 	const hasOwn = {}.hasOwnProperty
 	const classes: Array<string> = []
 	for (let i: number = 0; i < args.length; i++) {
-		var arg = args[i]
 		if (!args[i]) {
 			continue
 		}

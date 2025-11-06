@@ -160,4 +160,4 @@ function TreeRoot(props: TTreeRootPorps, ref: any): React.ReactElement {
 	return null as unknown as React.ReactElement
 }
 
-export default forwardRef(TreeRoot)
+export const TreeRootForward = forwardRef(TreeRoot)

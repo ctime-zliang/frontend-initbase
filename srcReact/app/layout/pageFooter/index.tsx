@@ -2,7 +2,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Layout } from 'antd'
 import './index.less'
-import { TCommonComponentBaseProps } from 'srcReact/app/types/comm.types'
+import { TCommonComponentBaseProps } from '../../types/comm.types'
 
 const { Footer } = Layout
 

@@ -1,4 +1,4 @@
-import { EdaAbstractStore } from 'srcReact/app/store/edaStore/EdaAbstractStore'
+import { EdaAbstractStore } from '../../../../../store/edaStore/EdaAbstractStore'
 import { MainStore } from './Main'
 
 export class InfoStore extends EdaAbstractStore {

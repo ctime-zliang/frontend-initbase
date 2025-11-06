@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react'
-import { ClockCanvas } from '../utils/ClockCanvas'
+import { ClockCanvas } from '../../utils/ClockCanvas'
 import styled from 'styled-components'
 
 const Container = styled.section`

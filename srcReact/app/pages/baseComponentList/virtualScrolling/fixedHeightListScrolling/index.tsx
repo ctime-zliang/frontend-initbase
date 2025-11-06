@@ -1,5 +1,5 @@
 import React from 'react'
-import { FixedHeightListRowItemStyle, FixedHeightListScrolling } from 'srcReact/app/componnet/virtualScrolling'
+import { FixedHeightListRowItemStyle, FixedHeightListScrolling } from '../../../../componnet/virtualScrolling'
 
 export function getRandomInArea(min: number = 0, max: number = Number.MAX_SAFE_INTEGER): number {
 	return Math.floor(Math.random() * (max - min + 1)) + min

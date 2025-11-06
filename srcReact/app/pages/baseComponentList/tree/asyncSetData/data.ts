@@ -1,4 +1,4 @@
-import { TTreeDataItem } from 'srcReact/app/componnet/tree'
+import { TTreeDataItem } from '../../../../componnet/tree'
 
 export const dataLine: Array<TTreeDataItem> = [
 	{
