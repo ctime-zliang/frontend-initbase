@@ -1,11 +1,10 @@
-import { TReduxStore } from '../../../store/public/types'
 import { TRouteItem } from '../../Router'
-import Index from '.'
+import { VirtualScrollingRootMemo } from '.'
 
-export const componentVirtualScrollingRoute = (reduxStore: TReduxStore): TRouteItem => {
+export const componentVirtualScrollingRoute = (): TRouteItem => {
 	return {
 		path: '/virtualscrolling',
 		exact: true,
-		element: Index,
+		element: VirtualScrollingRootMemo,
 	}
 }

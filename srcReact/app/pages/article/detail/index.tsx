@@ -15,4 +15,4 @@ function DetailRoot(props: any): React.ReactElement {
 	)
 }
 
-export default React.memo(DetailRoot)
+export const DetailRootMemo = React.memo(DetailRoot)

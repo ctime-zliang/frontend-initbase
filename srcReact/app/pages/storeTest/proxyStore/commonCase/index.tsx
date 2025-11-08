@@ -35,4 +35,4 @@ function ProxyStoreRoot(): React.ReactElement {
 // valitoStoreTest1()
 // proxyStoreTest2()
 
-export default React.memo(ProxyStoreRoot)
+export const ProxyStoreRootMemo = React.memo(ProxyStoreRoot)

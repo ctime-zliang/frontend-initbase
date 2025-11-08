@@ -7,7 +7,7 @@ function Root(props: TCommonComponentBaseProps): React.ReactElement {
 	console.log(`Root ☆☆☆`, props)
 	const { reduxStore } = props
 	const authPath: string = '/'
-	const routes: Array<TRouteItem> = filterRoutes(createRoutes(props.reduxStore))
+	const routes: Array<TRouteItem> = filterRoutes(createRoutes())
 	return renderRoutes(
 		routes,
 		{
@@ -17,4 +17,4 @@ function Root(props: TCommonComponentBaseProps): React.ReactElement {
 	)
 }
 
-export default React.memo(Root)
+export const RootMemo = React.memo(Root)

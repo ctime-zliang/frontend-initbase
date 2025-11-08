@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { TCommonComponentBaseProps } from '../types/comm.types'
-import Layout from './layout'
+import { LayoutMemo } from './Layout'
 
 export type TRouteItem = {
 	path: string
@@ -38,9 +38,9 @@ const createRouteComponentList = (routes: Array<TRouteItem>, profile: { [key: st
 			<Route
 				path={item.path}
 				element={
-					<Layout {...props}>
+					<LayoutMemo {...props}>
 						<item.element {...props}></item.element>
-					</Layout>
+					</LayoutMemo>
 				}
 				key={index}
 			></Route>

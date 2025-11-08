@@ -1,6 +1,3 @@
-import Layout from '../pages/layout'
-import { TReduxStore } from '../store/public/types'
-/* ... */
 import { homeRoute } from '../pages/home/route'
 import { error404Route } from '../pages/errorPage/route'
 import { linkListRoute } from '../pages/linkList/route'
@@ -14,45 +11,31 @@ import { componentContextmenuRoute } from '../pages/baseComponentList/contextmen
 import { testpageCommonRoute, testpageErrorRoute } from '../pages/testpage/route'
 import { storeTestValtioCommonRoute } from '../pages/storeTest/valtio/commonCase/route'
 import { storeTestErrorRoute } from '../pages/storeTest/error/route'
-import { storeTestReduxCommonRoute } from '../pages/storeTest/redux/commonCase/route'
 import { storeTestEdaAbstractStoreCommonRoute } from '../pages/storeTest/edaStore/commonCase/route'
-import { storeTestJotaiCommonRoute } from '../pages/storeTest/jotai/commonCase/route'
 import { storeTestProxyStoreCommonRoute } from '../pages/storeTest/proxyStore/commonCase/route'
 import { TRouteItem } from '../pages/Router'
 
-export const createRoutes = (reduxStore: TReduxStore): Array<TRouteItem> => {
+export const createRoutes = (): Array<TRouteItem> => {
 	return [
-		homeRoute(reduxStore),
-		linkListRoute(reduxStore),
+		homeRoute(),
+		linkListRoute(),
 		{
 			path: '/article/*',
-			routes: [articleListRoute(reduxStore), articleDetailRoute(reduxStore), articleErrorRoute(reduxStore)],
+			routes: [articleListRoute(), articleDetailRoute(), articleErrorRoute()],
 		},
 		{
 			path: '/storetest/*',
-			routes: [
-				storeTestValtioCommonRoute(reduxStore),
-				storeTestReduxCommonRoute(reduxStore),
-				storeTestEdaAbstractStoreCommonRoute(reduxStore),
-				storeTestJotaiCommonRoute(reduxStore),
-				storeTestProxyStoreCommonRoute(reduxStore),
-				storeTestErrorRoute(reduxStore),
-			],
+			routes: [storeTestValtioCommonRoute(), storeTestEdaAbstractStoreCommonRoute(), storeTestProxyStoreCommonRoute(), storeTestErrorRoute()],
 		},
 		{
 			path: '/testpage/*',
-			routes: [testpageCommonRoute(reduxStore), testpageErrorRoute(reduxStore)],
+			routes: [testpageCommonRoute(), testpageErrorRoute()],
 		},
 		{
 			path: '/componentLib/*',
-			routes: [
-				componentPaginationRoute(reduxStore),
-				componentTreeRoute(reduxStore),
-				componentVirtualScrollingRoute(reduxStore),
-				componentContextmenuRoute(reduxStore),
-			],
+			routes: [componentPaginationRoute(), componentTreeRoute(), componentVirtualScrollingRoute(), componentContextmenuRoute()],
 		},
-		error404Route(reduxStore),
+		error404Route(),
 	]
 }
 

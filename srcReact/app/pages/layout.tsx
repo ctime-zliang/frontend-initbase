@@ -1,18 +1,18 @@
 import React from 'react'
-import PageHeader from '../layout/pageHeader'
-import PageFooter from '../layout/pageFooter'
-import PageContent from '../layout/pageContent'
+import { PageHeaderRoot } from '../layout/pageHeader'
+import { PageFooterRoot } from '../layout/pageFooter'
+import { PageContentRoot } from '../layout/pageContent'
 import { TCommonComponentBaseProps } from '../types/comm.types'
 
 function Layout(props: TCommonComponentBaseProps): React.ReactElement {
 	console.log(`Layout ☆☆☆`, props)
 	return (
 		<>
-			<PageHeader {...props}></PageHeader>
-			<PageContent {...props}>{props.children}</PageContent>
-			<PageFooter {...props}></PageFooter>
+			<PageHeaderRoot {...props} />
+			<PageContentRoot {...props}>{props.children}</PageContentRoot>
+			<PageFooterRoot {...props} />
 		</>
 	)
 }
 
-export default React.memo(Layout)
+export const LayoutMemo = React.memo(Layout)

@@ -4,18 +4,18 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { HelmetProvider } from 'react-helmet-async'
 import I18nProvider from 'srcReact/app/i18n/I18nProvider'
-import { configureStore } from 'srcReact/app/store/redux'
-import App from 'srcReact/app/App'
+import App from '../app/App'
+import { reduxStore } from '../app/store/reduxToolkit'
 
 export function renderReactApp(): void {
+	console.log(`RenderReactApp ☆☆☆`)
 	const __render_id__: number = Math.random()
-	const store = configureStore()
 	ReactDOMClient.createRoot(document.getElementById('reactApp') as HTMLElement).render(
-		<Provider store={store}>
+		<Provider store={reduxStore}>
 			<I18nProvider>
 				<BrowserRouter>
 					<HelmetProvider>
-						<App __RenderProps__={{ __render_id__ }} reduxStore={store} />
+						<App __RenderProps__={{ __render_id__ }} reduxStore={reduxStore} />
 					</HelmetProvider>
 				</BrowserRouter>
 			</I18nProvider>

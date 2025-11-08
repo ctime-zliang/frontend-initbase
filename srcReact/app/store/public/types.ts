@@ -1,14 +1,11 @@
-import { Store as ReduxStore } from 'redux'
+import { EStoreModuleKey } from './config'
+import { TStore as TGloablStore } from '../global/store'
 
-export type TStoreReduxCommonAction<T> = {
-	type: T
-	data?: any
+export type TCombineStore = {
+	[EStoreModuleKey.global]: TGloablStore
 }
 
-export type TReduxStoreExtend = {
-	syncInitialState?: any
-	asyncReducers?: any
-	replaceReducer?: Function
+export type TReduxToolkitActionCommonResult<T> = {
+	payload: T
+	type: string
 }
-
-export type TReduxStore = ReduxStore & TReduxStoreExtend

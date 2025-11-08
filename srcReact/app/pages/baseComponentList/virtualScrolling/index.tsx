@@ -18,4 +18,4 @@ function VirtualScrollingRoot(props: any): React.ReactElement {
 	)
 }
 
-export default React.memo(VirtualScrollingRoot)
+export const VirtualScrollingRootMemo = React.memo(VirtualScrollingRoot)

@@ -1,20 +1,19 @@
-import { TReduxStore } from '../../store/public/types'
 import { TRouteItem } from '../Router'
-import Index from '.'
-import Error404 from './404'
+import { TestPageMainMemo } from '.'
+import { Error404RootMemo } from './404'
 
-export const testpageCommonRoute = (reduxStore: TReduxStore): TRouteItem => {
+export const testpageCommonRoute = (): TRouteItem => {
 	return {
 		path: '/common',
 		exact: true,
-		element: Index,
+		element: TestPageMainMemo,
 	}
 }
 
-export const testpageErrorRoute = (reduxStore: TReduxStore): TRouteItem => {
+export const testpageErrorRoute = (): TRouteItem => {
 	return {
 		path: '*',
 		exact: true,
-		element: Error404,
+		element: Error404RootMemo,
 	}
 }

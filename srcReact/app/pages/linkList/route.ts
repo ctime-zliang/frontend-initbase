@@ -1,11 +1,10 @@
-import { TReduxStore } from '../../store/public/types'
 import { TRouteItem } from '../Router'
-import Index from '.'
+import { ListRoot } from '.'
 
-export const linkListRoute = (reduxStore: TReduxStore): TRouteItem => {
+export const linkListRoute = (): TRouteItem => {
 	return {
 		path: '/link',
 		exact: true,
-		element: Index,
+		element: ListRoot,
 	}
 }

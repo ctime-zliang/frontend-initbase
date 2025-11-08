@@ -1,6 +1,4 @@
-import { TReduxStore } from '../store/public/types'
-
 export type TCommonComponentBaseProps = {
-	reduxStore: TReduxStore
+	reduxStore: any
 	[key: string]: any
 }

@@ -1,9 +1,23 @@
 import { v4 as uuidv4 } from 'uuid'
-import { TStore } from './types'
 import { globalConfig } from '../../config/config'
 
+export type TLinkListItem = {
+	id: string
+	title: string
+	path: string
+	desc: string
+}
+export type TStore = {
+	g_headLoadStatus: string
+	g_languageSetting: string
+	linkData: Array<{
+		subject: string
+		list: Array<TLinkListItem>
+	}>
+}
 export const createInitialState = (): TStore => {
 	return {
+		g_headLoadStatus: '-',
 		g_languageSetting: globalConfig.lang,
 		linkData: [
 			{
@@ -14,9 +28,7 @@ export const createInitialState = (): TStore => {
 				subject: 'Store Manager',
 				list: [
 					{ id: uuidv4(), title: 'Valtio State Manager', desc: 'Valtio Store Manager Case', path: '/storetest/valtio' },
-					{ id: uuidv4(), title: 'Redux State Manager', desc: 'Redux Store Manager Case', path: '/storetest/redux' },
 					{ id: uuidv4(), title: 'EdaAbstractStore State Manager', desc: 'EdaAbstract Store Manager Case', path: '/storetest/eda' },
-					{ id: uuidv4(), title: 'Jotai State Manager', desc: 'Jotai Store Manager Case', path: '/storetest/jotai' },
 					{ id: uuidv4(), title: 'ProxyStore State Manager', desc: 'Proxy Store Manager Case', path: '/storetest/proxyStore' },
 				],
 			},

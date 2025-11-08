@@ -1,11 +1,10 @@
-import { TReduxStore } from '../../../store/public/types'
 import { TRouteItem } from '../../Router'
-import Index from '.'
+import { PaginationRootMemo } from '.'
 
-export const componentPaginationRoute = (reduxStore: TReduxStore): TRouteItem => {
+export const componentPaginationRoute = (): TRouteItem => {
 	return {
 		path: '/pagination',
 		exact: true,
-		element: Index,
+		element: PaginationRootMemo,
 	}
 }

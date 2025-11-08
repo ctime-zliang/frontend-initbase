@@ -4,22 +4,24 @@ import { Layout } from 'antd'
 import './index.less'
 import { TCommonComponentBaseProps } from '../../types/comm.types'
 
-const { Footer } = Layout
-
-const layoutStyle: { [key: string]: string | number } = {
-	backgroundColor: `rgba(202, 202, 202, 0.5)`,
-}
-
-function PageFooterRoot(props: TCommonComponentBaseProps): React.ReactElement {
+export function PageFooterRoot(props: TCommonComponentBaseProps): React.ReactElement {
 	// console.log(`PageFooterRoot ☆☆☆`, props)
 	const { t } = useTranslation()
 	return (
 		<footer className="app-page-footer">
-			<Layout style={layoutStyle}>
-				<Footer style={layoutStyle}>Copyright Admin &copy;2010 - 2020, {t('China')}</Footer>
+			<Layout
+				style={{
+					backgroundColor: `rgba(202, 202, 202, 0.5)`,
+				}}
+			>
+				<Layout.Footer
+					style={{
+						backgroundColor: `rgba(202, 202, 202, 0.5)`,
+					}}
+				>
+					Copyright Admin &copy;2010 - 2020, {t('China')}
+				</Layout.Footer>
 			</Layout>
 		</footer>
 	)
 }
-
-export default React.memo(PageFooterRoot)

@@ -26,4 +26,4 @@ function ValtioRoot(): React.ReactElement {
 		</section>
 	)
 }
-export default React.memo(ValtioRoot)
+export const ValtioRootMemo = React.memo(ValtioRoot)

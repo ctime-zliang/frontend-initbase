@@ -1,11 +1,10 @@
-import { TReduxStore } from '../../../store/public/types'
 import { TRouteItem } from '../../Router'
-import Index from '.'
+import { ContextmenuRootMemo } from '.'
 
-export const componentContextmenuRoute = (reduxStore: TReduxStore): TRouteItem => {
+export const componentContextmenuRoute = (): TRouteItem => {
 	return {
 		path: '/contextmenu',
 		exact: true,
-		element: Index,
+		element: ContextmenuRootMemo,
 	}
 }

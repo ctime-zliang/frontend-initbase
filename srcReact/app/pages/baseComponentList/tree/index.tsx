@@ -22,4 +22,4 @@ function TreeRoot(props: any): React.ReactElement {
 	)
 }
 
-export default React.memo(TreeRoot)
+export const TreeRootMemo = React.memo(TreeRoot)

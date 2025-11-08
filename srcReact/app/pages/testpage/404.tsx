@@ -13,4 +13,4 @@ function Error404Root(props: any): React.ReactElement {
 	)
 }
 
-export default React.memo(Error404Root)
+export const Error404RootMemo = React.memo(Error404Root)

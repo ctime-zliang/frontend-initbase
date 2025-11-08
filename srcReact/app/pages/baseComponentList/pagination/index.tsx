@@ -18,4 +18,4 @@ function PaginationRoot(props: any): React.ReactElement {
 	)
 }
 
-export default React.memo(PaginationRoot)
+export const PaginationRootMemo = React.memo(PaginationRoot)

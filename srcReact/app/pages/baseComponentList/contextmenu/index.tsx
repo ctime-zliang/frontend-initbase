@@ -16,4 +16,4 @@ function ContextmenuRoot(props: any): React.ReactElement {
 	)
 }
 
-export default React.memo(ContextmenuRoot)
+export const ContextmenuRootMemo = React.memo(ContextmenuRoot)

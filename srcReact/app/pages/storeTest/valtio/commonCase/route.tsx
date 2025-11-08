@@ -1,11 +1,10 @@
-import { TReduxStore } from '../../../../store/public/types'
 import { TRouteItem } from '../../../Router'
-import Index from '.'
+import { ValtioRootMemo } from '.'
 
-export const storeTestValtioCommonRoute = (reduxStore: TReduxStore): TRouteItem => {
+export const storeTestValtioCommonRoute = (): TRouteItem => {
 	return {
 		path: '/valtio',
 		exact: true,
-		element: Index,
+		element: ValtioRootMemo,
 	}
 }

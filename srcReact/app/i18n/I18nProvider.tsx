@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 /* ... */
 import zhCN from './locales/zh_cn/translation.json'
 import enUS from './locales/en_us/translation.json'
-import { getLanguageSetting } from '../store/globalDefault/selectors'
+import { getLanguageSetting } from '../store/global/selectors'
 
 const DEFAULT_NAMESPACE: string = 'DEFAULT_NAMESPACE'
 const i18n = i18next
@@ -46,7 +46,7 @@ export const i18Next = i18next
 function I18nProvider(props: any): React.ReactElement {
 	const languageSetting: string = useSelector(getLanguageSetting)
 	const [isInitial, setIsInitial] = useState<boolean>(true)
-	console.log(`I18nProvider 🌙🌙🌙`, props, languageSetting)
+	// console.log(`I18nProvider 🌙🌙🌙`, props, languageSetting)
 	useEffect((): void => {
 		i18next.changeLanguage(languageSetting)
 	}, [languageSetting])

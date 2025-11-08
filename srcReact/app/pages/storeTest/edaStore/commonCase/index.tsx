@@ -27,4 +27,4 @@ function EdaStoreRoot(props: any): React.ReactElement {
 	)
 }
 
-export default EdaStoreRoot
+export const EdaStoreRootMemo = EdaStoreRoot

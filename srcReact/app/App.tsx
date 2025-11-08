@@ -4,7 +4,7 @@ import './assets/style/prefix.less'
 import '../../node_modules/antd/dist/antd.css'
 import favicon from './assets/images/log.jpg'
 import { TCommonComponentBaseProps } from './types/comm.types'
-import Root from './pages/Root'
+import { RootMemo } from './pages/Root'
 
 export default function App(props: TCommonComponentBaseProps): React.ReactElement {
 	console.log(`App ☆☆☆`, props)
@@ -14,7 +14,7 @@ export default function App(props: TCommonComponentBaseProps): React.ReactElemen
 			<Helmet link={[{ rel: 'icon', type: 'image/jpg', href: favicon }]}>
 				<title>React Application</title>
 			</Helmet>
-			<Root __AppProps__={{ __app_id__ }} {...props} />
+			<RootMemo __AppProps__={{ __app_id__ }} {...props} />
 		</section>
 	)
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
-import LinkRoot from './link'
+import { LinkRootMemo } from './link'
 import ClockCanvas from '../../componnet/clockCanvas'
 
 const HomeContainer = styled.section`
@@ -31,13 +31,13 @@ const ClockcanvasWrapper = styled.div`
 `
 
 function HomePageRoot(props: any): React.ReactElement {
-	console.log(`HomeRoot ☆☆☆`, props)
-	const useParamsRes = useParams()
-	console.log(`useParams`, useParamsRes)
-	const useNavigateRes = useNavigate()
-	console.log(`useNavigate`, useNavigateRes)
-	const useSearchParamsRes = useSearchParams()
-	console.log(`useSearchParams`, useSearchParamsRes)
+	// console.log(`HomeRoot ☆☆☆`, props)
+	// const useParamsRes = useParams()
+	// console.log(`useParams`, useParamsRes)
+	// const useNavigateRes = useNavigate()
+	// console.log(`useNavigate`, useNavigateRes)
+	// const useSearchParamsRes = useSearchParams()
+	// console.log(`useSearchParams`, useSearchParamsRes)
 	return (
 		<>
 			<HomeContainer>
@@ -45,11 +45,11 @@ function HomePageRoot(props: any): React.ReactElement {
 					<ClockcanvasWrapper>
 						<ClockCanvas />
 					</ClockcanvasWrapper>
-					<LinkRoot />
+					<LinkRootMemo />
 				</HomeContent>
 			</HomeContainer>
 		</>
 	)
 }
 
-export default React.memo(HomePageRoot)
+export const HomePageRootMemo = React.memo(HomePageRoot)

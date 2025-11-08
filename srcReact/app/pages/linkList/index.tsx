@@ -1,18 +1,21 @@
 import React from 'react'
 import { Helmet } from 'react-helmet-async'
-import { connect } from 'react-redux'
-import { Layout, Card, Col, Row } from 'antd'
-import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { Layout } from 'antd'
 import styles from './index.module.less'
-import { TLinkListItem } from '../../store/globalDefault/types'
+import { TStore as TGlobalStore, TLinkListItem } from '../../store/global/store'
 import { TCommonComponentBaseProps } from '../../types/comm.types'
-import { TCombineState } from '../../store/redux'
+import { TCombineStore } from '../../../app/store/public/types'
+import { EStoreModuleKey } from '../../../app/store/public/config'
 
 const { Content } = Layout
 
-function ListRoot(props: TProps): React.ReactElement {
+export function ListRoot(props: TCommonComponentBaseProps): React.ReactElement {
 	console.log(`ListRoot ☆☆☆`, props)
-	const { linkData } = props
+	const { linkData } = useSelector((store: TCombineStore): TGlobalStore => {
+		return store[EStoreModuleKey.global]
+	})
+	const dispatch = useDispatch()
 	const listItems: () => Array<React.ReactElement> = (): Array<React.ReactElement> => {
 		const viewItems: Array<React.ReactElement> = []
 		linkData.forEach((item: { subject: string; list: Array<TLinkListItem> }, index: number): void => {
@@ -49,26 +52,3 @@ function ListRoot(props: TProps): React.ReactElement {
 		</>
 	)
 }
-
-type TReduxStoreState = {
-	linkData: Array<{
-		subject: string
-		list: Array<TLinkListItem>
-	}>
-}
-
-type TReduxStoreActions = {}
-
-type TProps = TReduxStoreState & TReduxStoreActions & TCommonComponentBaseProps
-
-const mapStateToProps = (combineState: TCombineState): TReduxStoreState => {
-	return {
-		linkData: combineState.globalDefault.linkData,
-	}
-}
-
-const mapActionsToProps = {}
-
-const ListRootContainer = connect(mapStateToProps, mapActionsToProps)(ListRoot)
-
-export default React.memo(ListRootContainer)

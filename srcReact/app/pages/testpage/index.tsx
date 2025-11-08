@@ -2,7 +2,7 @@ import { TCommonComponentBaseProps } from '../../types/comm.types'
 import React, { useState, useMemo, useCallback, useEffect } from 'react'
 import InsertList from './insertList'
 
-function Main(props: TCommonComponentBaseProps): React.ReactElement {
+function TestPageMain(props: TCommonComponentBaseProps): React.ReactElement {
 	useEffect((): void => {
 		console.log('===>>>> Test Page Common Mounted.')
 	}, [])
@@ -13,4 +13,4 @@ function Main(props: TCommonComponentBaseProps): React.ReactElement {
 		</>
 	)
 }
-export default React.memo(Main)
+export const TestPageMainMemo = React.memo(TestPageMain)

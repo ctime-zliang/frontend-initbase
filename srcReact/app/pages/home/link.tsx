@@ -21,4 +21,4 @@ function LinkRoot(props: any): React.ReactElement {
 	)
 }
 
-export default React.memo(LinkRoot)
+export const LinkRootMemo = React.memo(LinkRoot)

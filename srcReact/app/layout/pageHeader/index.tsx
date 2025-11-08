@@ -1,22 +1,24 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { Layout, Button } from 'antd'
-import './index.less'
+import { useSelector, useDispatch } from 'react-redux'
 import logoImage from '../../assets/images/log.jpg'
 import { TCommonComponentBaseProps } from '../../types/comm.types'
-import { changeLanguageSettingAction } from '../../store/globalDefault/actions'
-import { TCombineState } from '../../store/redux'
+import { TStore as TGlobalStore } from '../../store/global/store'
+import { TReduxToolkitActionCommonResult, TCombineStore } from '../../../app/store/public/types'
+import { EStoreModuleKey } from '../../../app/store/public/config'
+import './index.less'
+import { changeLanguageSettingAction } from '../../store/global/slice'
 
-type TReduxStoreState = {
-	g_languageSetting: string
-}
-type TReduxStoreActions = {
-	changeLanguageSettingAction: (...args: Array<any>) => void
-}
-type TProps = TReduxStoreState & TReduxStoreActions & TCommonComponentBaseProps
-function PageHeaderRoot(props: TProps): React.ReactElement {
-	console.log(`PageHeaderRoot ☆☆☆`, props)
-	const { g_languageSetting, changeLanguageSettingAction } = props
+export function PageHeaderRoot(props: TCommonComponentBaseProps): React.ReactElement {
+	// console.log(`PageHeaderRoot ☆☆☆`, props)
+	const { g_languageSetting, g_headLoadStatus } = useSelector((store: TCombineStore): TGlobalStore => {
+		return store[EStoreModuleKey.global]
+	})
+	const dispatch = useDispatch()
+	const onLanguageSettingClickAction = (): void => {
+		const res: TReduxToolkitActionCommonResult<any> = changeLanguageSettingAction()
+		dispatch(res)
+	}
 	return (
 		<header className="app-page-header">
 			<Layout
@@ -37,25 +39,13 @@ function PageHeaderRoot(props: TProps): React.ReactElement {
 					</a>
 					<div>
 						Language:{' '}
-						<Button size="small" style={{ marginLeft: '8px' }} onClick={changeLanguageSettingAction}>
+						<Button size="small" style={{ marginLeft: '8px' }} onClick={onLanguageSettingClickAction}>
 							{g_languageSetting || '-'}
 						</Button>
+						<span style={{ padding: '0 5px' }}>{g_headLoadStatus}</span>
 					</div>
 				</Layout.Header>
 			</Layout>
 		</header>
 	)
 }
-
-const mapStateToProps = (combineState: TCombineState): TReduxStoreState => {
-	return {
-		g_languageSetting: combineState.globalDefault.g_languageSetting,
-	}
-}
-const mapActionsToProps = {
-	changeLanguageSettingAction,
-}
-
-const PageHeaderRootContainer = connect(mapStateToProps, mapActionsToProps)(PageHeaderRoot)
-
-export default PageHeaderRootContainer

@@ -1,11 +1,10 @@
-import { TReduxStore } from '../../../../store/public/types'
 import { TRouteItem } from '../../../Router'
-import Index from '.'
+import { EdaStoreRootMemo } from '.'
 
-export const storeTestEdaAbstractStoreCommonRoute = (reduxStore: TReduxStore): TRouteItem => {
+export const storeTestEdaAbstractStoreCommonRoute = (): TRouteItem => {
 	return {
 		path: '/eda',
 		exact: true,
-		element: Index,
+		element: EdaStoreRootMemo,
 	}
 }

@@ -57,4 +57,4 @@ function ListRoot(props: any): React.ReactElement {
 	)
 }
 
-export default React.memo(ListRoot)
+export const ListRootMemo = React.memo(ListRoot)

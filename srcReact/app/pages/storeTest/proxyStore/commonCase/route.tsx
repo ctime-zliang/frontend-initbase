@@ -1,11 +1,10 @@
-import { TReduxStore } from '../../../../store/public/types'
 import { TRouteItem } from '../../../Router'
-import Index from '.'
+import { ProxyStoreRootMemo } from '.'
 
-export const storeTestProxyStoreCommonRoute = (reduxStore: TReduxStore): TRouteItem => {
+export const storeTestProxyStoreCommonRoute = (): TRouteItem => {
 	return {
 		path: '/proxyStore',
 		exact: true,
-		element: Index,
+		element: ProxyStoreRootMemo,
 	}
 }

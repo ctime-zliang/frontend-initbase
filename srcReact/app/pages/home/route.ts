@@ -1,11 +1,10 @@
-import { TReduxStore } from '../../store/public/types'
 import { TRouteItem } from '../Router'
-import Index from '.'
+import { HomePageRootMemo } from '.'
 
-export const homeRoute = (reduxStore: TReduxStore): TRouteItem => {
+export const homeRoute = (): TRouteItem => {
 	return {
 		path: '/',
 		exact: true,
-		element: Index,
+		element: HomePageRootMemo,
 	}
 }
