@@ -1,23 +1,25 @@
-@headerHeight: 50px;
+@import '../../assets/style/public.less';
 
 .app-page-header {
 	width: 100%;
-	height: @headerHeight;
-	flex: 0 0 @headerHeight;
+	height: @pageHeaderHeight;
+	position: absolute;
+	left: 0;
+	top: 0;
 	overflow: hidden;
+	z-index: 999;
 	border-bottom: 1px solid #ececec;
-	.ant-layout {
-		height: inherit;
-	}
+	background-color: rgba(202, 202, 202, 0.5);
+	box-shadow: rgb(175 175 175 / 35%) 0 0 20px;
 	.ant-layout-header {
-		height: inherit;
+		height: 100%;
+		padding: 0 @pageRightPadding 0 @pageLeftPadding;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		align-content: center;
 		flex-wrap: nowrap;
 		background-color: #ffffff;
-		line-height: 1;
 	}
 	a.log-link {
 		color: #444444;

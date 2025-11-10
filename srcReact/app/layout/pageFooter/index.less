@@ -1,19 +1,24 @@
+@import '../../assets/style/public.less';
+
 .app-page-footer {
 	width: 100%;
-	height: 45px;
-	flex: 0 0 45px;
+	height: @pageFooterHeight;
+	position: absolute;
+	left: 0;
+	bottom: 0;
 	overflow: hidden;
 	border-top: 1px solid #ececec;
-	.ant-layout {
+	background-color: rgba(202, 202, 202, 0.5);
+	box-shadow: rgb(175 175 175 / 35%) 0 0 20px;
+	.ant-layout-footer {
 		height: 100%;
+		padding: 0 @pageRightPadding 0 @pageLeftPadding;
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		align-content: center;
-	}
-	.ant-layout-footer {
-		padding: 0;
-		text-align: center;
-		font-size: 12px;
+		flex-wrap: nowrap;
+		background-color: #ffffff;
 	}
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { TCommonComponentBaseProps } from '../types/comm.types'
-import { LayoutMemo } from './Layout'
+import { LayoutMemo } from '../layout/Layout'
 
 export type TRouteItem = {
 	path: string

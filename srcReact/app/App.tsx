@@ -4,13 +4,20 @@ import './assets/style/prefix.less'
 import '../../node_modules/antd/dist/antd.css'
 import favicon from './assets/images/log.jpg'
 import { TCommonComponentBaseProps } from './types/comm.types'
-import { RootMemo } from './pages/Root'
+import { RootMemo } from './layout/Root'
+
+const appContainerStyle: React.CSSProperties = {
+	display: 'flex',
+	flexDirection: 'column',
+	flexWrap: 'nowrap',
+	justifyContent: 'space-between',
+}
 
 export default function App(props: TCommonComponentBaseProps): React.ReactElement {
 	console.log(`App ☆☆☆`, props)
 	const __app_id__: number = Math.random()
 	return (
-		<section data-tagitem="React-App-Section" className="react-app-section">
+		<section data-tagitem="React-App" className="react-app" style={appContainerStyle}>
 			<Helmet link={[{ rel: 'icon', type: 'image/jpg', href: favicon }]}>
 				<title>React Application</title>
 			</Helmet>

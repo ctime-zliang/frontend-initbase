@@ -1,6 +1,23 @@
+@import '../../assets/style/public.less';
+
 .app-page-content {
 	position: relative;
 	left: 0;
 	top: 0;
 	width: 100%;
+	height: 100vh;
+	padding: @pageHeaderHeight 0 @pageFooterHeight 0;
+	.ant-layout-content {
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		padding: 0 @pageRightPadding 0 @pageLeftPadding;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+		align-content: center;
+		flex-wrap: nowrap;
+		background-color: #ffffff;
+	}
 }

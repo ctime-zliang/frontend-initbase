@@ -20,32 +20,22 @@ export function PageHeaderRoot(props: TCommonComponentBaseProps): React.ReactEle
 		dispatch(res)
 	}
 	return (
-		<header className="app-page-header">
-			<Layout
-				style={{
-					backgroundColor: `rgba(202, 202, 202, 0.5)`,
-				}}
-			>
-				<Layout.Header
-					style={{
-						backgroundColor: `rgba(202, 202, 202, 0.5)`,
-					}}
-				>
-					<a className="log-link" href="/" target="_blank" title="React App">
-						<div className="protail-wrapper">
-							<img className="log-img" src={logoImage} title="Logo Image" />
-							<span>React App</span>
-						</div>
-					</a>
-					<div>
-						Language:{' '}
-						<Button size="small" style={{ marginLeft: '8px' }} onClick={onLanguageSettingClickAction}>
-							{g_languageSetting || '-'}
-						</Button>
-						<span style={{ padding: '0 5px' }}>{g_headLoadStatus}</span>
+		<Layout className="app-page-header">
+			<Layout.Header>
+				<a className="log-link" href="/" target="_blank" title="React App">
+					<div className="protail-wrapper">
+						<img className="log-img" src={logoImage} title="Logo Image" />
+						<span>React App</span>
 					</div>
-				</Layout.Header>
-			</Layout>
-		</header>
+				</a>
+				<div>
+					Language:{' '}
+					<Button size="small" style={{ marginLeft: '8px' }} onClick={onLanguageSettingClickAction}>
+						{g_languageSetting || '-'}
+					</Button>
+					<span style={{ padding: '0 5px' }}>{g_headLoadStatus}</span>
+				</div>
+			</Layout.Header>
+		</Layout>
 	)
 }
