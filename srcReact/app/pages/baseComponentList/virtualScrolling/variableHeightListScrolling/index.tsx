@@ -35,10 +35,10 @@ function RowItem(props: any): React.ReactElement {
 
 function VariableHeightListScrollingMain(): React.ReactElement {
 	return (
-		<section style={{ padding: `5px 5px 15px 5px` }}>
+		<section style={{ padding: `10px 10px` }}>
 			<h3>$. 列表各项随机固定高度({dataLength} 条)</h3>
 			<div>
-				<div style={{ width: '50%', border: '1px solid #dcdcdc' }}>
+				<div style={{ width: '100%', border: '1px solid #dcdcdc' }}>
 					<VariableHeightListScrolling containerHeight={300} countTotal={dataLength}>
 						{RowItem}
 					</VariableHeightListScrolling>

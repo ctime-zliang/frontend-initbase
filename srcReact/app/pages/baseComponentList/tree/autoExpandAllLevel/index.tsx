@@ -11,7 +11,7 @@ const expandAction = (a: any, b: any) => {
 
 export function TreeAutoExpandAllLevel(props: any): React.ReactElement {
 	return (
-		<section style={{ padding: `5px 5px 15px 5px` }}>
+		<section style={{ padding: `10px 10px` }}>
 			<h3>$. 初始化时展开所有层级</h3>
 			<Tree selectedIds={[]} contentUnderline={true} expandAll={true} onExpand={expandAction} onClick={clickAction} data={dataLine}></Tree>
 		</section>

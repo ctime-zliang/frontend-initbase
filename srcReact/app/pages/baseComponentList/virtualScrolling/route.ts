@@ -1,5 +1,5 @@
 import { TRouteItem } from '../../Router'
-import { VirtualScrollingRootMemo } from '.'
+import { VirtualScrollingRootMemo } from './Index'
 
 export const componentVirtualScrollingRoute = (): TRouteItem => {
 	return {

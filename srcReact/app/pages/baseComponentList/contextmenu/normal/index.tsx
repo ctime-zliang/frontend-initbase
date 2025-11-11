@@ -63,7 +63,7 @@ function ContextmenuNoraml(props: any): React.ReactElement {
 	}, [])
 
 	return (
-		<section style={{ padding: `5px 5px 5px 5px`, height: '100%' }}>
+		<section style={{ padding: `10px 10px`, height: '100%' }}>
 			<div ref={elementRef} style={{ width: '100%', height: '100%', backgroundColor: '#efefef' }} onContextMenu={onContextmenuAction}>
 				<span>灰色矩形区域内右键唤起右键菜单</span>
 			</div>

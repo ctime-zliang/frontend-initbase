@@ -5,6 +5,7 @@ import { TreeAyncSetData } from './asyncSetData/Index'
 import { TreeAutoExpandAllLevel } from './autoExpandAllLevel/Index'
 import { TreeLongData } from './longData/Index'
 import { useContentBgColor } from '../../../utils/hooks/useContentBgColor'
+import { SimpleDividingLine } from '../../../componnet/simpleDividingLine'
 
 function TreeRoot(props: any): React.ReactElement {
 	console.log(`TreeRoot ☆☆☆`, props)
@@ -15,8 +16,11 @@ function TreeRoot(props: any): React.ReactElement {
 				<title>Tree Component</title>
 			</Helmet>
 			<TreeNormal />
+			<SimpleDividingLine />
 			<TreeAyncSetData />
+			<SimpleDividingLine />
 			<TreeAutoExpandAllLevel />
+			<SimpleDividingLine />
 			<TreeLongData />
 		</>
 	)

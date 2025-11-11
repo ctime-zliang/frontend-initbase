@@ -16,7 +16,7 @@ export function TreeLongData(props: any): React.ReactElement {
 	const tips: string = isVirtualList ? `(已启用虚拟滚动)` : ''
 	const containerHeight: number = 200
 	return (
-		<section style={{ padding: `5px 5px 15px 5px` }}>
+		<section style={{ padding: `10px 10px` }}>
 			<h3>$. 大数据展示{tips}</h3>
 			<div style={{ height: `${containerHeight}px`, overflow: 'auto' }}>
 				<Tree

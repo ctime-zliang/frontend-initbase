@@ -18,14 +18,14 @@ export function TreeAyncSetData(props: any): React.ReactElement {
 	}, [])
 	if (data2.length <= 0) {
 		return (
-			<section style={{ padding: `5px 5px 15px 5px` }}>
+			<section style={{ padding: `10px 10px` }}>
 				<h3>$. 异步设置数据</h3>
 				<div>loading...</div>
 			</section>
 		)
 	}
 	return (
-		<section style={{ padding: `5px 5px 15px 5px` }}>
+		<section style={{ padding: `10px 10px` }}>
 			<h3>$. 异步设置数据</h3>
 			<Tree
 				selectedIds={['002']}

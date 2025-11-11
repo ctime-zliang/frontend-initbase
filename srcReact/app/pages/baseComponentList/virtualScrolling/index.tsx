@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async'
 import { VariableHeightListScrollingMainMemo } from './variableHeightListScrolling/Index'
 import { FixedHeightListScrollingMainMemo } from './fixedHeightListScrolling/Index'
 import { useContentBgColor } from '../../../utils/hooks/useContentBgColor'
+import { SimpleDividingLine } from '../../../componnet/simpleDividingLine'
 
 function VirtualScrollingRoot(props: any): React.ReactElement {
 	console.log(`VirtualScrolling ☆☆☆`, props)
@@ -13,6 +14,7 @@ function VirtualScrollingRoot(props: any): React.ReactElement {
 				<title>Virtual Scrolling Component</title>
 			</Helmet>
 			<VariableHeightListScrollingMainMemo />
+			<SimpleDividingLine />
 			<FixedHeightListScrollingMainMemo />
 		</>
 	)

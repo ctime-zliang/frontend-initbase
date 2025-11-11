@@ -20,10 +20,10 @@ function InsertList(): React.ReactElement {
 		console.log('===>>>> Test Page Common Mounted.')
 	}, [])
 	return (
-		<>
+		<section style={{ padding: `10px 10px` }}>
 			<button onClick={btnClickAction}>Insert List</button>
 			<div ref={containerRef}></div>
-		</>
+		</section>
 	)
 }
 export default React.memo(InsertList)

@@ -1,5 +1,5 @@
 import { TRouteItem } from '../../Router'
-import { ContextmenuRootMemo } from '.'
+import { ContextmenuRootMemo } from './Index'
 
 export const componentContextmenuRoute = (): TRouteItem => {
 	return {

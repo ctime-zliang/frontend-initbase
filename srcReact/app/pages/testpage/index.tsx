@@ -8,7 +8,7 @@ function TestPageMain(props: TCommonComponentBaseProps): React.ReactElement {
 	}, [])
 	return (
 		<>
-			<div>Test Page Common</div>
+			<h2 style={{ padding: `10px 10px`, margin: 0 }}>Test Page Common</h2>
 			<InsertList />
 		</>
 	)
