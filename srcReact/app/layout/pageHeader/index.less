@@ -9,9 +9,9 @@
 	overflow: hidden;
 	z-index: 999;
 	border-bottom: 1px solid #ececec;
-	background-color: rgba(202, 202, 202, 0.5);
-	box-shadow: rgb(175 175 175 / 35%) 0 0 20px;
-	.ant-layout-header {
+	background-color: @pageHeaderBackgroundColor;
+	box-shadow: @pageHeaderBoxShadow;
+	& > .ant-layout-header {
 		height: 100%;
 		padding: 0 @pageRightPadding 0 @pageLeftPadding;
 		display: flex;
@@ -19,24 +19,54 @@
 		align-items: center;
 		align-content: center;
 		flex-wrap: nowrap;
-		background-color: #ffffff;
+		background-color: inherit;
 	}
-	a.log-link {
-		color: #444444;
-	}
-	a.log-link:hover {
-		color: #666666;
-	}
-	.protail-wrapper {
-		padding-right: 15px;
-		img {
-			width: 50px;
-			height: 50px;
-			border-radius: 50%;
-			transform: scale(0.75);
+	.home-wrapper {
+		height: 100%;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		align-content: center;
+		.back-icon-wrapper {
+			height: 100%;
+			padding: 0 5px 0 0;
+			.back-icon {
+				background-image: url(../../assets/images/icons-back-01.png);
+				background-repeat: no-repeat;
+				background-position: center center;
+				background-size: 50%;
+				width: 40px;
+				height: 100%;
+				cursor: pointer;
+				transition: all 0.5 ease-in-out;
+				&:hover {
+					background-color: rgba(235, 235, 235, 0.5);
+				}
+			}
 		}
-		span {
-			font-size: 14px;
+		a.log-link {
+			color: #444444;
+		}
+		a.log-link:hover {
+			color: #666666;
+		}
+		.protail-wrapper {
+			height: @pageHeaderHeight;
+			display: flex;
+			align-items: center;
+			align-content: center;
+			justify-self: flex-start;
+			flex-wrap: nowrap;
+			img {
+				display: block;
+				width: @pageHeaderHeight;
+				height: @pageHeaderHeight;
+				border-radius: 50%;
+				transform: scale(0.75);
+			}
+			span {
+				font-size: 14px;
+			}
 		}
 	}
 }

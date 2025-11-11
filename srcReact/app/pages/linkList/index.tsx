@@ -3,10 +3,11 @@ import { Helmet } from 'react-helmet-async'
 import { useDispatch, useSelector } from 'react-redux'
 import { Layout } from 'antd'
 import styles from './index.module.less'
+import { Link } from 'react-router-dom'
 import { TStore as TGlobalStore, TLinkListItem } from '../../store/global/store'
 import { TCommonComponentBaseProps } from '../../types/comm.types'
-import { TCombineStore } from '../../../app/store/public/types'
-import { EStoreModuleKey } from '../../../app/store/public/config'
+import { TCombineStore } from '../../store/public/types'
+import { EStoreModuleKey } from '../../store/public/config'
 
 const { Content } = Layout
 
@@ -26,12 +27,12 @@ export function ListRoot(props: TCommonComponentBaseProps): React.ReactElement {
 						{item.list.map((sItem: TLinkListItem, sIndex: number): React.ReactElement => {
 							return (
 								<div key={sIndex + '' + index} className={styles['list-groupcontent']}>
-									<a data-id={sItem.id} href={sItem.path}>
+									<Link className={styles['link-item']} to={{ pathname: `${sItem.path}` }} state={{ showBackIcon: true }}>
 										<div className={styles['list-groupcontent-card']}>
 											<div className={styles['entry-title']}>{sItem.title}</div>
 											<div className={styles['entry-description']}>{sItem.desc}</div>
 										</div>
-									</a>
+									</Link>
 								</div>
 							)
 						})}

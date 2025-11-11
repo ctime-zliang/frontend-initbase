@@ -27,7 +27,6 @@ export const createInitialState = (): TStore => {
 			{
 				subject: 'Store Manager',
 				list: [
-					{ id: uuidv4(), title: 'Valtio State Manager', desc: 'Valtio Store Manager Case', path: '/storetest/valtio' },
 					{ id: uuidv4(), title: 'EdaAbstractStore State Manager', desc: 'EdaAbstract Store Manager Case', path: '/storetest/eda' },
 					{ id: uuidv4(), title: 'ProxyStore State Manager', desc: 'Proxy Store Manager Case', path: '/storetest/proxyStore' },
 				],

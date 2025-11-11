@@ -8,9 +8,9 @@
 	bottom: 0;
 	overflow: hidden;
 	border-top: 1px solid #ececec;
-	background-color: rgba(202, 202, 202, 0.5);
-	box-shadow: rgb(175 175 175 / 35%) 0 0 20px;
-	.ant-layout-footer {
+	background-color: @pageFooterBackgroundColor;
+	box-shadow: @pageFooterBoxShadow;
+	& > .ant-layout-footer {
 		height: 100%;
 		padding: 0 @pageRightPadding 0 @pageLeftPadding;
 		display: flex;

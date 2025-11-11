@@ -1,6 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet-async'
-import ContextmenuNoraml from './normal'
+import { ContextmenuNoramlMemo } from './normal/Index'
 import { useContentBgColor } from '../../../utils/hooks/useContentBgColor'
 
 function ContextmenuRoot(props: any): React.ReactElement {
@@ -11,7 +11,7 @@ function ContextmenuRoot(props: any): React.ReactElement {
 			<Helmet>
 				<title>Contextmenu Component</title>
 			</Helmet>
-			<ContextmenuNoraml />
+			<ContextmenuNoramlMemo />
 		</>
 	)
 }

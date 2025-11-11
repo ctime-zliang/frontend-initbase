@@ -1,10 +1,10 @@
 import { TRouteItem } from '../../Router'
-import { ListRootMemo } from '.'
+import { ArticleListRootMemo } from './Index'
 
 export const articleListRoute = (): TRouteItem => {
 	return {
 		path: '/',
 		exact: true,
-		element: ListRootMemo,
+		element: ArticleListRootMemo,
 	}
 }

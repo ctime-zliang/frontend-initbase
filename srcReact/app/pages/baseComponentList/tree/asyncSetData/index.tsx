@@ -9,7 +9,7 @@ const expandAction = (a: any, b: any) => {
 	console.log(a, b)
 }
 
-function TreeAyncSetData(props: any): React.ReactElement {
+export function TreeAyncSetData(props: any): React.ReactElement {
 	const [data2, setData2] = useState<Array<TTreeDataItem>>([])
 	useEffect((): void => {
 		window.setTimeout((): void => {
@@ -38,5 +38,3 @@ function TreeAyncSetData(props: any): React.ReactElement {
 		</section>
 	)
 }
-
-export default TreeAyncSetData

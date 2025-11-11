@@ -9,7 +9,9 @@ function InsertList(): React.ReactElement {
 			(itemData: any, index: number): void => {
 				const itemDiv: HTMLDivElement = document.createElement('div')
 				itemDiv.innerText = `ID: ${itemData.id}, Text: ${itemData.text}`
-				containerRef.current.appendChild(itemDiv)
+				if (containerRef.current) {
+					containerRef.current.appendChild(itemDiv)
+				}
 			},
 			chunkSplitor2
 		)

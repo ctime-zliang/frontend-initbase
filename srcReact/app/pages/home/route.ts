@@ -1,5 +1,5 @@
 import { TRouteItem } from '../Router'
-import { HomePageRootMemo } from '.'
+import { HomePageRootMemo } from './Index'
 
 export const homeRoute = (): TRouteItem => {
 	return {

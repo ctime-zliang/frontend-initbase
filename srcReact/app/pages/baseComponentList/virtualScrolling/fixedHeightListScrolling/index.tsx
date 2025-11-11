@@ -39,7 +39,7 @@ function RowItem(props: any): React.ReactElement {
 	)
 }
 
-function FixedHeightListScrollingRoot(): React.ReactElement {
+function FixedHeightListScrollingMain(): React.ReactElement {
 	return (
 		<section style={{ padding: `5px 5px 15px 5px` }}>
 			<h3>$. 列表各项恒定固定高度({dataLength} 条)</h3>
@@ -54,4 +54,4 @@ function FixedHeightListScrollingRoot(): React.ReactElement {
 	)
 }
 
-export default React.memo(FixedHeightListScrollingRoot)
+export const FixedHeightListScrollingMainMemo = React.memo(FixedHeightListScrollingMain)

@@ -34,4 +34,4 @@ function PaginationNoraml(props: any): React.ReactElement {
 	)
 }
 
-export default React.memo(PaginationNoraml)
+export const PaginationNoramlMemo = React.memo(PaginationNoraml)

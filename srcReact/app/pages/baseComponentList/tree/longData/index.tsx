@@ -11,7 +11,7 @@ const expandAction = (a: any, b: any) => {
 
 const dataLine = createLongData()
 
-function TreeNormal(props: any): React.ReactElement {
+export function TreeLongData(props: any): React.ReactElement {
 	const isVirtualList: boolean = true
 	const tips: string = isVirtualList ? `(已启用虚拟滚动)` : ''
 	const containerHeight: number = 200
@@ -34,5 +34,3 @@ function TreeNormal(props: any): React.ReactElement {
 		</section>
 	)
 }
-
-export default TreeNormal

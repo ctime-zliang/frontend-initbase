@@ -1,5 +1,5 @@
 import { TRouteItem } from '../../../Router'
-import { ProxyStoreRootMemo } from '.'
+import { ProxyStoreRootMemo } from './Index'
 
 export const storeTestProxyStoreCommonRoute = (): TRouteItem => {
 	return {

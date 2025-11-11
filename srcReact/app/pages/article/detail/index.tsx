@@ -1,9 +1,11 @@
 import React from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 
-function DetailRoot(props: any): React.ReactElement {
-	console.log(`DetailRoot ☆☆☆`, props)
-	const { list } = props
+function ArticleDetailRoot(props: any): React.ReactElement {
+	console.log(`ArticleDetailRoot ☆☆☆`, props)
+	const location = useLocation()
+	console.log(location)
 	return (
 		<>
 			<Helmet>
@@ -15,4 +17,4 @@ function DetailRoot(props: any): React.ReactElement {
 	)
 }
 
-export const DetailRootMemo = React.memo(DetailRoot)
+export const ArticleDetailRootMemo = React.memo(ArticleDetailRoot)

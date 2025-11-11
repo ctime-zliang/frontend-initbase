@@ -1,5 +1,5 @@
 import { TRouteItem } from '../Router'
-import { TestPageMainMemo } from '.'
+import { TestPageMainMemo } from './Index'
 import { Error404RootMemo } from './404'
 
 export const testpageCommonRoute = (): TRouteItem => {

@@ -9,9 +9,8 @@ import { componentTreeRoute } from '../pages/baseComponentList/tree/route'
 import { componentVirtualScrollingRoute } from '../pages/baseComponentList/virtualScrolling/route'
 import { componentContextmenuRoute } from '../pages/baseComponentList/contextmenu/route'
 import { testpageCommonRoute, testpageErrorRoute } from '../pages/testpage/route'
-import { storeTestValtioCommonRoute } from '../pages/storeTest/valtio/commonCase/route'
 import { storeTestErrorRoute } from '../pages/storeTest/error/route'
-import { storeTestEdaAbstractStoreCommonRoute } from '../pages/storeTest/edaStore/commonCase/route'
+import { storeTestEdaAbstractStoreCommonRoute } from '../pages/storeTest/edaStore/route'
 import { storeTestProxyStoreCommonRoute } from '../pages/storeTest/proxyStore/commonCase/route'
 import { TRouteItem } from '../pages/Router'
 
@@ -25,7 +24,7 @@ export const createRoutes = (): Array<TRouteItem> => {
 		},
 		{
 			path: '/storetest/*',
-			routes: [storeTestValtioCommonRoute(), storeTestEdaAbstractStoreCommonRoute(), storeTestProxyStoreCommonRoute(), storeTestErrorRoute()],
+			routes: [storeTestEdaAbstractStoreCommonRoute(), storeTestProxyStoreCommonRoute(), storeTestErrorRoute()],
 		},
 		{
 			path: '/testpage/*',

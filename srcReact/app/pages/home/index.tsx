@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
-import { LinkRootMemo } from './link'
-import ClockCanvas from '../../componnet/clockCanvas'
+import { LinkRootMemo } from './Link'
+import ClockCanvas from '../../componnet/clockCanvas/Index'
 
 const HomeContainer = styled.section`
 	width: 100%;

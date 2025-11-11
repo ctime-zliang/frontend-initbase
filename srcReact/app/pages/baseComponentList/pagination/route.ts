@@ -1,5 +1,5 @@
 import { TRouteItem } from '../../Router'
-import { PaginationRootMemo } from '.'
+import { PaginationRootMemo } from './Index'
 
 export const componentPaginationRoute = (): TRouteItem => {
 	return {

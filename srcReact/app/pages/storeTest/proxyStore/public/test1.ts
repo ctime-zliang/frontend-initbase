@@ -56,27 +56,3 @@ export function proxyStoreTest1(): void {
 	// const proxySnap2 = proxySnapshot(proxyData)
 	// console.log(`proxySnap2 = `, JSON.stringify(proxySnap2))
 }
-
-export function valitoStoreTest1(): void {
-	const valtioState = proxy(JSON.parse(JSON.stringify(data)))
-
-	// // const valtioSubscribeCancel = valtioSubscribe(valtioState, (params: any): void => {
-	// // 	console.log(`params = `, params)
-	// // })
-
-	// const valtioSnap1 = valtioSnapshot(valtioState)
-	// console.log(`valtioSnap1 = `, JSON.stringify(valtioSnap1))
-
-	// valtioState.username = 'zhangsan_updated'
-	// delete valtioState.level
-	// valtioState.newKey = 'addKey'
-	// valtioState.symbolItem.title = 'symbol_updated'
-	// valtioState.age = 18
-	// valtioState.list.push({ name: 'name-3', id: '3' })
-	// valtioState.list[1].name = 'name-2_updated'
-
-	// const valtioSnap2 = valtioSnapshot(valtioState)
-	// console.log(`valtioSnap2 = `, JSON.stringify(valtioSnap2))
-
-	// // valtioSubscribeCancel()
-}

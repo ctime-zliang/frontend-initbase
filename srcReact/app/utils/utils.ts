@@ -13,3 +13,7 @@ export async function sleep(delay: number = 500, ...args: any): Promise<any> {
 		}, +delay)
 	})
 }
+
+export function getRandomInArea(min: number = 0, max: number = Number.MAX_SAFE_INTEGER): number {
+	return Math.floor(Math.random() * (max - min + 1)) + min
+}

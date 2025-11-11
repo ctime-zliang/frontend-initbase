@@ -33,7 +33,7 @@ function RowItem(props: any): React.ReactElement {
 	)
 }
 
-function VariableHeightListScrollingRoot(): React.ReactElement {
+function VariableHeightListScrollingMain(): React.ReactElement {
 	return (
 		<section style={{ padding: `5px 5px 15px 5px` }}>
 			<h3>$. 列表各项随机固定高度({dataLength} 条)</h3>
@@ -48,4 +48,4 @@ function VariableHeightListScrollingRoot(): React.ReactElement {
 	)
 }
 
-export default React.memo(VariableHeightListScrollingRoot)
+export const VariableHeightListScrollingMainMemo = React.memo(VariableHeightListScrollingMain)

@@ -33,4 +33,4 @@ function PaginationSimplify(props: any): React.ReactElement {
 	)
 }
 
-export default React.memo(PaginationSimplify)
+export const PaginationSimplifyMemo = React.memo(PaginationSimplify)

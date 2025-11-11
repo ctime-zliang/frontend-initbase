@@ -1,6 +1,6 @@
 import { TCommonComponentBaseProps } from '../../types/comm.types'
 import React, { useState, useMemo, useCallback, useEffect } from 'react'
-import InsertList from './insertList'
+import InsertList from './insertList/Index'
 
 function TestPageMain(props: TCommonComponentBaseProps): React.ReactElement {
 	useEffect((): void => {

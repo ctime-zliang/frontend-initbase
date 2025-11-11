@@ -9,7 +9,7 @@ const expandAction = (a: any, b: any) => {
 	console.log(a, b)
 }
 
-function TreeAutoExpandAllLevel(props: any): React.ReactElement {
+export function TreeAutoExpandAllLevel(props: any): React.ReactElement {
 	return (
 		<section style={{ padding: `5px 5px 15px 5px` }}>
 			<h3>$. 初始化时展开所有层级</h3>
@@ -17,5 +17,3 @@ function TreeAutoExpandAllLevel(props: any): React.ReactElement {
 		</section>
 	)
 }
-
-export default TreeAutoExpandAllLevel

@@ -1,60 +1,54 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Layout, List } from 'antd'
 import { Link } from 'react-router-dom'
 import styles from './index.module.less'
+import { getRandomInArea } from '../../../utils/utils'
 
-const { Content } = Layout
-
-const linkList: Array<any> = [
-	{
-		title: 'Article 1',
-		path: `detail/a1`,
-	},
-	{
-		title: 'Article 2',
-		path: `detail/a2`,
-	},
-	{
-		title: 'Article 3',
-		path: `detail/a3`,
-	},
-]
-
-function ListRoot(props: any): React.ReactElement {
-	console.log(`ListRoot ☆☆☆`, props)
+function ArticleListRoot(props: any): React.ReactElement {
+	console.log(`ArticleListRoot ☆☆☆`, props)
+	const testListSize: number = 100
+	const articleList: Array<any> = useMemo(() => {
+		const articleList: Array<any> = []
+		for (let i: number = 0; i < testListSize; i++) {
+			const n: number = getRandomInArea(100, 100000)
+			articleList.push({ title: `Article ${i}-${n}`, path: `detail/a-${i}-${n}` })
+		}
+		return articleList
+	}, [])
 	return (
 		<>
 			<Helmet>
 				<title>Article List</title>
 			</Helmet>
-			<section className={styles['list-container']}>
-				<section className={styles['list-wrapper']}>
+			<div className={styles['list-container']}>
+				<div className={styles['list-wrapper']}>
 					<div className={styles['list-header']}>
 						<span>Article List</span>
 					</div>
-					<Content>
+					<Layout.Content>
 						<List
+							className={styles['list-item-wrapper']}
 							size="small"
 							bordered
-							dataSource={linkList}
+							dataSource={articleList}
 							renderItem={(item: any, index: number): React.ReactElement => {
 								const number: string = (++index, index) <= 9 ? '0' + index : String(index)
 								return (
-									<List.Item className="entry-linklist" style={{ justifyContent: 'flex-start' }}>
+									<List.Item className={styles['list-item']}>
 										<span style={{ paddingRight: '6px' }}>{number}.</span>
-										<Link className={styles['link-item']} to={{ pathname: `${item.path}` }}>
+										<Link className={styles['link-item']} to={{ pathname: `${item.path}` }} state={{ showBackIcon: true }}>
 											{item.title}
 										</Link>
 									</List.Item>
 								)
 							}}
 						/>
-					</Content>
-				</section>
-			</section>
+					</Layout.Content>
+				</div>
+			</div>
 		</>
 	)
 }
 
-export const ListRootMemo = React.memo(ListRoot)
+export const ArticleListRootMemo = React.memo(ArticleListRoot)

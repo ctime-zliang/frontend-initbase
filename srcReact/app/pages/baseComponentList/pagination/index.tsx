@@ -1,7 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet-async'
-import PaginationNoraml from './normal'
-import PaginationSimplify from './simplify'
+import { PaginationNoramlMemo } from './normal/Index'
+import { PaginationSimplifyMemo } from './simplify/Index'
 import { useContentBgColor } from '../../../utils/hooks/useContentBgColor'
 
 function PaginationRoot(props: any): React.ReactElement {
@@ -12,8 +12,8 @@ function PaginationRoot(props: any): React.ReactElement {
 			<Helmet>
 				<title>Pagination Component</title>
 			</Helmet>
-			<PaginationNoraml />
-			<PaginationSimplify />
+			<PaginationNoramlMemo />
+			<PaginationSimplifyMemo />
 		</>
 	)
 }

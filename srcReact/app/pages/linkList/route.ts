@@ -1,5 +1,5 @@
 import { TRouteItem } from '../Router'
-import { ListRoot } from '.'
+import { ListRoot } from './Index'
 
 export const linkListRoute = (): TRouteItem => {
 	return {

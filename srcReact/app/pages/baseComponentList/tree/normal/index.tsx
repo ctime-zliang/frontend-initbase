@@ -9,7 +9,7 @@ const expandAction = (a: any, b: any) => {
 	console.log(a, b)
 }
 
-function TreeNormal(props: any): React.ReactElement {
+export function TreeNormal(props: any): React.ReactElement {
 	return (
 		<section style={{ padding: `5px 5px 15px 5px` }}>
 			<h3>$. 常规模式</h3>
@@ -25,5 +25,3 @@ function TreeNormal(props: any): React.ReactElement {
 		</section>
 	)
 }
-
-export default TreeNormal

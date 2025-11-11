@@ -71,4 +71,4 @@ function ContextmenuNoraml(props: any): React.ReactElement {
 	)
 }
 
-export default React.memo(ContextmenuNoraml)
+export const ContextmenuNoramlMemo = React.memo(ContextmenuNoraml)

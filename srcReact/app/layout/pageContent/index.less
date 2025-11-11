@@ -7,7 +7,7 @@
 	width: 100%;
 	height: 100vh;
 	padding: @pageHeaderHeight 0 @pageFooterHeight 0;
-	.ant-layout-content {
+	& > .ant-layout-content {
 		width: 100%;
 		height: 100%;
 		overflow: auto;
@@ -19,5 +19,9 @@
 		align-content: center;
 		flex-wrap: nowrap;
 		background-color: #ffffff;
+		& > * {
+			width: 100%;
+			height: fit-content;
+		}
 	}
 }

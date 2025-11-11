@@ -1,9 +1,9 @@
 import React from 'react'
 import { Helmet } from 'react-helmet-async'
-import TreeNormal from './normal'
-import TreeAyncSetData from './asyncSetData'
-import TreeAutoExpandAllLevel from './autoExpandAllLevel'
-import LongData from './longData'
+import { TreeNormal } from './normal/Index'
+import { TreeAyncSetData } from './asyncSetData/Index'
+import { TreeAutoExpandAllLevel } from './autoExpandAllLevel/Index'
+import { TreeLongData } from './longData/Index'
 import { useContentBgColor } from '../../../utils/hooks/useContentBgColor'
 
 function TreeRoot(props: any): React.ReactElement {
@@ -17,7 +17,7 @@ function TreeRoot(props: any): React.ReactElement {
 			<TreeNormal />
 			<TreeAyncSetData />
 			<TreeAutoExpandAllLevel />
-			<LongData />
+			<TreeLongData />
 		</>
 	)
 }
