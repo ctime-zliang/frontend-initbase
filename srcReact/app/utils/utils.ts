@@ -267,7 +267,7 @@ export async function selectPlatformFiles(
 		accept?: string
 		multiple?: boolean
 	} = {}
-): Promise<{ code: number; data: { files: Array<File> | ArrayLike<File> } | null; msg: string }> {
+): Promise<{ code: number; data: { files: Array<File>; overs: Array<File> } | null; msg: string }> {
 	return new Promise((resolve): void => {
 		const itemMaxSize: number = options.itemMaxSize || 50 * 1024 * 1024
 		const inputElement = document.createElement('input')
@@ -276,19 +276,17 @@ export async function selectPlatformFiles(
 		inputElement.multiple = options.multiple || false
 		inputElement.addEventListener('change', function (e: Event): void {
 			const files: ArrayLike<File> = (e.target as any).files
+			const iFiles: Array<File> = []
+			const jFiles: Array<File> = []
 			if (files.length > 0) {
-				let isOverItemMaxSize: boolean = false
 				for (let i: number = 0; i < files.length; i++) {
 					if (files[i].size > itemMaxSize) {
-						isOverItemMaxSize = true
+						jFiles.push(files[i])
 						break
 					}
+					iFiles.push(files[i])
 				}
-				if (isOverItemMaxSize) {
-					resolve({ code: -2, data: null, msg: 'File exceeds size limit' })
-					return
-				}
-				resolve({ code: 0, data: { files }, msg: '' })
+				resolve({ code: 0, data: { files: iFiles, overs: jFiles }, msg: '' })
 			} else {
 				resolve({ code: -1, data: null, msg: 'no file selected.' })
 			}
