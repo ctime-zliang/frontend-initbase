@@ -59,7 +59,7 @@ export function deepClone2(data: any): any {
 /**
  * JSON 深拷贝
  */
-export function deepCloneByMessageChannel(json: any): any {
+export function deepCloneByMessageChannel(json: any): Promise<any> {
 	return new Promise((resolve): any => {
 		try {
 			const { port1, port2 } = new MessageChannel()
@@ -68,7 +68,7 @@ export function deepCloneByMessageChannel(json: any): any {
 			}
 			port1.postMessage(json)
 		} catch (e) {
-			resolve(null)
+			resolve(null!)
 		}
 	})
 }
