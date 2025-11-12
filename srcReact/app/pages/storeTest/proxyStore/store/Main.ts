@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 import { AttrStore } from './Attr'
 import { InfoStore } from './Info'
-import { ProxyStore } from '../../../../../store/proxyStore'
+import { ProxyStore } from '../../../../store/proxyStore'
 
 export async function createStoreInstance(): Promise<MainStore> {
 	const storeInstance: MainStore = new MainStore()

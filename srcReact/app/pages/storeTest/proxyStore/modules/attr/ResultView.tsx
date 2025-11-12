@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { MainStoreContext, MainStore } from '../../store/Main'
-import { useSnapshot } from '../../../../../../store/proxyStore'
+import { useSnapshot } from '../../../../../store/proxyStore'
 
 export function ResultView(): React.ReactElement {
 	console.log(`Component: ResultView`)

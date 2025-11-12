@@ -1,40 +1,45 @@
 import { homeRoute } from '../pages/home/route'
-import { error404Route } from '../pages/errorPage/route'
+import { error404Route } from '../pages/route'
 import { linkListRoute } from '../pages/linkList/route'
-import { articleListRoute } from '../pages/article/list/route'
-import { articleDetailRoute } from '../pages/article/detail/route'
-import { articleErrorRoute } from '../pages/article/error/route'
-import { componentPaginationRoute } from '../pages/baseComponentList/pagination/route'
-import { componentTreeRoute } from '../pages/baseComponentList/tree/route'
-import { componentVirtualScrollingRoute } from '../pages/baseComponentList/virtualScrolling/route'
-import { componentContextmenuRoute } from '../pages/baseComponentList/contextmenu/route'
-import { testpageCommonRoute, testpageErrorRoute } from '../pages/testpage/route'
-import { storeTestErrorRoute } from '../pages/storeTest/error/route'
-import { storeTestEdaAbstractStoreCommonRoute } from '../pages/storeTest/edaStore/route'
-import { storeTestProxyStoreCommonRoute } from '../pages/storeTest/proxyStore/commonCase/route'
-import { TRouteItem } from '../pages/Router'
+import { articleErrorRoute, articleListRoute, articleDetailRoute } from '../pages/article/route'
+import {
+	baseComponentListErrorRoute,
+	componentPaginationRoute,
+	componentTreeRoute,
+	componentVirtualScrollingRoute,
+	componentContextmenuRoute,
+} from '../pages/baseComponentList/route'
+import { testpageCommonRoute, testPageErrorRoute } from '../pages/testpage/route'
+import { storeTestErrorRoute, storeTestEdaAbstractStoreCommonRoute, storeTestProxyStoreCommonRoute } from '../pages/storeTest/route'
+import { TRouteItem } from '../layout/Router'
 
 export const createRoutes = (): Array<TRouteItem> => {
 	return [
+		error404Route(),
 		homeRoute(),
 		linkListRoute(),
 		{
 			path: '/article/*',
-			routes: [articleListRoute(), articleDetailRoute(), articleErrorRoute()],
+			routes: [articleErrorRoute(), articleListRoute(), articleDetailRoute()],
 		},
 		{
 			path: '/storetest/*',
-			routes: [storeTestEdaAbstractStoreCommonRoute(), storeTestProxyStoreCommonRoute(), storeTestErrorRoute()],
+			routes: [storeTestErrorRoute(), storeTestEdaAbstractStoreCommonRoute(), storeTestProxyStoreCommonRoute()],
 		},
 		{
 			path: '/testpage/*',
-			routes: [testpageCommonRoute(), testpageErrorRoute()],
+			routes: [testPageErrorRoute(), testpageCommonRoute()],
 		},
 		{
-			path: '/componentLib/*',
-			routes: [componentPaginationRoute(), componentTreeRoute(), componentVirtualScrollingRoute(), componentContextmenuRoute()],
+			path: '/baseComponentLib/*',
+			routes: [
+				baseComponentListErrorRoute(),
+				componentPaginationRoute(),
+				componentTreeRoute(),
+				componentVirtualScrollingRoute(),
+				componentContextmenuRoute(),
+			],
 		},
-		error404Route(),
 	]
 }
 

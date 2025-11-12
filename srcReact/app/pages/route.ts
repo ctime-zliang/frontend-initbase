@@ -1,4 +1,4 @@
-import { TRouteItem } from '../Router'
+import { TRouteItem } from '../layout/Router'
 import Error404 from './404'
 
 export const error404Route = (): TRouteItem => {

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { subscribe, useSnapshot } from '../../../../../../store/proxyStore'
+import { subscribe, useSnapshot } from '../../../../../store/proxyStore'
 import { MainStoreContext, MainStore } from '../../store/Main'
 
 export function DisplayView(): React.ReactElement {

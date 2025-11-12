@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { MainStoreContext, MainStore } from '../../store/Main'
-import { subscribe, useSnapshot } from '../../../../../../store/proxyStore'
+import { subscribe, useSnapshot } from '../../../../../store/proxyStore'
 
 export function AgeView(): React.ReactElement {
 	console.log(`Component: AgeView`)

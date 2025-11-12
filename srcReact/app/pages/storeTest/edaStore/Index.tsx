@@ -19,7 +19,7 @@ function EdaStoreRoot(props: any): React.ReactElement {
 		return <section>store initialing...</section>
 	}
 	return (
-		<section>
+		<section style={{ padding: `10px 10px` }}>
 			<MainStoreContext.Provider value={store}>
 				<Main />
 			</MainStoreContext.Provider>
