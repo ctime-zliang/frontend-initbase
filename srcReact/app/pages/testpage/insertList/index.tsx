@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react'
-import { chunkSplitor2, createListData, taskSplitChunk } from '../../../utils/timeSplitTask'
+import { chunkSplitorRIC, taskSplitChunk } from '../../../utils/timeSplitTask'
+import { createListData } from './utils'
 
 function InsertList(): React.ReactElement {
 	const containerRef: { current: HTMLDivElement } = React.useRef<HTMLDivElement>(null!)
@@ -13,7 +14,7 @@ function InsertList(): React.ReactElement {
 					containerRef.current.appendChild(itemDiv)
 				}
 			},
-			chunkSplitor2
+			chunkSplitorRIC
 		)
 	}
 	useEffect((): void => {

@@ -2,7 +2,7 @@
  * JSON 深拷贝
  */
 export function deepClone(data: any): any {
-	const wMap = new WeakMap()
+	const wMap: WeakMap<Object, any> = new WeakMap()
 	const traverse = (data: any): any => {
 		const result: { [key: string]: any } = {}
 		let keys: Array<string> = []
@@ -67,7 +67,7 @@ export function deepCloneByMessageChannel(json: any): Promise<any> {
 				resolve(e.data)
 			}
 			port1.postMessage(json)
-		} catch (e) {
+		} catch (e: any) {
 			resolve(null!)
 		}
 	})
