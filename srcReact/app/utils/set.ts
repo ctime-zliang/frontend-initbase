@@ -8,7 +8,7 @@ function getUnionOfSets(setA: Set<any>, setB: Set<any>): Set<any> {
 /**
  * 获取两个集合的交集
  */
-function ven$getIntersectOfSets(setA: Set<any>, setB: Set<any>): Set<any> {
+function getIntersectOfSets(setA: Set<any>, setB: Set<any>): Set<any> {
 	return new Set(
 		[...setA].filter(item => {
 			return setB.has(item)
@@ -19,7 +19,7 @@ function ven$getIntersectOfSets(setA: Set<any>, setB: Set<any>): Set<any> {
 /**
  * 获取两个集合的差集
  */
-function ven$getDifferenceOfSets(setA: Set<any>, setB: Set<any>): Set<any> {
+function getDifferenceOfSets(setA: Set<any>, setB: Set<any>): Set<any> {
 	return new Set(
 		[...setA].filter(item => {
 			return !setB.has(item)
