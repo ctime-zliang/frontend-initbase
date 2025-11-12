@@ -20,4 +20,4 @@ function Error404PageRoot(): React.ReactElement {
 	)
 }
 
-export default React.memo(Error404PageRoot)
+export const Error404PageRootMemo = React.memo(Error404PageRoot)

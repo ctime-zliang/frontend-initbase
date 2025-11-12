@@ -12,7 +12,7 @@ function ArticleListRoot(props: any): React.ReactElement {
 		const articleList: Array<any> = []
 		for (let i: number = 0; i < testListSize; i++) {
 			const n: number = getRandomInArea(100, 100000)
-			articleList.push({ title: `Article ${i}-${n}`, path: `detail/a-${i}-${n}` })
+			articleList.push({ title: `Article ${i}-${n}`, path: `detail/a-${i}-${n}`, id: `${i}-${n}` })
 		}
 		return articleList
 	}, [])
@@ -37,7 +37,11 @@ function ArticleListRoot(props: any): React.ReactElement {
 								return (
 									<List.Item className={styles['list-item']}>
 										<span style={{ paddingRight: '6px' }}>{number}.</span>
-										<Link className={styles['link-item']} to={{ pathname: `${item.path}` }} state={{ showBackIcon: true }}>
+										<Link
+											className={styles['link-item']}
+											to={{ pathname: `${item.path}` }}
+											state={{ showBackIcon: true, id: item.id }}
+										>
 											{item.title}
 										</Link>
 									</List.Item>

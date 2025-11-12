@@ -13,6 +13,7 @@ function ArticleDetailRoot(props: any): React.ReactElement {
 			</Helmet>
 			<section>Article Detail</section>
 			<section>{window.location.href}</section>
+			<section>{JSON.stringify(location)}</section>
 		</>
 	)
 }

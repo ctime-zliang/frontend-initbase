@@ -16,7 +16,7 @@ function EdaStoreRoot(props: any): React.ReactElement {
 		}
 	}, [])
 	if (!store) {
-		return <section>store initialing...</section>
+		return <section style={{ padding: `10px 10px` }}>store initialing...</section>
 	}
 	return (
 		<section style={{ padding: `10px 10px` }}>

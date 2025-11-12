@@ -1,6 +1,6 @@
 import { homeRoute } from '../pages/home/route'
 import { error404Route } from '../pages/route'
-import { linkListRoute } from '../pages/linkList/route'
+import { linkListErrorRoute, linkListRoute } from '../pages/linkList/route'
 import { articleErrorRoute, articleListRoute, articleDetailRoute } from '../pages/article/route'
 import {
 	baseComponentListErrorRoute,
@@ -14,10 +14,14 @@ import { storeTestErrorRoute, storeTestEdaAbstractStoreCommonRoute, storeTestPro
 import { TRouteItem } from '../layout/Router'
 
 export const createRoutes = (): Array<TRouteItem> => {
-	return [
+	const routes: Array<TRouteItem> = [
 		error404Route(),
 		homeRoute(),
 		linkListRoute(),
+		{
+			path: '/link/*',
+			routes: [linkListErrorRoute()],
+		},
 		{
 			path: '/article/*',
 			routes: [articleErrorRoute(), articleListRoute(), articleDetailRoute()],
@@ -41,20 +45,17 @@ export const createRoutes = (): Array<TRouteItem> => {
 			],
 		},
 	]
+	return recursion(routes, ``), routes
 }
 
-export const filterRoutes = (routes: Array<TRouteItem> = []): Array<TRouteItem> => {
-	return exec(routes, ``), routes
-
-	function exec(routes: Array<TRouteItem> = [], prefixPath: string = ''): void {
-		let path: string = ``
-		for (let i: number = 0; i < routes.length; i++) {
-			const routeItem: TRouteItem = routes[i]
-			if (routeItem.routes && routeItem.routes.length) {
-				exec(routeItem.routes)
-			}
-			path = prefixPath + routeItem.path
-			routeItem.path = path
+function recursion(routes: Array<TRouteItem> = [], prefixPath: string = ''): void {
+	let path: string = ``
+	for (let i: number = 0; i < routes.length; i++) {
+		const routeItem: TRouteItem = routes[i]
+		if (routeItem.routes && routeItem.routes.length) {
+			recursion(routeItem.routes)
 		}
+		path = prefixPath + routeItem.path
+		routeItem.path = path
 	}
 }

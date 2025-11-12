@@ -6,21 +6,25 @@ import { LayoutMemo } from './Layout'
 export type TRouteItem = {
 	path: string
 	element?: React.ReactElement | React.FC | any
-	render?: (...r: any[]) => {}
+	render?: (...r: Array<any>) => { [key: string]: any }
 	requiresAuth?: boolean
-	routes?: TRouteItem[]
+	routes?: Array<TRouteItem>
 	exact?: boolean
 	noMatch?: boolean
 	strict?: boolean
 	sensitive?: boolean
-	meta?: any
-	getInitialProps?: (...r: any[]) => {}
-	asyncStoreKeys?: string[]
+	meta?: { [key: string]: any }
+	getInitialProps?: (...r: any[]) => { [key: string]: any }
+	asyncStoreKeys?: Array<string>
 	[key: string]: any
 }
 
-const createRouteComponentList = (routes: Array<TRouteItem>, profile: { [key: string]: any }, props: TCommonComponentBaseProps) => {
-	return routes.map((item: TRouteItem, index: number) => {
+const createRouteComponentList = (
+	routes: Array<TRouteItem>,
+	profile: { [key: string]: any },
+	props: TCommonComponentBaseProps
+): Array<React.ReactElement> => {
+	return routes.map((item: TRouteItem, index: number): React.ReactElement => {
 		if (item && item.routes) {
 			return (
 				<Route
