@@ -7,13 +7,13 @@ export type TRPCResult = {
 }
 
 class EventBus {
-	private handlers: { [key: string]: any } = {}
+	private handlers: PlainObject = {}
 	constructor() {
 		this.handlers = {}
 	}
 
 	public on(eventName: string, callback: Function, spaceName: string = DEFAULT_NS): void {
-		const handlers: { [key: string]: any } = this.handlers
+		const handlers: PlainObject = this.handlers
 		const sn: string = spaceName || DEFAULT_NS
 		if (!eventName || typeof eventName !== 'string' || typeof callback !== 'function') {
 			return
@@ -28,7 +28,7 @@ class EventBus {
 	}
 
 	public async emit(eventName: string, params: any = null, spaceName: string = DEFAULT_NS): Promise<void> {
-		const handlers: { [key: string]: any } = this.handlers
+		const handlers: PlainObject = this.handlers
 		const sn: string = spaceName || DEFAULT_NS
 		if (!eventName || typeof eventName !== 'string' || !handlers[sn]) {
 			return
@@ -40,7 +40,7 @@ class EventBus {
 	}
 
 	public subscribe(eventName: string, callback: Function, spaceName: string = DEFAULT_NS): void {
-		const handlers: { [key: string]: any } = this.handlers
+		const handlers: PlainObject = this.handlers
 		const sn: string = spaceName || DEFAULT_NS
 		if (!eventName || typeof eventName !== 'string' || typeof callback !== 'function') {
 			return
@@ -52,7 +52,7 @@ class EventBus {
 	}
 
 	public async exec(eventName: string, params: any, spaceName: string = DEFAULT_NS): Promise<TRPCResult> {
-		const handlers: { [key: string]: any } = this.handlers
+		const handlers: PlainObject = this.handlers
 		const sn: string = spaceName || DEFAULT_NS
 		return new Promise(async _ => {
 			try {
@@ -80,7 +80,7 @@ class EventBus {
 	}
 
 	public clearEvent(eventName: string, spaceName: string = DEFAULT_NS): void {
-		const handlers: { [key: string]: any } = this.handlers
+		const handlers: PlainObject = this.handlers
 		const sn: string = spaceName || DEFAULT_NS
 		if (!eventName || typeof eventName !== 'string' || !handlers[sn]) {
 			return
@@ -89,7 +89,7 @@ class EventBus {
 	}
 
 	public clearNameSpace(spaceName: string = DEFAULT_NS): void {
-		const handlers: { [key: string]: any } = this.handlers
+		const handlers: PlainObject = this.handlers
 		const sn: string = spaceName || DEFAULT_NS
 		if (!handlers[sn]) {
 			return

@@ -15,7 +15,7 @@ export type TUseStoreResult<S, A> = (() => [S, A]) &
 
 export type TUseStore = {
 	state: any
-	actions: { [key: string]: any }
+	actions: PlainObject
 	setState?: (state: any, updatedCallback?: (a: TUseStore) => void) => void
 	listeners?: Array<TListenerEffectItem>
 	flushListeners?: (store: TUseStore) => void

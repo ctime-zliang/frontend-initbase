@@ -21,28 +21,42 @@ export const createInitialState = (): TStore => {
 		g_languageSetting: globalConfig.lang,
 		linkData: [
 			{
-				subject: 'Modules List',
-				list: [{ id: uuidv4(), title: 'Article', desc: 'Article Module Case', path: '/article' }],
+				subject: 'Page Module List',
+				list: [{ id: uuidv4(), title: 'Article', desc: 'Article page case test', path: '/article' }],
 			},
 			{
-				subject: 'Store Manager',
+				subject: 'Store Tool',
 				list: [
-					{ id: uuidv4(), title: 'EdaAbstractStore State Manager', desc: 'EdaAbstract Store Manager Case', path: '/storetest/edaStore' },
-					{ id: uuidv4(), title: 'ProxyStore State Manager', desc: 'Proxy Store Manager Case', path: '/storetest/proxyStore' },
+					{
+						id: uuidv4(),
+						title: 'EdaAbstractStore State Manager',
+						desc: 'EdaAbstractStore manager case test',
+						path: '/storetest/edaStore',
+					},
+					{ id: uuidv4(), title: 'ProxyStore State Manager', desc: 'Proxy-Store manager case test', path: '/storetest/proxyStore' },
 				],
 			},
 			{
 				subject: 'Base Component Lib',
 				list: [
-					{ id: uuidv4(), title: 'Paginataion', desc: 'Pagination Base Component', path: '/baseComponentLib/pagination' },
-					{ id: uuidv4(), title: 'Tree', desc: 'Tree Base Component', path: '/baseComponentLib/tree' },
-					{ id: uuidv4(), title: 'Virtual Scrolling', desc: 'VirtualScrolling Base Component', path: '/baseComponentLib/virtualscrolling' },
-					{ id: uuidv4(), title: 'Contextmenu', desc: 'Contextmenu Base Component', path: '/baseComponentLib/contextmenu' },
+					{ id: uuidv4(), title: 'Paginataion', desc: 'Pagination component case test', path: '/baseComponentLib/pagination' },
+					{ id: uuidv4(), title: 'Tree', desc: 'Tree component case test', path: '/baseComponentLib/tree' },
+					{
+						id: uuidv4(),
+						title: 'VirtualScrolling',
+						desc: 'VirtualScrolling component case test',
+						path: '/baseComponentLib/virtualscrolling',
+					},
+					{ id: uuidv4(), title: 'Contextmenu', desc: 'Contextmenu component case test', path: '/baseComponentLib/contextmenu' },
 				],
 			},
 			{
+				subject: 'Utils',
+				list: [{ id: uuidv4(), title: 'ProxyState', desc: 'ProxyState util case test', path: '/utils/proxyState' }],
+			},
+			{
 				subject: 'Test Page',
-				list: [{ id: uuidv4(), title: 'Common', desc: 'Test Common Case Page', path: '/testpage/common' }],
+				list: [{ id: uuidv4(), title: 'Common', desc: 'Common page', path: '/testpage/common' }],
 			},
 		],
 	}

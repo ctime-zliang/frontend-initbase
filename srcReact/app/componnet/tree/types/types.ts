@@ -16,7 +16,7 @@ export type TTreeRootPorps = {
 	/**
 	 * 容器 style 样式描述对象
 	 */
-	containerStyleObject?: { [key: string]: any }
+	containerStyleObject?: React.CSSProperties
 	/**
 	 * 容器尺寸描述
 	 */
@@ -35,7 +35,7 @@ export type TTreeRootPorps = {
 	/**
 	 * 显示 ${data[index].title} 的元素的样式描述对象
 	 */
-	itemStyleObject?: { [key: string]: any }
+	itemStyleObject?: React.CSSProperties
 	/**
 	 * 是否显示连接线
 	 */

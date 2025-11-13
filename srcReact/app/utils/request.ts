@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
 
-const RequestConfig: { [key: string]: any } = {
+const RequestConfig: PlainObject = {
 	defaultErrMsg: `System Error`,
 }
 export type TRequestResponse = {
@@ -9,7 +9,7 @@ export type TRequestResponse = {
 	data: any
 	remote?: any
 }
-export async function requestByGet(url: string, data: any = null, options: { [key: string]: any } = {}): Promise<TRequestResponse> {
+export async function requestByGet(url: string, data: any = null, options: PlainObject = {}): Promise<TRequestResponse> {
 	return new Promise(async (_): Promise<void> => {
 		try {
 			axios.defaults.withCredentials = true

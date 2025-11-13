@@ -34,7 +34,7 @@ function TreeRoot(props: TTreeRootPorps, ref: any): React.ReactElement {
 
 	const treeContainerClassString: string = `tree-container`
 	const treeRowlineClassString: string = 'tree-rowline'
-	const treeRowlineStyleObject: { [key: string]: any } = {}
+	const treeRowlineStyleObject: PlainObject = {}
 
 	useImperativeHandle(ref, () => {
 		return {

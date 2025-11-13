@@ -4,7 +4,7 @@
 export function deepClone(data: any): any {
 	const wMap: WeakMap<Object, any> = new WeakMap()
 	const traverse = (data: any): any => {
-		const result: { [key: string]: any } = {}
+		const result: PlainObject = {}
 		let keys: Array<string> = []
 		let item: any = null
 		if (wMap.get(data)) {
@@ -29,7 +29,7 @@ export function deepClone(data: any): any {
  * JSON 深拷贝
  */
 export function deepClone2(data: any): any {
-	const traverse = (data: { [key: string]: any } | Array<any>): { [key: string]: any } | Array<any> => {
+	const traverse = (data: PlainObject | Array<any>): PlainObject | Array<any> => {
 		if (
 			typeof data !== 'object' ||
 			data === null ||
@@ -45,7 +45,7 @@ export function deepClone2(data: any): any {
 		if (Array.isArray(data)) {
 			return data.map(traverse)
 		}
-		const obj: { [key: string]: any } = {}
+		const obj: PlainObject = {}
 		for (let key in data) {
 			if (data.hasOwnProperty(key)) {
 				obj[key] = traverse(data[key])

@@ -1,7 +1,7 @@
 import { TUseStore } from './types'
 
-export function associateActions(store: TUseStore, actions: { [key: string]: any } = {}): { [key: string]: any } {
-	const assActions: { [key: string]: any } = {}
+export function associateActions(store: TUseStore, actions: PlainObject = {}): PlainObject {
+	const assActions: PlainObject = {}
 	const actionsKeys: Array<string> = Object.keys(actions)
 	for (let i: number = 0; i < actionsKeys.length; i++) {
 		const item: any = actions[actionsKeys[i]]

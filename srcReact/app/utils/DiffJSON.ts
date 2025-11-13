@@ -130,7 +130,7 @@ export class DiffJSON {
 	 * diff 主函数
 	 * 		返回层次化 key-path 返回格式
 	 */
-	static implementByNested(obj1: any, obj2: any): { [key: string]: any } {
+	static implementByNested(obj1: any, obj2: any): PlainObject {
 		return implementByNested(obj1, obj2)
 	}
 
@@ -142,16 +142,16 @@ export class DiffJSON {
 	 * @param {object|array} obj2 对象 2(被检查对象)
 	 * @return {object}
 	 */
-	static __flatOutput: { [key: string]: any } = {}
-	static implementByFlat(obj1: any, obj2: any): { [key: string]: any } {
+	static __flatOutput: PlainObject = {}
+	static implementByFlat(obj1: any, obj2: any): PlainObject {
 		this.__flatOutput = {}
 		implementByFlat(obj1, obj2, '')
 		return this.__flatOutput
 	}
 }
 
-function implementByNested(obj1: any, obj2: any): { [key: string]: any } {
-	const result: { [key: string]: any } = {}
+function implementByNested(obj1: any, obj2: any): PlainObject {
+	const result: PlainObject = {}
 	let valueOfObj2: any = undefined!
 	if (DiffJSON.isFunction(obj1) || DiffJSON.isFunction(obj2)) {
 		throw new Error('invalid argument. function given, object expected.')
@@ -199,8 +199,8 @@ function implementByNested(obj1: any, obj2: any): { [key: string]: any } {
 	return result
 }
 
-function implementByFlat(obj1: any, obj2: any, path: string = ''): { [key: string]: any } {
-	const result: { [key: string]: any } = {}
+function implementByFlat(obj1: any, obj2: any, path: string = ''): PlainObject {
+	const result: PlainObject = {}
 	let valueOfObj2: any = undefined!
 	if (DiffJSON.isFunction(obj1) || DiffJSON.isFunction(obj2)) {
 		throw new Error('invalid argument. function given, object expected.')

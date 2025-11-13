@@ -51,7 +51,7 @@ export function classOf(target: any): string {
 /**
  * 判断对象是否为空
  */
-export function isEmptyObject(obj: { [key: string]: any }): boolean {
+export function isEmptyObject(obj: PlainObject): boolean {
 	for (let attr in obj) {
 		return false
 	}
