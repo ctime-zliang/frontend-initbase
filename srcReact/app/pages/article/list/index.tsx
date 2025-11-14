@@ -6,7 +6,6 @@ import styles from './index.module.less'
 import { getRandomInArea } from '../../../utils/utils'
 
 function ArticleListRoot(props: any): React.ReactElement {
-	console.log(`ArticleListRoot ☆☆☆`, props)
 	const testListSize: number = 100
 	const articleList: Array<any> = useMemo(() => {
 		const articleList: Array<any> = []

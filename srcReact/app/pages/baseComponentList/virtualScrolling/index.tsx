@@ -6,7 +6,6 @@ import { useContentBgColor } from '../../../utils/hooks/useContentBgColor'
 import { SimpleDividingLine } from '../../../componnet/simpleDividingLine'
 
 function VirtualScrollingRoot(props: any): React.ReactElement {
-	console.log(`VirtualScrolling ☆☆☆`, props)
 	useContentBgColor('rgba(255, 255, 255, 1)')
 	return (
 		<>

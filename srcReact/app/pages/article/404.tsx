@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 
 function Error404Root(props: any): React.ReactElement {
-	console.log(`Error404Root ☆☆☆`, props)
 	return (
 		<section style={{ padding: `10px 10px` }}>
 			<Helmet>

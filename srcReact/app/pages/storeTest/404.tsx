@@ -3,11 +3,10 @@ import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 
 function Error404Root(props: any): React.ReactElement {
-	console.log(`Error404Root ☆☆☆`, props)
 	return (
 		<section style={{ padding: `10px 10px` }}>
 			<Helmet>
-				<title>StoreTest Error 404</title>
+				<title>Store Test Error 404</title>
 			</Helmet>
 			<section
 				style={{
@@ -16,7 +15,7 @@ function Error404Root(props: any): React.ReactElement {
 					padding: '100px 0',
 				}}
 			>
-				<h2>StoreTest Error 404</h2>
+				<h2>Store Test Error 404</h2>
 				<div style={{ textAlign: 'center' }}>
 					<Link to={`/`}>Link to Home Page</Link>
 				</div>

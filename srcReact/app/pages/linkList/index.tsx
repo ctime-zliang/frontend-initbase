@@ -10,7 +10,6 @@ import { TCombineStore } from '../../store/public/types'
 import { EStoreModuleKey } from '../../store/public/config'
 
 export function LinkListRoot(props: TCommonComponentBaseProps): React.ReactElement {
-	console.log(`LinkListRoot ☆☆☆`, props)
 	const { linkData } = useSelector((store: TCombineStore): TGlobalStore => {
 		return store[EStoreModuleKey.global]
 	})

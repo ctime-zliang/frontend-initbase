@@ -15,7 +15,7 @@ export class ProxyState {
 	private _nowVersion: number
 	private _checkVersion: number
 	private _listeners: Set<(...args: Array<any>) => void>
-	private _proxyObject: Object
+	private _proxyInstance: Object
 	private _childMap: Map<string, ProxyState>
 	private _proxyObjectHandlerItem: TProxyObjectHandlerItemObject
 	constructor(initialObject: TLocalObject, parent: Object = null!) {
@@ -30,7 +30,7 @@ export class ProxyState {
 		this._nowVersion = markVersionHolder[0]
 		this._checkVersion = markVersionHolder[1]
 		this._listeners = new Set()
-		this._proxyObject = null!
+		this._proxyInstance = null!
 		this._childMap = new Map()
 		this._proxyObjectHandlerItem = null!
 		this.initial(initialObject)
@@ -38,7 +38,7 @@ export class ProxyState {
 
 	private initial(initialObject: PlainObject): void {
 		const localObject: TLocalObject = Array.isArray(initialObject) ? [] : Object.create(Object.getPrototypeOf(initialObject))
-		this._proxyObject = new Proxy(localObject, this.createProxyHandler())
+		this._proxyInstance = new Proxy(localObject, this.createProxyHandler())
 		this._proxyObjectHandlerItem = {
 			data: localObject,
 			createSnapshot,
@@ -47,7 +47,7 @@ export class ProxyState {
 			listenerRemove: null,
 		}
 		globalProxyStoreCache.set(initialObject, this)
-		globalProxyObjectHandlerMap.set(this._proxyObject, this._proxyObjectHandlerItem)
+		globalProxyObjectHandlerMap.set(this._proxyInstance, this._proxyObjectHandlerItem)
 		const ownKeys: Array<string | symbol> = Reflect.ownKeys(initialObject)
 		for (let i: number = 0; i < ownKeys.length; i++) {
 			const propKey: string | symbol = ownKeys[i]
@@ -56,12 +56,12 @@ export class ProxyState {
 				Object.defineProperty(localObject, propKey, descriptor)
 				continue
 			}
-			;(this.proxyObject as any)[propKey as string] = initialObject[propKey as string]
+			;(this._proxyInstance as any)[propKey as string] = initialObject[propKey as string]
 		}
 	}
 
-	public get proxyObject() {
-		return this._proxyObject
+	public getProxyInstance(): PlainObject {
+		return this._proxyInstance
 	}
 
 	private notifyUpdate(op: Array<any>) {
@@ -177,7 +177,7 @@ export class ProxyState {
 						const hasExist: boolean = globalProxyStoreCache.has(newValue)
 						const childProxyStore: ProxyState = new ProxyState(newValue, self)
 						!hasExist && self._childMap.set(prop, childProxyStore)
-						newValue = childProxyStore.proxyObject
+						newValue = childProxyStore._proxyInstance
 						self.addPropListener(prop, childProxyStore._proxyObjectHandlerItem)
 					}
 				}

@@ -12,6 +12,7 @@ import {
 import { testpageCommonRoute, testPageErrorRoute } from '../pages/testpage/route'
 import { storeTestErrorRoute, storeTestEdaAbstractStoreCommonRoute, storeTestProxyStoreCommonRoute } from '../pages/storeTest/route'
 import { TRouteItem } from '../layout/Router'
+import { proxyStateRoute, utilsErrorRoute } from '../pages/utils/route'
 
 export const createRoutes = (): Array<TRouteItem> => {
 	const routes: Array<TRouteItem> = [
@@ -31,10 +32,6 @@ export const createRoutes = (): Array<TRouteItem> => {
 			routes: [storeTestErrorRoute(), storeTestEdaAbstractStoreCommonRoute(), storeTestProxyStoreCommonRoute()],
 		},
 		{
-			path: '/testpage/*',
-			routes: [testPageErrorRoute(), testpageCommonRoute()],
-		},
-		{
 			path: '/baseComponentLib/*',
 			routes: [
 				baseComponentListErrorRoute(),
@@ -43,6 +40,14 @@ export const createRoutes = (): Array<TRouteItem> => {
 				componentVirtualScrollingRoute(),
 				componentContextmenuRoute(),
 			],
+		},
+		{
+			path: '/utils/*',
+			routes: [utilsErrorRoute(), proxyStateRoute()],
+		},
+		{
+			path: '/testpage/*',
+			routes: [testPageErrorRoute(), testpageCommonRoute()],
 		},
 	]
 	return recursion(routes, ``), routes
