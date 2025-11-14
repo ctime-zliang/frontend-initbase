@@ -33,7 +33,7 @@ export const createInitialState = (): TStore => {
 						desc: 'EdaAbstractStore manager case test',
 						path: '/storetest/edaStore',
 					},
-					{ id: uuidv4(), title: 'ProxyStore State Manager', desc: 'Proxy-Store manager case test', path: '/storetest/proxyStore' },
+					{ id: uuidv4(), title: 'ProxyStore State Manager', desc: 'ProxyStore manager case test', path: '/storetest/proxyStore' },
 				],
 			},
 			{
