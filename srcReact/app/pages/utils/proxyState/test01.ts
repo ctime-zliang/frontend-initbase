@@ -1,7 +1,7 @@
 import { ProxyState } from '../../../utils/proxyState/ProxyState'
 import { xProxy } from '../../../utils/proxyState'
 
-export function test01() {
+export function test01(): void {
 	const data: any = {
 		username: 'zhangsan',
 		level: '1',

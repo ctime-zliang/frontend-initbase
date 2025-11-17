@@ -11,7 +11,7 @@ const Err404Content = styled.div`
 
 function Error404PageRoot(): React.ReactElement {
 	return (
-		<section style={{ padding: `10px 10px` }}>
+		<section style={{ padding: `10px 10px`, position: 'relative' }}>
 			<Err404Content>404 Not Found</Err404Content>
 			<div style={{ textAlign: 'center' }}>
 				<Link to={`/`}>Link to Home Page</Link>

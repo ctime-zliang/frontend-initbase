@@ -12,7 +12,15 @@ import {
 import { testpageCommonRoute, testPageErrorRoute } from '../pages/testpage/route'
 import { storeTestErrorRoute, storeTestEdaAbstractStoreCommonRoute, storeTestProxyStoreCommonRoute } from '../pages/storeTest/route'
 import { TRouteItem } from '../layout/Router'
-import { proxyStateRoute, utilsErrorRoute } from '../pages/utils/route'
+import {
+	asyncAnimatorRoute,
+	asyncTimeoutRoute,
+	concurrencyControlRoute,
+	diffJSONRoute,
+	proxyStateRoute,
+	setMessageTimeoutRoute,
+	utilsErrorRoute,
+} from '../pages/utils/route'
 
 export const createRoutes = (): Array<TRouteItem> => {
 	const routes: Array<TRouteItem> = [
@@ -43,7 +51,15 @@ export const createRoutes = (): Array<TRouteItem> => {
 		},
 		{
 			path: '/utils/*',
-			routes: [utilsErrorRoute(), proxyStateRoute()],
+			routes: [
+				utilsErrorRoute(),
+				proxyStateRoute(),
+				asyncAnimatorRoute(),
+				asyncTimeoutRoute(),
+				concurrencyControlRoute(),
+				diffJSONRoute(),
+				setMessageTimeoutRoute(),
+			],
 		},
 		{
 			path: '/testpage/*',

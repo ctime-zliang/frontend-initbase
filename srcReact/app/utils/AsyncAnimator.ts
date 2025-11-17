@@ -39,7 +39,7 @@ export class AsyncAnimator {
 		})
 	}
 
-	ease(easingHandler: (progress: number) => number): AsyncAnimator {
+	public ease(easingHandler: (progress: number) => number): AsyncAnimator {
 		return new AsyncAnimator(this._duration, this._updateCall, easingHandler)
 	}
 }

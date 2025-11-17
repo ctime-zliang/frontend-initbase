@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 function Error404Root(props: any): React.ReactElement {
 	return (
-		<section style={{ padding: `10px 10px` }}>
+		<section style={{ padding: `10px 10px`, position: 'relative' }}>
 			<Helmet>
 				<title>Store Test Error 404</title>
 			</Helmet>

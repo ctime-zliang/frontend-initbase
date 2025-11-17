@@ -52,7 +52,14 @@ export const createInitialState = (): TStore => {
 			},
 			{
 				subject: 'Utils',
-				list: [{ id: uuidv4(), title: 'ProxyState', desc: 'ProxyState util case test', path: '/utils/proxyState' }],
+				list: [
+					{ id: uuidv4(), title: 'Proxy State', desc: 'Proxy state util case test', path: '/utils/proxyState' },
+					{ id: uuidv4(), title: 'Async Animator', desc: 'Async animator util case test', path: '/utils/asyncAnimator' },
+					{ id: uuidv4(), title: 'Async Timeout', desc: 'Async timeout util case test', path: '/utils/asyncTimeout' },
+					{ id: uuidv4(), title: 'Concurrency Control', desc: 'Concurrency control util case test', path: '/utils/concurrencyControl' },
+					{ id: uuidv4(), title: 'DiffJSON', desc: 'DiffJSON util case test', path: '/utils/diffJSON' },
+					{ id: uuidv4(), title: 'SetMessageTimeout', desc: 'SetMessageTimeout util case test', path: '/utils/setMessageTimeout' },
+				],
 			},
 			{
 				subject: 'Test Page',

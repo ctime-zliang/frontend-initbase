@@ -1,110 +1,115 @@
 type TTaskStartExecListener = (optional: { attempt: number; timeStamp: number; maxRetries: number; timeout: number; intervalDelay: number }) => void
-type TTaskSuccessedListener = (
+type TTaskEndExecListener = (
+	finished: boolean,
 	result: any,
-	optional: { attempt: number; timeStamp: number; maxRetries: number; timeout: number; intervalDelay: number }
+	optional: { attempt: number; timeStamp: number; maxRetries: number; isTimeout: boolean; timeout: number; intervalDelay: number }
 ) => void
-type TTaskFailedListener = (
-	error: any,
-	optional: { attempt: number; timeStamp: number; maxRetries: number; timeout: number; intervalDelay: number }
-) => void
+
+const TIMEOUT_TAG: string = '__ASYNC_TIMEOUT_ERROR__'
 export class AsyncTimeout {
+	private _isRuning: boolean
+	private _isCanceled: boolean
 	private _maxRetries: number
 	private _timeout: number
 	private _intervalDelay: number
 	private _taskStartExecListeners: Array<TTaskStartExecListener>
-	private _taskSuccessedListener: Array<TTaskSuccessedListener>
-	private _taskFailedListener: Array<TTaskFailedListener>
+	private _taskEndExecListeners: Array<TTaskEndExecListener>
 	constructor(maxRetries: number = 1, timeout: number = 5000, intervalDelay: number = 500) {
+		this._isRuning = false
+		this._isCanceled = false
 		this._maxRetries = maxRetries
 		this._timeout = timeout
 		this._intervalDelay = intervalDelay
 		this._taskStartExecListeners = []
-		this._taskSuccessedListener = []
-		this._taskFailedListener = []
+		this._taskEndExecListeners = []
+	}
+
+	public cancel(): void {
+		this._isCanceled = true
 	}
 
 	public addTaskStartExecListener(taskItem: TTaskStartExecListener): void {
 		this._taskStartExecListeners.push(taskItem)
 	}
-	public addTaskSuccessedListener(taskItem: TTaskSuccessedListener): void {
-		this._taskSuccessedListener.push(taskItem)
-	}
-	public addTaskFailedListener(taskItem: TTaskFailedListener): void {
-		this._taskFailedListener.push(taskItem)
+	public addTaskEndListener(taskItem: TTaskEndExecListener): void {
+		this._taskEndExecListeners.push(taskItem)
 	}
 
 	public clearTaskStartExecListeners(): void {
 		this._taskStartExecListeners = []
 	}
-	public clearTaskSuccessedListeners(): void {
-		this._taskSuccessedListener = []
-	}
-	public clearTaskFailedListeners(): void {
-		this._taskFailedListener = []
+	public clearTaskEndListeners(): void {
+		this._taskEndExecListeners = []
 	}
 
 	public async exec(fn: () => Promise<any>): Promise<any> {
-		let attempt: number = 0
-		const nowTimeStamp: number = performance.now()
-		for (let taskItem of this._taskStartExecListeners) {
-			taskItem({
-				attempt,
-				timeStamp: nowTimeStamp,
-				maxRetries: this._maxRetries,
-				timeout: this._timeout,
-				intervalDelay: this._intervalDelay,
-			})
+		if (this._isRuning) {
+			return
 		}
+		this._isCanceled = false
+		this._isRuning = true
+		let attempt: number = 0
+		let isTimeout: boolean = false
+		let successed: boolean = false
+		let result: any = undefined!
 		while (attempt < this._maxRetries) {
+			if (this._isCanceled) {
+				return
+			}
 			try {
-				const result: any = await Promise.race([
+				const timeStamp: number = new Date().getTime()
+				for (let taskItem of this._taskStartExecListeners) {
+					taskItem({
+						attempt,
+						timeStamp,
+						maxRetries: this._maxRetries,
+						timeout: this._timeout,
+						intervalDelay: this._intervalDelay,
+					})
+				}
+				result = await Promise.race([
 					fn(),
-					this.timeoutController().then(() => {
-						throw new Error('[delay controller] async task timeout...')
+					new Promise((resolve, reject): void => {
+						window.setTimeout((): void => {
+							reject({ __$$innner_tag__: TIMEOUT_TAG })
+						}, this._timeout)
 					}),
 				])
-				for (let taskItem of this._taskSuccessedListener) {
-					taskItem(result, {
-						attempt,
-						timeStamp: nowTimeStamp,
-						maxRetries: this._maxRetries,
-						timeout: this._timeout,
-						intervalDelay: this._intervalDelay,
-					})
-				}
-				return result
-			} catch (error) {
-				for (let taskItem of this._taskFailedListener) {
-					taskItem(error, {
-						attempt,
-						timeStamp: nowTimeStamp,
-						maxRetries: this._maxRetries,
-						timeout: this._timeout,
-						intervalDelay: this._intervalDelay,
-					})
-				}
-				attempt++
-				if (attempt === this._maxRetries) {
-					throw error
-				}
-				await this.delayController()
+				successed = true
+				isTimeout = false
+			} catch (error: any) {
+				result = error
+				successed = false
+				isTimeout = error && error.__$$innner_tag__ === TIMEOUT_TAG ? true : false
 			}
+			if (this._isCanceled) {
+				return
+			}
+			const timeStamp: number = new Date().getTime()
+			for (let taskItem of this._taskEndExecListeners) {
+				taskItem(successed, result, {
+					attempt,
+					timeStamp,
+					maxRetries: this._maxRetries,
+					timeout: this._timeout,
+					isTimeout,
+					intervalDelay: this._intervalDelay,
+				})
+			}
+			if (successed) {
+				this._isRuning = false
+				return result
+			}
+			attempt++
+			if (attempt >= this._maxRetries) {
+				this._isRuning = false
+				throw result
+			}
+			await new Promise((resolve): void => {
+				window.setTimeout((): void => {
+					resolve(null)
+				}, this._intervalDelay)
+			})
 		}
-	}
-
-	private delayController(): Promise<null> {
-		return new Promise((resolve): void => {
-			window.setTimeout((): void => {
-				resolve(null)
-			}, this._intervalDelay)
-		})
-	}
-
-	private timeoutController(): Promise<null> {
-		return new Promise((resolve): void => {
-			window.setTimeout((): void => {
-				resolve(null)
-			}, this._timeout)
-		})
 	}
 }

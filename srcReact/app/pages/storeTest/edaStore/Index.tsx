@@ -16,10 +16,10 @@ function EdaStoreRoot(props: any): React.ReactElement {
 		}
 	}, [])
 	if (!store) {
-		return <section style={{ padding: `10px 10px` }}>store initialing...</section>
+		return <section style={{ padding: `10px 10px`, position: 'relative' }}>store initialing...</section>
 	}
 	return (
-		<section style={{ padding: `10px 10px` }}>
+		<section style={{ padding: `10px 10px`, position: 'relative' }}>
 			<MainStoreContext.Provider value={store}>
 				<Main />
 			</MainStoreContext.Provider>
