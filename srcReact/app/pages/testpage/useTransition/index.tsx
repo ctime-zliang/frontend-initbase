@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback, useTransition } from 'react'
-import styles from './index.module.less'
+import './index.less'
 
 const LONG_LIST_COUNT: number = 50000
 
@@ -15,7 +15,7 @@ function ListItem({ name, highlight }: { name: string; highlight: string }): Rea
 	return (
 		<div>
 			{name.slice(0, index)}
-			<span className={styles['highlight']}>{name.slice(index, index + highlight.length)}</span>
+			<span className="highlight">{name.slice(index, index + highlight.length)}</span>
 			{name.slice(index + highlight.length)}
 		</div>
 	)
@@ -39,7 +39,7 @@ export function FilterList(): React.ReactElement {
 	return (
 		<div>
 			<input onChange={changeHandler} value={query} type="text" />
-			{isPending && <span className={styles['pending']}>Loading...</span>}
+			{isPending && <span className="pending">Loading...</span>}
 			{fakeNames.map(
 				(name: string, i: number): React.ReactElement => (
 					<ListItem key={i} name={name} highlight={highlight} />

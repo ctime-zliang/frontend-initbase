@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Layout, List } from 'antd'
 import { Link } from 'react-router-dom'
-import styles from './index.module.less'
+import './index.less'
 import { getRandomInArea } from '../../../utils/utils'
 
 function ArticleListRoot(props: any): React.ReactElement {
@@ -20,27 +20,23 @@ function ArticleListRoot(props: any): React.ReactElement {
 			<Helmet>
 				<title>Article List</title>
 			</Helmet>
-			<div className={styles['list-container']}>
-				<div className={styles['list-wrapper']}>
-					<div className={styles['list-header']}>
+			<div className="list-container">
+				<div className="list-wrapper">
+					<div className="list-header">
 						<span>Article List</span>
 					</div>
 					<Layout.Content>
 						<List
-							className={styles['list-item-wrapper']}
+							className="list-item-wrapper"
 							size="small"
 							bordered
 							dataSource={articleList}
 							renderItem={(item: any, index: number): React.ReactElement => {
 								const number: string = (++index, index) <= 9 ? '0' + index : String(index)
 								return (
-									<List.Item className={styles['list-item']}>
+									<List.Item className="list-item">
 										<span style={{ paddingRight: '6px' }}>{number}.</span>
-										<Link
-											className={styles['link-item']}
-											to={{ pathname: `${item.path}` }}
-											state={{ showBackIcon: true, id: item.id }}
-										>
+										<Link className="link-item" to={{ pathname: `${item.path}` }} state={{ showBackIcon: true, id: item.id }}>
 											{item.title}
 										</Link>
 									</List.Item>

@@ -4,6 +4,7 @@ import { AsyncAnimatorRootMemo } from './asyncAnimator/Index'
 import { AsyncTimeoutRootMemo } from './asyncTimeout/Index'
 import { ConcurrencyControlRootMemo } from './concurrencyControl/Index'
 import { DiffJSONRootMemo } from './diffJSON/Index'
+import { ListDragableRootMemo } from './dragable/Index'
 import { ProxyStateRootMemo } from './proxyState/Index'
 import { SetMessageTimeoutRootMemo } from './setMessageTimeout/Index'
 
@@ -60,5 +61,13 @@ export const setMessageTimeoutRoute = (): TRouteItem => {
 		path: '/setMessageTimeout',
 		exact: true,
 		element: SetMessageTimeoutRootMemo,
+	}
+}
+
+export const listDragableRoute = (): TRouteItem => {
+	return {
+		path: '/listDragable',
+		exact: true,
+		element: ListDragableRootMemo,
 	}
 }

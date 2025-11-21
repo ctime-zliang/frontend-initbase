@@ -17,6 +17,7 @@ import {
 	asyncTimeoutRoute,
 	concurrencyControlRoute,
 	diffJSONRoute,
+	listDragableRoute,
 	proxyStateRoute,
 	setMessageTimeoutRoute,
 	utilsErrorRoute,
@@ -59,6 +60,7 @@ export const createRoutes = (): Array<TRouteItem> => {
 				concurrencyControlRoute(),
 				diffJSONRoute(),
 				setMessageTimeoutRoute(),
+				listDragableRoute(),
 			],
 		},
 		{

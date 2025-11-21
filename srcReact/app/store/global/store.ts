@@ -59,6 +59,7 @@ export const createInitialState = (): TStore => {
 					{ id: uuidv4(), title: 'Concurrency Control', desc: 'Concurrency control util case test', path: '/utils/concurrencyControl' },
 					{ id: uuidv4(), title: 'DiffJSON', desc: 'DiffJSON util case test', path: '/utils/diffJSON' },
 					{ id: uuidv4(), title: 'SetMessageTimeout', desc: 'SetMessageTimeout util case test', path: '/utils/setMessageTimeout' },
+					{ id: uuidv4(), title: 'List Dragable', desc: 'List dragable component case test', path: '/utils/listDragable' },
 				],
 			},
 			{

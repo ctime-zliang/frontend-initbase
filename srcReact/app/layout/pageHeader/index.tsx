@@ -48,7 +48,7 @@ export function PageHeaderRoot(props: TCommonComponentBaseProps): React.ReactEle
 						</div>
 					</a>
 				</div>
-				<div>
+				<div className="userinfo-wrapper">
 					Language:{' '}
 					<Button size="small" style={{ marginLeft: '8px' }} onClick={onLanguageSettingClickAction}>
 						{g_languageSetting || '-'}

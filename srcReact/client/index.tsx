@@ -6,8 +6,10 @@ import { HelmetProvider } from 'react-helmet-async'
 import I18nProvider from 'srcReact/app/i18n/I18nProvider'
 import App from '../app/App'
 import { reduxStore } from '../app/store/reduxToolkit'
+import { resetFontsize } from '../app/utils/resetFontsize'
 
 export function renderReactApp(): void {
+	resetFontsize()
 	console.log(`RenderReactApp ☆☆☆`)
 	const __render_id__: number = Math.random()
 	ReactDOMClient.createRoot(document.getElementById('reactApp') as HTMLElement).render(
