@@ -1,7 +1,9 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import './link.less'
+import styles from './link.module.less'
+
+console.log(styles)
 
 function LinkRoot(props: any): React.ReactElement {
 	const { t } = useTranslation()
@@ -10,8 +12,8 @@ function LinkRoot(props: any): React.ReactElement {
 		navigate('/link', { state: { showBackIcon: true } })
 	}
 	return (
-		<div className="link-container" data-tag="Link">
-			<span className="link-text" onClick={onSpanClickAction}>
+		<div className={styles['link-container']} data-tag="Link">
+			<span className={styles['link-text']} onClick={onSpanClickAction}>
 				[{t('Click here to enter the Link List page')}]
 			</span>
 		</div>

@@ -1,0 +1,21 @@
+@keyframes GestureTapRippleAnimation {
+	100% {
+		-webkit-transform: scale(2);
+		transform: scale(2);
+		opacity: 0;
+	}
+}
+.gesture-tap-ripple {
+	border-radius: 50%;
+	background-color: #dcdcdc;
+	-webkit-transform: scale(0);
+	transform: scale(0);
+	position: absolute;
+	opacity: 1;
+	pointer-events: none;
+}
+.gesture-tap-ripple-animation {
+	-webkit-animation: GestureTapRippleAnimation 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+	-moz-animation: GestureTapRippleAnimation 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+	animation: GestureTapRippleAnimation 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+}

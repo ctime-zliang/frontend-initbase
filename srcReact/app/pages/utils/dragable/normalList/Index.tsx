@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import './index.less'
+import styles from './index.module.less'
 import { ListDragableUtils } from '../../../../utils/dragableUtils/listDragableUtils'
 
 export function NormalList(): React.ReactElement {
@@ -29,12 +29,12 @@ export function NormalList(): React.ReactElement {
 	}, [dragableConatinerElementRef.current])
 	return (
 		<section style={{ padding: `10px 10px`, position: 'relative' }}>
-			<div className="draglist-container">
-				<div className="draglist-wrapper">
-					<ul className="draglist-ulist" ref={dragableConatinerElementRef}>
+			<div className={styles['draglist-container']}>
+				<div className={styles['draglist-wrapper']}>
+					<ul className={styles['draglist-ulist']} ref={dragableConatinerElementRef}>
 						{list.map((item: { id: number; text: string }, index: number): React.ReactElement => {
 							return (
-								<li draggable="true" className="draglist-listitem" key={index}>
+								<li draggable="true" className={styles['draglist-listitem']} key={index}>
 									<span>{item.id}</span> - <span>{item.text}</span>
 								</li>
 							)

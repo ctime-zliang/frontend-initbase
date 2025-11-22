@@ -1,6 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet-async'
-import './assets/style/prefix.less'
+import './assets/styles/prefix.less'
 import '../../node_modules/antd/dist/antd.css'
 import favicon from './assets/images/log.jpg'
 import { TCommonComponentBaseProps } from './types/comm.types'

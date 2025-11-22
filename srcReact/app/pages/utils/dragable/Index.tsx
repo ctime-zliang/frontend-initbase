@@ -8,7 +8,7 @@ function ListDragableRoot(props: any): React.ReactElement {
 	return (
 		<>
 			<Helmet>
-				<title>Dragable Component</title>
+				<title>Dragable Utils</title>
 			</Helmet>
 			<NormalList />
 		</>

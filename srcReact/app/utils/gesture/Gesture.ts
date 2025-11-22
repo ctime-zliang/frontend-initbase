@@ -17,7 +17,7 @@ export class Gesture {
 		this._handleListeners = {
 			pointerdown: [],
 			pointerup: [],
-			pointermove: [],
+			pointerdownmove: [],
 			pointercancel: [],
 			tap: [],
 			longtap: [],
@@ -54,7 +54,7 @@ export class Gesture {
 		namespace?:
 			| 'pointerdown'
 			| 'pointerup'
-			| 'pointermove'
+			| 'pointerdownmove'
 			| 'pointercancel'
 			| 'tap'
 			| 'longtap'
@@ -69,7 +69,7 @@ export class Gesture {
 		if (typeof namespace === 'undefined') {
 			this._handleListeners.pointerdown.length = 0
 			this._handleListeners.pointerup.length = 0
-			this._handleListeners.pointermove.length = 0
+			this._handleListeners.pointerdownmove.length = 0
 			this._handleListeners.pointercancel.length = 0
 			this._handleListeners.tap.length = 0
 			this._handleListeners.longtap.length = 0
@@ -111,7 +111,7 @@ export class Gesture {
 	): void {
 		this._handleListeners.pointerup.push(callback)
 	}
-	public addPointerMoveListener(
+	public addPointerDownMoveListener(
 		callback: (
 			evte: TListenerExtendPointerEvent,
 			data: {
@@ -121,7 +121,7 @@ export class Gesture {
 			gesture: Gesture
 		) => void
 	): void {
-		this._handleListeners.pointermove.push(callback)
+		this._handleListeners.pointerdownmove.push(callback)
 	}
 	public addPointerCancelListener(
 		callback: (
@@ -640,8 +640,8 @@ export class Gesture {
 			lastDotRecordInPointerdown2.y = pointer2.clientY
 		}
 		const lastOnePointerEvent: TExtendPointer = this.getLastOnePointerEvent()
-		for (let i: number = 0; i < this._handleListeners.pointermove.length; i++) {
-			this._handleListeners.pointermove[i].call(
+		for (let i: number = 0; i < this._handleListeners.pointerdownmove.length; i++) {
+			this._handleListeners.pointerdownmove[i].call(
 				undefined,
 				evte,
 				{

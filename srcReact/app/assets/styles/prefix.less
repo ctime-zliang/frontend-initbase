@@ -1,0 +1,45 @@
+/****************************** 重置样式 ******************************/
+::-webkit-input-placeholder {
+	color: inherit;
+	opacity: 0.54;
+}
+::-webkit-file-upload-button {
+	-webkit-appearance: button;
+	font: inherit;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none !important;
+	margin: 0;
+}
+.clearfix::after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+/* 整个滚动条 */
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+/* 滚动条有滑块的轨道部分 */
+::-webkit-scrollbar-track-piece {
+	background-color: transparent;
+	border-radius: 5px;
+}
+/* 滚动条滑块(竖向:vertical 横向:horizontal) */
+::-webkit-scrollbar-thumb {
+	cursor: pointer;
+	background-color: #b8b6b6;
+	border-radius: 3px;
+}
+/* 滚动条滑块hover */
+::-webkit-scrollbar-thumb:hover {
+	background-color: #999999;
+}
+/* 同时有垂直和水平滚动条时交汇的部分 */
+::-webkit-scrollbar-corner {
+	display: block; /* 修复交汇时出现的白块 */
+}
+/****************************** /重置样式 ******************************/

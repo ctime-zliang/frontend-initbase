@@ -1,5 +1,5 @@
 export function resetFontsize(): void {
-	const MAX_FONTSIZE: number = 200
+	const MAX_FONTSIZE: number = 100
 	function __resetFontSizeClac(): number {
 		const _fontSize: number = document.documentElement.clientWidth / 3.75
 		return _fontSize > MAX_FONTSIZE ? MAX_FONTSIZE : _fontSize

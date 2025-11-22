@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
 import contextmenuData from './config'
-import '../index.less'
+import styles from '../index.module.less'
 import { TContextMenuItem } from '../../../../componnet/contextmenu/types/type'
 import { EContextMenuType } from '../../../../componnet/contextmenu/config/enum'
 import { ContextMenu } from '../../../../componnet/contextmenu'
@@ -13,7 +13,7 @@ function ContextmenuNoraml(props: any): React.ReactElement {
 		e.stopPropagation()
 		const menuData: Array<TContextMenuItem> = JSON.parse(JSON.stringify(contextmenuData))
 		/* ... */
-		menuData[menuData.length - 1].iconClassName = 'icon-demo'
+		menuData[menuData.length - 1].iconClassName = styles['icon-demo']
 		/* ... */
 		// menuData.push({ type: EContextMenuType.SEPARATOR })
 		// for (let i: number = 0; i < 50; i++) {

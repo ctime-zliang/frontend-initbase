@@ -122,7 +122,7 @@ export type THandleListeners = {
 			gesture: Gesture
 		) => void
 	>
-	pointermove: Array<
+	pointerdownmove: Array<
 		(
 			evte: TListenerExtendPointerEvent,
 			data: {

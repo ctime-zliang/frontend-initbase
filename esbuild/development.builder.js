@@ -1,9 +1,10 @@
 const esbuild = require('esbuild')
 const fs = require('fs-extra')
 const path = require('path')
-const lessLoader = require('./plugins/lessLoader')
 const htmlInject = require('./plugins/htmlInject')
+const stylePlugin = require('esbuild-style-plugin')
 
+console.log(process.cwd())
 class DevelopmentBuidler {
 	constructor() {
 		this._startTime = Date.now()
@@ -30,6 +31,10 @@ class DevelopmentBuidler {
 			format: 'iife',
 			platform: 'browser',
 			target: 'es2015',
+			assetNames: 'assets/[name]-[hash]',
+			chunkNames: '[name]-[hash]',
+			publicPath: '/',
+			write: true,
 			loader: {
 				'.ts': 'ts',
 				'.tsx': 'tsx',
@@ -50,7 +55,18 @@ class DevelopmentBuidler {
 				'process.env.NODE_ENV': '"development"',
 				global: 'window',
 			},
-			plugins: [htmlInject, lessLoader, this.getWatchPlugin()],
+			plugins: [
+				htmlInject(),
+				stylePlugin({
+					cssModules: {
+						pattern: '[name]__[local]___[hash:base64:5]',
+					},
+					less: {
+						javascriptEnabled: true,
+					},
+				}),
+				this.getWatchPlugin(),
+			],
 		}
 	}
 
@@ -59,7 +75,6 @@ class DevelopmentBuidler {
 			name: 'dev-server-plugin',
 			setup: build => {
 				build.onEnd(result => {
-					this.buildCount++
 					this.onBuildEnd(result)
 				})
 
@@ -74,7 +89,7 @@ class DevelopmentBuidler {
 		const time = new Date().toLocaleTimeString()
 		const duration = Date.now() - this.startTime
 		if (result.errors.length > 0) {
-			console.log(`❌ [${time}] 构建失败 (${this.buildCount})`)
+			console.log(`❌ [${time}] 构建失败`)
 			result.errors.forEach((error, index) => {
 				console.log(`  ${index + 1}. ${error.text}`)
 			})
@@ -82,7 +97,7 @@ class DevelopmentBuidler {
 			const files = Object.keys(result.metafile.outputs)
 			const jsFiles = files.filter(f => f.endsWith('.js'))
 			const cssFiles = files.filter(f => f.endsWith('.css'))
-			console.log(`✅ [${time}] 构建成功 (${this.buildCount})`)
+			console.log(`✅ [${time}] 构建成功`)
 			console.log(`   📦 JS: ${jsFiles.length} 个, CSS: ${cssFiles.length} 个`)
 			console.log(`   ⏱️  运行时间: ${duration}ms`)
 		}

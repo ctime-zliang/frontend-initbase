@@ -20,8 +20,8 @@
 		"noEmit": true,
 		"baseUrl": "./",
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./srcReact/*"]
 		}
 	},
-	"include": ["src", "srcReact"]
+	"include": ["srcReact"]
 }
