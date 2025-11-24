@@ -4,6 +4,7 @@ import { AsyncAnimator } from 'srcReact/app/utils/AsyncAnimator'
 import { createAnimators01, test01 } from './test01'
 
 function AsyncAnimatorRoot(props: any): React.ReactElement {
+	const MODULE_NAME: string = `Async Animator`
 	const boxElementRef: { current: HTMLDivElement } = useRef<HTMLDivElement>(null!)
 	const dataHandlerRef: { current: { animators: Array<AsyncAnimator> } } = useRef<{ animators: Array<AsyncAnimator> }>({
 		animators: [],
@@ -24,9 +25,10 @@ function AsyncAnimatorRoot(props: any): React.ReactElement {
 	return (
 		<>
 			<Helmet>
-				<title>Async Animator</title>
+				<title>{MODULE_NAME}</title>
 			</Helmet>
 			<section style={{ padding: `10px 10px`, position: 'relative' }}>
+				<h2 style={{ padding: `10px 10px`, margin: 0 }}>{MODULE_NAME}</h2>
 				<div>点击绿色圆面 执行序列动画</div>
 				<div
 					ref={boxElementRef}

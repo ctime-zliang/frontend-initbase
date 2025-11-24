@@ -47,9 +47,9 @@ export function SwipeVIew(): React.ReactElement {
 				<div className={styles['gesture-interactive']}>
 					<div className={styles['swiper-container']}>
 						<div className={styles['swiper-wrapper']}>
-							{dataHandler.current.list.map((item: { id: number; text: string }): React.ReactElement => {
+							{dataHandler.current.list.map((item: { id: number; text: string }, index: number): React.ReactElement => {
 								return (
-									<div className={styles['swiper-item']} data-id={item.id}>
+									<div className={styles['swiper-item']} data-id={item.id} key={index}>
 										<div className={styles['list-content']}>{item.text}</div>
 										<div className={styles['list-extend']}>
 											<button className={styles['list-btn list-readed-setting']}>设为已读</button>

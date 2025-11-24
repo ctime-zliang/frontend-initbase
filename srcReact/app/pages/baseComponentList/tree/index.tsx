@@ -8,19 +8,23 @@ import { useContentBgColor } from '../../../utils/hooks/useContentBgColor'
 import { SimpleDividingLine } from '../../../componnet/simpleDividingLine'
 
 function TreeRoot(props: any): React.ReactElement {
+	const MODULE_NAME: string = `Tree Component`
 	useContentBgColor('rgba(255, 255, 255, 1)')
 	return (
 		<>
 			<Helmet>
-				<title>Tree Component</title>
+				<title>{MODULE_NAME}</title>
 			</Helmet>
-			<TreeNormal />
-			<SimpleDividingLine />
-			<TreeAyncSetData />
-			<SimpleDividingLine />
-			<TreeAutoExpandAllLevel />
-			<SimpleDividingLine />
-			<TreeLongData />
+			<section style={{ padding: `10px 10px`, position: 'relative' }}>
+				<h2 style={{ padding: `10px 10px`, margin: 0 }}>{MODULE_NAME}</h2>
+				<TreeNormal />
+				<SimpleDividingLine />
+				<TreeAyncSetData />
+				<SimpleDividingLine />
+				<TreeAutoExpandAllLevel />
+				<SimpleDividingLine />
+				<TreeLongData />
+			</section>
 		</>
 	)
 }

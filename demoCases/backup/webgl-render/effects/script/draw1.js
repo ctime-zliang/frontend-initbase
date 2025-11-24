@@ -874,7 +874,12 @@ function drawCanvas1(containerElement) {
 		}
 	`
 
-	Program1.glControl.gl.clearColor(Program1.profile.clearColor.r / 255, Program1.profile.clearColor.g / 255, Program1.profile.clearColor.b / 255, 1.0)
+	Program1.glControl.gl.clearColor(
+		Program1.profile.clearColor.r / 255,
+		Program1.profile.clearColor.g / 255,
+		Program1.profile.clearColor.b / 255,
+		1.0
+	)
 	Program1.glControl.gl.clear(Program1.glControl.gl.COLOR_BUFFER_BIT | Program1.glControl.gl.DEPTH_BUFFER_BIT)
 	Program1.glControl.gl.enable(Program1.glControl.gl.BLEND)
 	Program1.glControl.gl.enable(Program1.glControl.gl.CULL_FACE)
@@ -996,16 +1001,36 @@ function drawCanvas1(containerElement) {
 			gl.uniformMatrix4fv(glUniforms.u_ViewMatrix, false, new Float32Array(lookAtMatrix4.data))
 			gl.uniform1f(glUniforms.u_illuType, Program1.profile.light.illuType)
 			if (Program1.profile.light.illuType === 1) {
-				const lightDirection = new Ven$Vector3(Program1.profile.light.direction.x, Program1.profile.light.direction.y, Program1.profile.light.direction.z)
+				const lightDirection = new Ven$Vector3(
+					Program1.profile.light.direction.x,
+					Program1.profile.light.direction.y,
+					Program1.profile.light.direction.z
+				)
 				const lightNormalizeDirection = lightDirection.normalize()
-				gl.uniform3fv(glUniforms.u_LightDirection, new Float32Array([lightNormalizeDirection.x, lightNormalizeDirection.y, lightNormalizeDirection.z]))
+				gl.uniform3fv(
+					glUniforms.u_LightDirection,
+					new Float32Array([lightNormalizeDirection.x, lightNormalizeDirection.y, lightNormalizeDirection.z])
+				)
 			}
 			if (Program1.profile.light.illuType === 2) {
-				gl.uniform3fv(glUniforms.u_LightPosition, new Float32Array([Program1.profile.light.position.x, Program1.profile.light.position.y, Program1.profile.light.position.z]))
+				gl.uniform3fv(
+					glUniforms.u_LightPosition,
+					new Float32Array([Program1.profile.light.position.x, Program1.profile.light.position.y, Program1.profile.light.position.z])
+				)
 			}
-			gl.uniform3f(glUniforms.u_LightColor, Program1.profile.light.color.r / 255, Program1.profile.light.color.g / 255, Program1.profile.light.color.b / 255)
+			gl.uniform3f(
+				glUniforms.u_LightColor,
+				Program1.profile.light.color.r / 255,
+				Program1.profile.light.color.g / 255,
+				Program1.profile.light.color.b / 255
+			)
 			gl.uniform1f(glUniforms.u_lightIntensityGain, Program1.profile.light.intensityGain)
-			gl.uniform3f(glUniforms.u_AmbientLightColor, Program1.profile.light.ambient.r, Program1.profile.light.ambient.g, Program1.profile.light.ambient.b)
+			gl.uniform3f(
+				glUniforms.u_AmbientLightColor,
+				Program1.profile.light.ambient.r,
+				Program1.profile.light.ambient.g,
+				Program1.profile.light.ambient.b
+			)
 		},
 		render(gl, vertexFeatureSize, modelInstances, itemProgramControl, enableTexture) {
 			modelInstances.forEach(modelInstanceItem => {
@@ -1055,12 +1080,29 @@ function drawCanvas1(containerElement) {
 		},
 		applyModelMatrix(gl, modelInstance, itemProgramControl) {
 			const { glUniforms } = itemProgramControl
-			const modelRotationXMatrix4 = Ven$CanvasMatrix4.setRotate(Ven$Angles.degreeToRadian(modelInstance.modelRatation.x), new Ven$Vector3(1, 0, 0))
-			const modelRotationYMatrix4 = Ven$CanvasMatrix4.setRotate(Ven$Angles.degreeToRadian(modelInstance.modelRatation.y), new Ven$Vector3(0, 1, 0))
-			const modelRotationZMatrix4 = Ven$CanvasMatrix4.setRotate(Ven$Angles.degreeToRadian(modelInstance.modelRatation.z), new Ven$Vector3(0, 0, 1))
-			const modelOffsetMatrix4 = Ven$CanvasMatrix4.setTranslate(new Ven$Vector3(modelInstance.modelOffset.x, modelInstance.modelOffset.y, modelInstance.modelOffset.z))
-			const modelScaleMatrix4 = Ven$CanvasMatrix4.setScale(new Ven$Vector3(modelInstance.modelScale.x, modelInstance.modelScale.y, modelInstance.modelScale.z))
-			const modelEffectMatrix4 = modelRotationXMatrix4.multiply4(modelRotationYMatrix4).multiply4(modelRotationZMatrix4).multiply4(modelScaleMatrix4).multiply4(modelOffsetMatrix4)
+			const modelRotationXMatrix4 = Ven$CanvasMatrix4.setRotate(
+				Ven$Angles.degreeToRadian(modelInstance.modelRatation.x),
+				new Ven$Vector3(1, 0, 0)
+			)
+			const modelRotationYMatrix4 = Ven$CanvasMatrix4.setRotate(
+				Ven$Angles.degreeToRadian(modelInstance.modelRatation.y),
+				new Ven$Vector3(0, 1, 0)
+			)
+			const modelRotationZMatrix4 = Ven$CanvasMatrix4.setRotate(
+				Ven$Angles.degreeToRadian(modelInstance.modelRatation.z),
+				new Ven$Vector3(0, 0, 1)
+			)
+			const modelOffsetMatrix4 = Ven$CanvasMatrix4.setTranslate(
+				new Ven$Vector3(modelInstance.modelOffset.x, modelInstance.modelOffset.y, modelInstance.modelOffset.z)
+			)
+			const modelScaleMatrix4 = Ven$CanvasMatrix4.setScale(
+				new Ven$Vector3(modelInstance.modelScale.x, modelInstance.modelScale.y, modelInstance.modelScale.z)
+			)
+			const modelEffectMatrix4 = modelRotationXMatrix4
+				.multiply4(modelRotationYMatrix4)
+				.multiply4(modelRotationZMatrix4)
+				.multiply4(modelScaleMatrix4)
+				.multiply4(modelOffsetMatrix4)
 			const modelEffectInverseMatrix4 = Ven$CanvasMatrix4.setInverse(modelEffectMatrix4)
 			const modelEffectInverseTransposeMatrix4 = Ven$CanvasMatrix4.setTranspose(modelEffectInverseMatrix4)
 			const normalMatrix4 = modelEffectInverseTransposeMatrix4
@@ -1096,7 +1138,13 @@ function drawCanvas1(containerElement) {
 			}
 			canvas.clear(Program1.glControl.gl)
 			canvas.setProfile(Program1.glControl.gl, Program1.glControl.textureLight)
-			canvas.render(Program1.glControl.gl, Program1.glControl.vertexFeatureSize, Program1.glControl.modelInstances, Program1.glControl.textureLight, true)
+			canvas.render(
+				Program1.glControl.gl,
+				Program1.glControl.vertexFeatureSize,
+				Program1.glControl.modelInstances,
+				Program1.glControl.textureLight,
+				true
+			)
 			stepControl.updateLastStamp()
 			window.requestAnimationFrame(exec)
 			return
@@ -1104,7 +1152,13 @@ function drawCanvas1(containerElement) {
 		Program1.glControl.gl.useProgram(Program1.glControl.commonLight.program)
 		canvas.clear(Program1.glControl.gl)
 		canvas.setProfile(Program1.glControl.gl, Program1.glControl.commonLight)
-		canvas.render(Program1.glControl.gl, Program1.glControl.vertexFeatureSize, Program1.glControl.modelInstances, Program1.glControl.commonLight, false)
+		canvas.render(
+			Program1.glControl.gl,
+			Program1.glControl.vertexFeatureSize,
+			Program1.glControl.modelInstances,
+			Program1.glControl.commonLight,
+			false
+		)
 		stepControl.updateLastStamp()
 		window.requestAnimationFrame(exec)
 	}

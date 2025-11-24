@@ -6,6 +6,7 @@ import styles from './index.module.less'
 import { getRandomInArea } from '../../../utils/utils'
 
 function ArticleListRoot(props: any): React.ReactElement {
+	const MODULE_NAME: string = `Article List`
 	const testListSize: number = 100
 	const articleList: Array<any> = useMemo(() => {
 		const articleList: Array<any> = []
@@ -18,7 +19,7 @@ function ArticleListRoot(props: any): React.ReactElement {
 	return (
 		<>
 			<Helmet>
-				<title>Article List</title>
+				<title>{MODULE_NAME}</title>
 			</Helmet>
 			<div className={styles['list-container']}>
 				<div className={styles['list-wrapper']}>

@@ -9,6 +9,7 @@ import { TCombineStore } from '../../store/public/types'
 import { EStoreModuleKey } from '../../store/public/config'
 
 export function LinkListRoot(props: TCommonComponentBaseProps): React.ReactElement {
+	const MODULE_NAME: string = `Entry Link List`
 	const { linkData } = useSelector((store: TCombineStore): TGlobalStore => {
 		return store[EStoreModuleKey.global]
 	})
@@ -25,8 +26,12 @@ export function LinkListRoot(props: TCommonComponentBaseProps): React.ReactEleme
 								<div key={sIndex + '' + index} className={styles['list-groupcontent']}>
 									<Link className={styles['link-item']} to={{ pathname: `${sItem.path}` }} state={{ showBackIcon: true }}>
 										<div className={styles['list-groupcontent-card']}>
-											<div className={styles['entry-title']}>{sItem.title}</div>
-											<div className={styles['entry-description']}>{sItem.desc}</div>
+											<div className={styles['entry-title-wrapper']}>
+												<div className={styles['entry-title']}>{sItem.title}</div>
+											</div>
+											<div className={styles['entry-description-wrapper']}>
+												<div className={styles['entry-description']}>{sItem.desc}</div>
+											</div>
 										</div>
 									</Link>
 								</div>
@@ -41,7 +46,7 @@ export function LinkListRoot(props: TCommonComponentBaseProps): React.ReactEleme
 	return (
 		<>
 			<Helmet>
-				<title>Entry Link List</title>
+				<title>{MODULE_NAME}</title>
 			</Helmet>
 			<section className={styles['list-container']}>
 				<section className={styles['list-wrapper']}>{listItems()}</section>
