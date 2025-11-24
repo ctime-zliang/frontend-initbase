@@ -7,7 +7,6 @@ import { TapRipple } from '@/app/utils/gesture/TapRipple'
 type TController = {
 	isInit: boolean
 	gestureInstance: Gesture
-	tapRipple: TapRipple
 	downClientX: number
 	downClientY: number
 }
@@ -16,7 +15,6 @@ export function PointerDownView(): React.ReactElement {
 	const controllerRef: { current: TController } = useRef<TController>({
 		isInit: false,
 		gestureInstance: null!,
-		tapRipple: null!,
 		downClientX: -1,
 		downClientY: -1,
 	})
@@ -24,7 +22,6 @@ export function PointerDownView(): React.ReactElement {
 	useEffect((): (() => void) => {
 		if (!controllerRef.current.isInit) {
 			controllerRef.current.isInit = true
-			controllerRef.current.tapRipple = attachTapRipple('tap-ripple')
 			controllerRef.current.gestureInstance = attachGesture([gestureInteractiveElementRef.current])
 			controllerRef.current.gestureInstance.addPointerDownListener(
 				(
@@ -45,7 +42,6 @@ export function PointerDownView(): React.ReactElement {
 		}
 		return (): void => {
 			controllerRef.current.isInit = false
-			controllerRef.current.tapRipple.uninstall()
 			controllerRef.current.gestureInstance.destory()
 		}
 	}, [])

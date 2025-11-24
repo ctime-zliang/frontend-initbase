@@ -1,12 +1,39 @@
+export type TTapRippleOptional = {
+	rippleColor?: string
+}
 export class TapRipple {
 	private _name: string
-	constructor(name: string) {
+	private _optional: TTapRippleOptional
+	private _rippleAnimationEndActionScopeHandler: (e: AnimationEvent) => void
+	constructor(name: string, optional: TTapRippleOptional = {}) {
 		this._name = name
+		this._optional = {
+			rippleColor: `#dcdcdc`,
+			...optional,
+		}
 		this.init()
 	}
 
 	private init(): void {
+		this._rippleAnimationEndActionScopeHandler = this.rippleAnimationEndAction.bind(this)
 		this.appendStyleElement()
+	}
+
+	public apply(insertContainerElement: HTMLElement, position: { x: number; y: number }): void {
+		const insertContainerElementClientWidth = insertContainerElement.offsetWidth
+		const spanElement = document.createElement('span')
+		const targetClientRect = insertContainerElement.getBoundingClientRect()
+		const x = position.x - targetClientRect.left - insertContainerElementClientWidth / 2
+		const y = position.y - targetClientRect.top - insertContainerElementClientWidth / 2
+		if (insertContainerElement.firstChild) {
+			insertContainerElement.insertBefore(spanElement, insertContainerElement.firstChild)
+		} else {
+			insertContainerElement.appendChild(spanElement)
+		}
+		spanElement.classList.add('gesture-tap-ripple')
+		spanElement.addEventListener('animationend', this._rippleAnimationEndActionScopeHandler)
+		spanElement.style.cssText = `width: ${insertContainerElementClientWidth}px; height: ${insertContainerElementClientWidth}px; top: ${y}px; left: ${x}px`
+		spanElement.classList.add('gesture-tap-ripple-animation')
 	}
 
 	public uninstall(): void {
@@ -20,6 +47,12 @@ export class TapRipple {
 		}
 	}
 
+	private rippleAnimationEndAction(e: AnimationEvent): void {
+		const currentTarget: HTMLElement = e.currentTarget as HTMLElement
+		currentTarget.removeEventListener('animationend', this._rippleAnimationEndActionScopeHandler)
+		;(currentTarget.parentNode as HTMLElement).removeChild(currentTarget)
+	}
+
 	private createCSSText(): string {
 		const cssText: string = `
             @keyframes GestureTapRippleAnimation {
@@ -31,7 +64,7 @@ export class TapRipple {
             }
             .gesture-tap-ripple {
                 border-radius: 50%;
-                background-color: #dcdcdc;
+                background-color: ${this._optional.rippleColor};
                 -webkit-transform: scale(0);
                 transform: scale(0);
                 position: absolute;
