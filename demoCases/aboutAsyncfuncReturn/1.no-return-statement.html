@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width"/>
+<meta name="author" content="qzql" />
+<meta name="keywords" content="rainna's js lib" />
+<meta name="description" content="HTML_WEB" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Test Demo</title>
+<style>
+    .tips{
+        width: 768px;
+        margin: 100px auto 0 auto;
+        font-size: 30px;
+        text-align: left;        
+    }
+    .note{
+        width: 768px;
+        margin: 30px auto 0 auto;
+        font-size: 20px;
+        text-align: left;  
+        color: #ff6600;      
+    }
+    .code{
+        width: 768px;
+        margin: 30px auto 0 auto;
+        font-size: 14px;
+        text-align: left;  
+        color: #444444;   
+    }
+</style>
+</head>
+
+<body>
+<div class="tips">请在 开发者工具-Console面板查看 输出</div>
+<div class="note">示例情形：</div>
+<div class="code">
+    <pre>
+        <code>
+async function async1(){
+    console.log( 'async1 start' )
+    await async2()
+    console.log( 'async1 end' )
+}
+
+async function async2(){
+    console.log( 'async2 )
+}
+
+console.log( 'script start' )
+
+setTimeout(()=>{
+    console.log( 'setTimeout' )
+}, 0)
+
+async1()
+    
+new Promise(( resolve )=>{
+    console.log( 'promise1' )
+    resolve()
+}).then(()=>{
+    console.log( 'promise2' )
+})
+
+console.log( 'script end' )
+        </code>
+    </pre>
+</div>
+</body>
+<script>
+{
+    async function async1(){
+        console.log( 'async1 start' )
+        await async2()
+        console.log( 'async1 end' )
+    }
+
+    // function _async1(){
+    //     console.log( 'async1 start' )
+    //     let implicit_promise = new Promise((resolve, reject)=>{
+    //         let promise = new Promise((rs, rj)=>{
+    //             rs( async2() )
+    //         })
+    //         promise.then(()=>{
+    //             console.log( 'async1 end' )
+    //             resolve()
+    //         })        
+    //     })
+    //     return implicit_promise
+    // }
+
+    async function async2(){
+        console.log( 'async2' )
+    }
+
+    setTimeout(()=>{
+        console.log( 'setTimeout' )
+    }, 0)
+
+    async1()
+        
+    new Promise(( resolve )=>{
+        console.log( 'promise1' )
+        resolve()
+    }).then(()=>{
+        console.log( 'promise2' )
+    }).then(()=>{
+        console.log( 'promise3' )
+    }).then(()=>{
+        console.log( 'promise4' )
+    })
+}
+</script>
+</html>

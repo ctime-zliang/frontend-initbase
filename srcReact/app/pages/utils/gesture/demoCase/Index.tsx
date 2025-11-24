@@ -9,8 +9,9 @@ import { LongTapView } from './LongTapView'
 import { DragMoveView } from './DragMoveView'
 import { WheelView } from './WheelView'
 import { PinchView } from './PinchView'
-import { RotateView } from './RotateView'
 import { SwipeVIew } from './SwipeVIew'
+import { DoubleTapView } from './DoubleTapView'
+import { RotateView } from './RotateView'
 
 export function DemeCase(): React.ReactElement {
 	return (
@@ -22,6 +23,7 @@ export function DemeCase(): React.ReactElement {
 					<PointerUpView />
 					<PointerCancelView />
 					<TapView />
+					<DoubleTapView />
 					<LongTapView />
 					<DragMoveView />
 					<SwipeVIew />

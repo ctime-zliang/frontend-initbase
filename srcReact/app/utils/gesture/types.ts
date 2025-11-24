@@ -192,7 +192,7 @@ export type THandleListeners = {
 		(
 			evte: WheelEvent,
 			data: {
-				scale: number
+				factor: number
 				clientX: number
 				clientY: number
 			},
@@ -216,7 +216,7 @@ export type THandleListeners = {
 		(
 			evte: TListenerExtendPointerEvent,
 			data: {
-				scale: number
+				factor: number
 				centerX: number
 				centerY: number
 				lastCenterX: number

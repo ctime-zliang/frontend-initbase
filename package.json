@@ -10,7 +10,7 @@
 		"prettier:check-all": "prettier --check .",
 		"eslint:check-srcReact": "eslint --ext .js,.ts,.jsx,.tsx srcReact",
 		"eslint:fix-srcReact": "eslint --fix --ext .js,.ts,.jsx,.tsx srcReact",
-		"esbuild:react-client:dev": "cross-env NODE_ENV=development node ./esbuild/development.builder.js"
+		"esbuild:react-client:dev": "cross-env NODE_ENV=development node ./build/esbuild/development.builder.js"
 	},
 	"repository": {
 		"type": "git",

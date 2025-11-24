@@ -193,7 +193,7 @@ export class Gesture {
 		callback: (
 			evte: WheelEvent,
 			data: {
-				scale: number
+				factor: number
 				clientX: number
 				clientY: number
 			},
@@ -221,7 +221,7 @@ export class Gesture {
 		callback: (
 			evte: TListenerExtendPointerEvent,
 			data: {
-				scale: number
+				factor: number
 				centerX: number
 				centerY: number
 				lastCenterX: number
@@ -613,7 +613,7 @@ export class Gesture {
 					this
 				)
 			}
-			const scale: number =
+			const factor: number =
 				this.getDistance({ x: pointer1.clientX, y: pointer1.clientY }, { x: pointer2.clientX, y: pointer2.clientY }) /
 				this.getDistance(lastDotRecordInPointerdown1, lastDotRecordInPointerdown2)
 			for (let i: number = 0; i < this._handleListeners.pinch.length; i++) {
@@ -621,7 +621,7 @@ export class Gesture {
 					undefined,
 					evte,
 					{
-						scale,
+						factor,
 						centerX: center.x,
 						centerY: center.y,
 						lastCenterX: this._profile.centerPositionCacheOfMultiPointers.x,
@@ -680,8 +680,8 @@ export class Gesture {
 				}
 				if (this._profile.tapCount >= 2) {
 					this._profile.tapCount = 0
-					for (let i: number = 0; i < this._handleListeners.pointerup.length; i++) {
-						this._handleListeners.pointerup[i].call(
+					for (let i: number = 0; i < this._handleListeners.doubletap.length; i++) {
+						this._handleListeners.doubletap[i].call(
 							undefined,
 							evte,
 							{
@@ -754,13 +754,13 @@ export class Gesture {
 	}
 
 	private handleWheelEvent(evte: WheelEvent): void {
-		const scale: number = evte.deltaY > 0 ? this._profile.zoomOutWheelRatio : this._profile.zoomInWheelRatio
+		const factor: number = evte.deltaY > 0 ? this._profile.zoomOutWheelRatio : this._profile.zoomInWheelRatio
 		for (let i: number = 0; i < this._handleListeners.wheel.length; i++) {
 			this._handleListeners.wheel[i].call(
 				undefined,
 				evte,
 				{
-					scale,
+					factor,
 					clientX: evte.clientX,
 					clientY: evte.clientY,
 				},

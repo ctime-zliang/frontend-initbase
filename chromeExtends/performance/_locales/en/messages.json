@@ -1,0 +1,8 @@
+{
+	"pluginDesc": {
+		"message": "A simple chrome extension about performance count on web page"
+	},
+	"helloWorld": {
+		"message": "Hello World!"
+	}
+}

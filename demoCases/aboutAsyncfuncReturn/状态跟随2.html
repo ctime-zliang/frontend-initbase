@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width"/>
+<meta name="author" content="qzql" />
+<meta name="keywords" content="rainna's js lib" />
+<meta name="description" content="HTML_WEB" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Test Demo</title>
+<style>
+    .tips{
+        width: 768px;
+        margin: 100px auto 0 auto;
+        font-size: 30px;
+        text-align: left;        
+    }
+    .note{
+        width: 768px;
+        margin: 30px auto 0 auto;
+        font-size: 20px;
+        text-align: left;  
+        color: #ff6600;      
+    }
+    .code{
+        width: 768px;
+        margin: 30px auto 0 auto;
+        font-size: 14px;
+        text-align: left;  
+        color: #444444;   
+    }
+</style>
+</head>
+
+<body>
+<div class="tips">请在 开发者工具-Console面板查看 输出</div>
+<div class="note">示例情形：</div>
+<div class="code">
+    <pre>
+        <code>
+const promiseA = new Promise((resolve, reject)=>{
+    resolve( 'ccc' )
+})
+const promiseB = new Promise((resolve, reject)=>{
+    resolve( promiseA )
+})
+const promiseC = new Promise((resolve, reject)=>{
+    resolve( promiseB )
+})
+const promiseD = new Promise((resolve, reject)=>{
+    resolve( promiseC )
+})
+
+promiseD.then(()=>{
+    console.log( 'promiseD then' )
+})
+promiseC.then(()=>{
+    console.log( 'promiseC then' )
+})
+promiseB.then(()=>{
+    console.log( 'promiseB then' )
+})
+promiseA.then(()=>{
+    console.log( 'promiseA then' )
+})
+
+
+Promise.resolve().then(()=>{
+    console.log( 'p.then1' )
+}).then(()=>{
+    console.log( 'p.then2' )
+}).then(()=>{
+    console.log( 'p.then3' )
+}).then(()=>{
+    console.log( 'p.then4' )
+}).then(()=>{
+    console.log( 'p.then5' )
+}).then(()=>{
+    console.log( 'p.then6' )
+})
+        </code>
+    </pre>
+</div>
+</body>
+<script>
+{
+    const promiseA = new Promise((resolve, reject)=>{
+        resolve( 'ccc' )
+    })
+    const promiseB = new Promise((resolve, reject)=>{
+        resolve( promiseA )
+    })
+    const promiseC = new Promise((resolve, reject)=>{
+        resolve( promiseB )
+    })
+    const promiseD = new Promise((resolve, reject)=>{
+        resolve( promiseC )
+    })
+
+    promiseD.then(()=>{
+        console.log( 'promiseD then' )
+    })
+    promiseC.then(()=>{
+        console.log( 'promiseC then' )
+    })
+    promiseB.then(()=>{
+        console.log( 'promiseB then' )
+    })
+    promiseA.then(()=>{
+        console.log( 'promiseA then' )
+    })
+
+    /* 
+        PromiseResolveThenableJob1:
+
+        promiseA.then(()=>{
+            resolvePromiseB,
+            rejectPromiseB
+        })
+     */
+
+    /* 
+        PromiseResolveThenableJob2:
+
+        promiseB.then(()=>{
+            resolvePromiseC,
+            rejectPromiseC
+        })
+     */
+
+    /* 
+        PromiseResolveThenableJob3:
+
+        promiseC.then(()=>{
+            resolvePromiseD,
+            rejectPromiseD
+        })
+     */
+
+
+    Promise.resolve().then(()=>{
+        console.log( 'p.then1' )
+    }).then(()=>{
+        console.log( 'p.then2' )
+    }).then(()=>{
+        console.log( 'p.then3' )
+    }).then(()=>{
+        console.log( 'p.then4' )
+    }).then(()=>{
+        console.log( 'p.then5' )
+    }).then(()=>{
+        console.log( 'p.then6' )
+    })
+
+    /*
+        步骤1：
+        执行：执行main stack，生成PromiseResolveThenableJob1，PromiseResolveThenableJob2，PromiseResolveThenableJob3，生成console.log( 'promiseA then' )回调微任务，生成console.log( 'p.then1' )回调微任务
+        微任务队列：PromiseResolveThenableJob1、PromiseResolveThenableJob2、PromiseResolveThenableJob3、console.log( 'promiseA then' )、console.log( 'p.then1' )
+        输出：<无>
+
+        步骤2：
+        执行：执行微任务PromiseResolveThenableJob1，生成resolvePromiseB微任务（因为promiseA已经立即resolved）
+        微任务队列：PromiseResolveThenableJob2、PromiseResolveThenableJob3、console.log( 'promiseA then' )、console.log( 'p.then1' )、resolvePromiseB
+        输出：<无>
+
+        步骤3：
+        执行：执行微任务PromiseResolveThenableJob2
+        微任务队列：PromiseResolveThenableJob3、console.log( 'promiseA then' )、console.log( 'p.then1' )、resolvePromiseB
+        输出：<无>
+
+        步骤4：
+        执行：执行微任务PromiseResolveThenableJob3
+        微任务队列：console.log( 'promiseA then' )、console.log( 'p.then1' )、resolvePromiseB
+        输出：<无>
+
+        步骤5：
+        执行：执行微任务console.log( 'promiseA then' )
+        微任务队列：console.log( 'p.then1' )、resolvePromiseB
+        输出：promiseA then
+
+        步骤6：
+        执行：执行微任务console.log( 'p.then1' )，生成console.log( 'p.then2' )回调微任务
+        微任务队列：resolvePromiseB、console.log( 'p.then2' )
+        输出：p.then1
+
+        步骤7：
+        执行：执行微任务resolvePromiseB，生成console.log( 'promiseB then' )回调微任务，生成resolvePromiseC回调微任务
+        微任务队列：console.log( 'p.then2' )、console.log( 'promiseB then' )、resolvePromiseC
+        输出：<无>
+
+        步骤8：
+        执行：执行微任务console.log( 'p.then2' )，生成console.log( 'p.then3' )回调微任务
+        微任务队列：console.log( 'promiseB then' )、resolvePromiseC、console.log( 'p.then3' )
+        输出：p.then2
+
+        步骤9：
+        执行：执行微任务console.log( 'promiseB then' )
+        微任务队列：resolvePromiseC、console.log( 'p.then3' )
+        输出：promiseB then
+
+        步骤10：
+        执行：执行微任务resolvePromiseC，生成console.log( 'promiseC then' )回调微任务，生成resolvePromiseD回调微任务
+        微任务队列：console.log( 'p.then3' )、console.log( 'promiseC then' )、resolvePromiseD
+        输出：<无>
+
+        步骤11：
+        执行：执行微任务console.log( 'p.then3' )，生成console.log( 'p.then4' )回调微任务
+        微任务队列：console.log( 'promiseC then' )、resolvePromiseD、console.log( 'p.then4' )
+        输出：p.then3
+
+        步骤12：
+        执行：执行微任务console.log( 'promiseC then' )
+        微任务队列：resolvePromiseD、console.log( 'p.then4' )
+        输出：promiseC then
+
+        步骤13：
+        执行：执行微任务resolvePromiseD，生成console.log( 'promiseD then' )回调微任务
+        微任务队列：console.log( 'p.then4' )、console.log( 'promiseD then' )
+        输出：<无>
+
+        步骤14：
+        执行：执行微任务console.log( 'p.then4' )，生成console.log( 'p.then5' )回调微任务
+        微任务队列：console.log( 'promiseD then' )、console.log( 'p.then5' )
+        输出：p.then4
+
+        步骤15：
+        执行：执行微任务console.log( 'promiseD then' )
+        微任务队列：console.log( 'p.then5' )
+        输出：promiseD then
+
+        步骤16：
+        执行：执行微任务console.log( 'p.then5' )，生成console.log( 'p.then6' )回调微任务
+        微任务队列：console.log( 'p.then6' )
+        输出：p.then5
+
+        步骤......
+     */
+}
+</script>
+</html>

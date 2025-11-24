@@ -1,23 +1,67 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './index.module.less'
 import { Gesture } from '@/app/utils/gesture/Gesture'
-import { attachGesture } from '@/app/utils/gesture'
+import { attachGesture, ListenerExtendPointerEvent, PlainDot } from '@/app/utils/gesture'
+
+const MAX_SCALE: number = 10
+const MIN_SCALE: number = 0.1
 
 type TController = {
 	isInit: boolean
 	gestureInstance: Gesture
+	rotate: number
+	centerX: number
+	centerY: number
+	lastCenterX: number
+	lastCenterY: number
+	pointA: PlainDot
+	pointB: PlainDot
 }
 export function RotateView(): React.ReactElement {
 	const gestureInteractiveElementRef: { current: HTMLDivElement } = useRef<HTMLDivElement>(null!)
 	const controllerRef: { current: TController } = useRef<TController>({
 		isInit: false,
 		gestureInstance: null!,
+		rotate: 1,
+		centerX: -1,
+		centerY: -1,
+		lastCenterX: -1,
+		lastCenterY: -1,
+		pointA: { x: -1, y: -1 },
+		pointB: { x: -1, y: -1 },
 	})
 	const [flush, setFlush] = useState<number>(0)
 	useEffect((): (() => void) => {
 		if (!controllerRef.current.isInit) {
 			controllerRef.current.isInit = true
 			controllerRef.current.gestureInstance = attachGesture([gestureInteractiveElementRef.current])
+			controllerRef.current.gestureInstance.addRotateListener(
+				(
+					evte: ListenerExtendPointerEvent,
+					data: {
+						rotate: number
+						centerX: number
+						centerY: number
+						lastCenterX: number
+						lastCenterY: number
+						pointA: { x: number; y: number }
+						pointB: { x: number; y: number }
+					}
+				): void => {
+					evte.stopPropagation()
+					evte.preventDefault()
+					controllerRef.current.rotate = data.rotate
+					controllerRef.current.centerX = data.centerX
+					controllerRef.current.centerY = data.centerY
+					controllerRef.current.lastCenterX = data.lastCenterX
+					controllerRef.current.lastCenterY = data.lastCenterY
+					controllerRef.current.pointA = data.pointA
+					controllerRef.current.pointB = data.pointB
+					setFlush((prev: number): number => {
+						return prev + 1
+					})
+				}
+			)
 		}
 		return (): void => {
 			controllerRef.current.isInit = false
@@ -34,7 +78,21 @@ export function RotateView(): React.ReactElement {
 					</div>
 				</div>
 				<div style={{ padding: '5px 0' }}></div>
-				<div className={styles['gesture-interactive']}></div>
+				<div className={styles['gesture-interactive']}>
+					<div>Rotate: {controllerRef.current.rotate}</div>
+					<div>
+						Center: ({controllerRef.current.centerX}, {controllerRef.current.centerY})
+					</div>
+					<div>
+						Last Center: ({controllerRef.current.lastCenterX}, {controllerRef.current.lastCenterY})
+					</div>
+					<div>
+						Pointer A: ({controllerRef.current.pointA.x}, {controllerRef.current.pointA.y})
+					</div>
+					<div>
+						Pointer B: ({controllerRef.current.pointB.x}, {controllerRef.current.pointB.y})
+					</div>
+				</div>
 			</div>
 		</div>
 	)

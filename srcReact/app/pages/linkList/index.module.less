@@ -15,7 +15,7 @@
 		}
 	}
 	.list-grouptitle-wrapper {
-		padding: 25px 0 5px 0;
+		padding: 10px 0 5px 0;
 		border-bottom: 1px dashed #dcdcdc;
 		font-weight: bolder;
 	}
@@ -30,26 +30,23 @@
 
 .list-groupcontent {
 	display: block;
-	width: 25%;
+	width: 20%;
 	min-width: 200px;
 	padding: 10px 10px;
-	a {
-		padding: 15px 10px;
+	.list-groupcontent-card {
+		padding: 10px 10px;
 		border: 1px solid #dcdcdc;
 		border-radius: 5px;
 		display: block;
 		transition: all 0.75s cubic-bezier(0.075, 0.82, 0.165, 1);
 		box-shadow: rgb(175 175 175 / 35%) 0 0 20px;
-	}
-	a:hover {
-		border: 1px solid rgba(24, 144, 255, 1);
-		color: rgba(24, 144, 255, 1);
-		.entry-title {
+		&:hover {
+			border: 1px solid rgba(24, 144, 255, 1);
 			color: rgba(24, 144, 255, 1);
+			.entry-title {
+				color: rgba(24, 144, 255, 1);
+			}
 		}
-	}
-	.list-groupcontent-card {
-		height: 75px;
 		.entry-title {
 			color: #000000;
 			padding-bottom: 5px;

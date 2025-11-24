@@ -1,0 +1,30 @@
+{
+	"manifest_version": 3,
+	"name": "Performance Monitor",
+	"version": "1.0.0",
+	"description": "Web Page Performance Monitor",
+	"icons": {
+		"16": "icons/modular.png",
+		"48": "icons/modular.png",
+		"128": "icons/modular.png"
+	},
+	"background": {
+		"service_worker": "scripts/background.js"
+	},
+	"action": {
+		"default_icon": "icons/modular.png",
+		"default_title": "Performance Monitor"
+	},
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["scripts/performance.js", "scripts/userview.js"],
+			"css": [],
+			"run_at": "document_start"
+		}
+	],
+	"host_permissions": ["http://*/*", "https://*/*"],
+	"web_accessible_resources": [],
+	"default_locale": "zh_CN",
+	"permissions": ["storage", "activeTab", "scripting", "tabs", "system.cpu", "system.memory"]
+}

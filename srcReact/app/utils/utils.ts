@@ -67,13 +67,6 @@ export function padNumber(number: number, allLength: number): string {
 }
 
 /**
- * 生成指定长度的数组并以固定值填充各位
- */
-export function createArray<T extends string>(length: number, value: T = undefined!): Array<string> {
-	return new Array(length + 1).join(value).split('')
-}
-
-/**
  * 依据 HTML 字符串生成 DOM 片段
  */
 export function createElementFragment(htmlString: string, useDOMParser: boolean = false): DocumentFragment | Document {
@@ -296,4 +289,31 @@ export async function selectPlatformFiles(
 		})
 		inputElement.click()
 	})
+}
+
+export function viewMatrix(containerElement: HTMLElement, data: Array<number>, row: number, col: number, title?: string): void {
+	if (row * col !== data.length) {
+		throw new Error('illegal matrix.')
+	}
+	let matrixTitle: string = title || `Matrix ${row}x${col}`
+	let htmlStrArr: Array<string> = []
+	htmlStrArr.push(
+		`<div style="display: inline-flex; flex-direction: column; justify-content: center; width: fit-content; border: 1px solid #dcdcdc;box-sizing: border-box; margin: 10px 10px;">`
+	)
+	htmlStrArr.push(`<h4 style="padding: 5px 10px; margin: 0; text-align: center;">${matrixTitle}</h4>`)
+	htmlStrArr.push(`<table border="0" cellspacing="0" cellpadding="0" style="text-align: center;">`)
+	htmlStrArr.push(`<tbody>`)
+	for (let ri: number = 0; ri <= row - 1; ri++) {
+		htmlStrArr.push(`<tr>`)
+		for (let ci = 0; ci <= col - 1; ci++) {
+			const index = ci + ri * col
+			htmlStrArr.push(`<td style="padding: 5px 5px; min-width: 50px;">${data[index]}</td>`)
+		}
+		htmlStrArr.push(`</tr>`)
+	}
+	htmlStrArr.push(`</tbody>`)
+	htmlStrArr.push(`</table>`)
+	htmlStrArr.push(`</div>`)
+	const fragmentElement: DocumentFragment = document.createRange().createContextualFragment(htmlStrArr.join('\n'))
+	containerElement.appendChild(fragmentElement)
 }
