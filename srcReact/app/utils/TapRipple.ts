@@ -11,12 +11,22 @@ export class TapRipple {
 			rippleColor: `#dcdcdc`,
 			...optional,
 		}
-		this.init()
 	}
 
-	private init(): void {
+	public install(): void {
 		this._rippleAnimationEndActionScopeHandler = this.rippleAnimationEndAction.bind(this)
 		this.appendStyleElement()
+	}
+
+	public uninstall(): void {
+		const headElement: HTMLHeadElement = document.head || document.getElementsByTagName('head')[0]
+		const allStyleElements: Array<HTMLStyleElement> = Array.from(headElement.querySelectorAll('style'))
+		for (let i: number = 0; i < allStyleElements.length; i++) {
+			if (allStyleElements[i].getAttribute('id') === this._name) {
+				allStyleElements[i].remove()
+				break
+			}
+		}
 	}
 
 	public apply(insertContainerElement: HTMLElement, position: { x: number; y: number }): void {
@@ -34,17 +44,6 @@ export class TapRipple {
 		spanElement.addEventListener('animationend', this._rippleAnimationEndActionScopeHandler)
 		spanElement.style.cssText = `width: ${insertContainerElementClientWidth}px; height: ${insertContainerElementClientWidth}px; top: ${y}px; left: ${x}px`
 		spanElement.classList.add('gesture-tap-ripple-animation')
-	}
-
-	public uninstall(): void {
-		const headElement: HTMLHeadElement = document.head || document.getElementsByTagName('head')[0]
-		const allStyleElements: Array<HTMLStyleElement> = Array.from(headElement.querySelectorAll('style'))
-		for (let i: number = 0; i < allStyleElements.length; i++) {
-			if (allStyleElements[i].getAttribute('id') === this._name) {
-				allStyleElements[i].remove()
-				break
-			}
-		}
 	}
 
 	private rippleAnimationEndAction(e: AnimationEvent): void {

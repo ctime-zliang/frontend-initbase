@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './index.module.less'
 import { Gesture } from '@/app/utils/gesture/Gesture'
-import { attachGesture, attachTapRipple, ListenerExtendPointerEvent } from '@/app/utils/gesture'
-import { TapRipple } from '@/app/utils/gesture/TapRipple'
+import { attachGesture, ListenerExtendPointerEvent } from '@/app/utils/gesture'
 
 type TController = {
 	isInit: boolean
