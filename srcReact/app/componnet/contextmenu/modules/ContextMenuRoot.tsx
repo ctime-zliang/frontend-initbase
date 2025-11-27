@@ -1,9 +1,14 @@
 import React, { useEffect, useLayoutEffect, useRef } from 'react'
-import { TBoundingClientRectResultToJSONResult, TContextMenuRootProps, TContextMenuItem } from '../types/type'
-import MenuWrapper from './MenuWrapper'
+import { TBoundingClientRectResultToJSONResult, TContextMenuItem, TContextMenu } from '../types/type'
 import '../styles/index.less'
 import { PADDING_VIEWPORT_BOTTOM, PADDING_VIEWPORT_TOP } from '../config/config'
 import { EContextPanelAlignment } from '../config/enum'
+import { MenuWrapperMemo } from './MenuWrapper'
+
+export type TContextMenuRootProps = TContextMenu & {
+	domId: string
+	unmount: () => void
+}
 
 function ContextMenuRoot(props: TContextMenuRootProps): React.ReactElement {
 	const { domId, data, position, panelAlignment = EContextPanelAlignment.INITIAL, panelMaxHeight, unmount, onClick } = props
@@ -86,7 +91,7 @@ function ContextMenuRoot(props: TContextMenuRootProps): React.ReactElement {
 			onMouseEnter={onMouseenterAction}
 			onContextMenu={onContextmenuAction}
 		>
-			<MenuWrapper
+			<MenuWrapperMemo
 				panelMaxHeight={panelMaxHeight as number}
 				domId={domId}
 				subMenuItems={data}
@@ -97,4 +102,4 @@ function ContextMenuRoot(props: TContextMenuRootProps): React.ReactElement {
 	)
 }
 
-export default React.memo(ContextMenuRoot)
+export const ContextMenuRootMemo = React.memo(ContextMenuRoot)

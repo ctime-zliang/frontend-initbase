@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { MemoExoticComponent } from 'react'
 import { CMDLINK_DIVISION_TAG } from '../config/config'
 import { EContextMenuType } from '../config/enum'
-import { TContextMenuItem, TMenuWrapperProps } from '../types/type'
-import MenuItem from './MenuItem'
-import Separator from './Separator'
+import { TContextMenuItem, TContextMenuItemExtend } from '../types/type'
+import { MenuItemMemo } from './MenuItem'
+import { SeparatorMemo } from './Separator'
+
+export type TMenuWrapperProps = {
+	domId: string
+	panelMaxHeight: number
+	commanLink?: string
+	subMenuItems?: Array<TContextMenuItem>
+	onClickAction?: (a: TContextMenuItemExtend, e: React.MouseEvent) => void
+	isSubMenu?: boolean
+}
 
 function MenuWrapper(props: TMenuWrapperProps): React.ReactElement {
 	const { domId, panelMaxHeight, commanLink = undefined, subMenuItems = [], isSubMenu = false, onClickAction } = props
@@ -14,7 +23,7 @@ function MenuWrapper(props: TMenuWrapperProps): React.ReactElement {
 					const cmdlink: string = commanLink ? commanLink + CMDLINK_DIVISION_TAG + menuItem.cmd : (menuItem.cmd as string)
 					if (Array.isArray(menuItem.subMenu)) {
 						return (
-							<MenuItem
+							<MenuItemMemo
 								panelMaxHeight={panelMaxHeight}
 								domId={domId}
 								key={index}
@@ -27,10 +36,10 @@ function MenuWrapper(props: TMenuWrapperProps): React.ReactElement {
 						)
 					}
 					if (menuItem['type'] === EContextMenuType.SEPARATOR) {
-						return <Separator key={index} menuItem={menuItem} />
+						return <SeparatorMemo key={index} menuItem={menuItem} />
 					}
 					return (
-						<MenuItem
+						<MenuItemMemo
 							panelMaxHeight={panelMaxHeight}
 							domId={domId}
 							commanLink={cmdlink}
@@ -46,4 +55,4 @@ function MenuWrapper(props: TMenuWrapperProps): React.ReactElement {
 	)
 }
 
-export default React.memo(MenuWrapper)
+export const MenuWrapperMemo = React.memo(MenuWrapper)

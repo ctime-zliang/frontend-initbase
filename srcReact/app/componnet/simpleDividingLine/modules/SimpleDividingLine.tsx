@@ -1,7 +1,7 @@
 import React from 'react'
 import { TSimpleDividingLine } from '../types/types'
 
-export function SimpleDividingLine(props: TSimpleDividingLine): React.ReactElement {
+export function SimpleDividingLineRoot(props: TSimpleDividingLine): React.ReactElement {
 	const {
 		paddingTop = 10,
 		paddingRight = 0,

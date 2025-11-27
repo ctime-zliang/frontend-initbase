@@ -26,4 +26,4 @@ function CheckTags(): React.ReactElement {
 	)
 }
 
-export const CheckTagsMemo = React.memo(CheckTags)
+export default React.memo(CheckTags)

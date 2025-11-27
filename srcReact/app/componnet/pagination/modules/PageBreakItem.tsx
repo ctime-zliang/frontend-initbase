@@ -1,5 +1,6 @@
 import React from 'react'
-import { TPageBreakItemProps } from '../types/types'
+
+export type TPageBreakItemProps = {}
 
 function PageBreakItem(props: TPageBreakItemProps): React.ReactElement {
 	const theBreakWrapperClassName: string = 'page-break-wrapper'
@@ -17,4 +18,4 @@ function PageBreakItem(props: TPageBreakItemProps): React.ReactElement {
 	)
 }
 
-export default React.memo(PageBreakItem)
+export const PageBreakItemMemo = React.memo(PageBreakItem)

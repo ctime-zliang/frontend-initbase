@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { defaultProfile, EPageUpdateAction } from '../config/config'
 import { TPagination } from '../types/types'
 import { correctionUserInput } from '../utils/correctionUserInput'
-import PageRange from './PageRange'
-import PageSelect from './PageSelect'
 import '../styles/index.less'
+import { PageSelectMemo } from './PageSelect'
+import { PageRangeMemo } from './PageRange'
 
 export function PaginationRoot(props: TPagination): React.ReactElement {
 	// console.log(`Component: PaginationRoot`, props)
@@ -131,7 +131,7 @@ export function PaginationRoot(props: TPagination): React.ReactElement {
 					></path>
 				</svg>
 			</li>
-			<PageRange
+			<PageRangeMemo
 				inputValue={inputPageNumber}
 				pageTotal={pageTotal}
 				pageNumber={pageNumber}
@@ -150,7 +150,7 @@ export function PaginationRoot(props: TPagination): React.ReactElement {
 				</svg>
 			</li>
 			{totalReneder()}
-			<PageSelect selectValue={cutSize} optionList={cutSizeOptions} selectChangeAction={piecewiseToggleAcion} />
+			<PageSelectMemo selectValue={cutSize} optionList={cutSizeOptions} selectChangeAction={piecewiseToggleAcion} />
 		</ul>
 	)
 }

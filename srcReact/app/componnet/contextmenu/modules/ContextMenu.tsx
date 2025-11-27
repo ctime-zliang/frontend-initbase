@@ -9,7 +9,7 @@ import {
 	rootElementKeyupEventHandler,
 	unmountContextmenu,
 } from '../utils/rootElementEventHandler'
-import ContextMenuRoot from './ContextMenuRoot'
+import { ContextMenuRootMemo } from './ContextMenuRoot'
 
 let id: number = 0
 
@@ -22,8 +22,7 @@ export class ContextMenu {
 		const docScrollLeft: number = documentRoot.scrollLeft
 		const rootElement: HTMLElement = document.createElement('div')
 		const domId: string = ROOT_PREFIEX_TAG + id++
-		rootElement.setAttribute('contextmenu', domId)
-		rootElement.setAttribute('data-domid', domId)
+		rootElement.setAttribute(ROOT_PREFIEX_TAG, domId)
 		rootElement.id = domId
 		rootElement.style.position = 'absolute'
 		rootElement.style.left = docScrollLeft + 'px'
@@ -36,7 +35,7 @@ export class ContextMenu {
 		}
 		const root = ReactDOMClient.createRoot(rootElement)
 		root.render(
-			<ContextMenuRoot
+			<ContextMenuRootMemo
 				{...params}
 				domId={domId}
 				panelMaxHeight={panelMaxHeight}
@@ -58,7 +57,7 @@ export class ContextMenu {
 
 	static closeActive(): void {
 		const activeElement: HTMLElement = document.activeElement as HTMLElement
-		if (!activeElement || !activeElement.hasAttribute('contextmenu')) {
+		if (!activeElement || !activeElement.hasAttribute(ROOT_PREFIEX_TAG)) {
 			return
 		}
 		unmountContextmenu(activeElement)

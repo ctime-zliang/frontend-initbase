@@ -43,37 +43,3 @@ export type TPagination = {
 	 */
 	pagePiecewise?: (v: number) => void
 }
-
-/**********************************************************************/
-/**********************************************************************/
-/**********************************************************************/
-
-export type TPageBreakItemProps = {}
-
-export type TPageRangeProps = {
-	pageTotal: number
-	middleDisplaySize: number
-	sideDislpaySize: number
-	pageNumber: number
-	inputValue: number
-	simplify: boolean
-	inputChangeAction: (e: React.FormEvent) => void
-	confirmAction: (e: React.MouseEvent | React.KeyboardEvent, v: number) => void
-}
-
-export type TPageSelectProps = {
-	selectValue: number
-	optionList: Array<number>
-	selectChangeAction: (e: React.FormEvent) => void
-}
-
-export type TPageShowItemProps = {
-	pageNumber: number
-	isSelected: boolean
-	inputValue: number
-	pageTotal: number
-	canInput: boolean
-	simplify: boolean
-	inputChangeAction: (e: React.FormEvent) => void
-	confirmAction: (e: React.MouseEvent | React.KeyboardEvent, v: number) => void
-}

@@ -1,14 +1,20 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { defaultProfileVariable, variableListItemWrapperIdPrefix } from '../config/config'
-import {
-	TRowCache,
-	TVariableHeightListRowItemCallStyle,
-	TVariableHeightListScrollingCallProps,
-	TVariableHeightListScrollingFunctionProps,
-} from '../types/types'
+import { TRowCache, TVariableHeightListRowItemCallStyle, TVariableHeightListScrollingFunctionProps } from '../types/types'
 import { binarySearch } from '../utils/binarySearch'
 import { initRowCache, updateRowCacheByContentItemElement } from '../utils/updateRowCache'
+
+export type TVariableHeightListScrollingCallProps = {
+	containerHeight: number
+	countTotal: number
+	estimatedRowHeight?: number
+	topBufferSize?: number
+	bottomBufferSize?: number
+	initContainerScrollTop?: number
+	onScroll?: ((y: number, x: number) => void) | null
+	children?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.FunctionComponent<any> | null
+}
 
 export function VariableHeightListScrolling(props: TVariableHeightListScrollingCallProps): React.ReactElement {
 	const globalProfile: TVariableHeightListScrollingFunctionProps = { ...defaultProfileVariable, ...props }

@@ -1,10 +1,10 @@
 import React, { useEffect, useState, forwardRef, useImperativeHandle, useRef } from 'react'
 import '../styles/index.less'
-import TreeLine from './TreeLine'
 import { TComponentTreeRowData, TTreeDataItemID, TTreeRootPorps } from '../types/types'
 import { handleFormatData } from '../utils/filter'
 import { defaultProfile, DEFAULT_ITEMHIEGHT } from '../config/config'
 import { FixedHeightListScrolling } from '../../virtualScrolling'
+import { TreeLineMemo } from './TreeLine'
 
 function TreeRoot(props: TTreeRootPorps, ref: any): React.ReactElement {
 	const globalProfile: TTreeRootPorps = {
@@ -106,7 +106,7 @@ function TreeRoot(props: TTreeRootPorps, ref: any): React.ReactElement {
 			const showchildren: boolean = !!(expand && !isLeaf && children?.length)
 			return [
 				<div key={id} className={treeRowlineClassString} style={treeRowlineStyleObject}>
-					<TreeLine
+					<TreeLineMemo
 						lineKey={index}
 						lineData={lineData}
 						profile={globalProfile}

@@ -1,18 +1,28 @@
 import React from 'react'
-import { TPageRangeProps } from '../types/types'
-import PageBreakItem from './PageBreakItem'
-import PageShowItem from './PageShowItem'
+import { PageShowItemMemo } from './PageShowItem'
+import { PageBreakItemMemo } from './PageBreakItem'
+
+export type TPageRangeProps = {
+	pageTotal: number
+	middleDisplaySize: number
+	sideDislpaySize: number
+	pageNumber: number
+	inputValue: number
+	simplify: boolean
+	inputChangeAction: (e: React.FormEvent) => void
+	confirmAction: (e: React.MouseEvent | React.KeyboardEvent, v: number) => void
+}
 
 function PageRange(props: TPageRangeProps): React.ReactElement {
 	const { pageTotal, middleDisplaySize, sideDislpaySize, pageNumber, simplify } = props
 	const viewItemComponents: Array<React.ReactElement> = []
 	const loopTotal: number = pageTotal || 1
 	if (simplify) {
-		viewItemComponents.push(<PageShowItem key={1} canInput={true} isSelected={true} {...props} pageNumber={pageNumber} />)
+		viewItemComponents.push(<PageShowItemMemo key={1} canInput={true} isSelected={true} {...props} pageNumber={pageNumber} />)
 	} else {
 		if (loopTotal <= middleDisplaySize) {
 			for (let i: number = 1; i <= loopTotal; i++) {
-				viewItemComponents.push(<PageShowItem key={i} canInput={false} isSelected={pageNumber === i} {...props} pageNumber={i} />)
+				viewItemComponents.push(<PageShowItemMemo key={i} canInput={false} isSelected={pageNumber === i} {...props} pageNumber={i} />)
 			}
 		} else {
 			let middleStart: number = pageNumber - Math.floor(middleDisplaySize / 2)
@@ -29,22 +39,22 @@ function PageRange(props: TPageRangeProps): React.ReactElement {
 			for (let i: number = 1; i <= loopTotal; i++) {
 				if (i <= leftEnd) {
 					isCouldAddBreakItem = true
-					viewItemComponents.push(<PageShowItem key={i} canInput={true} isSelected={pageNumber === i} {...props} pageNumber={i} />)
+					viewItemComponents.push(<PageShowItemMemo key={i} canInput={true} isSelected={pageNumber === i} {...props} pageNumber={i} />)
 					continue
 				}
 				if (i >= rightStart) {
 					isCouldAddBreakItem = true
-					viewItemComponents.push(<PageShowItem key={i} canInput={true} isSelected={pageNumber === i} {...props} pageNumber={i} />)
+					viewItemComponents.push(<PageShowItemMemo key={i} canInput={true} isSelected={pageNumber === i} {...props} pageNumber={i} />)
 					continue
 				}
 				if (i >= middleStart && i <= middleEnd) {
 					isCouldAddBreakItem = true
-					viewItemComponents.push(<PageShowItem key={i} canInput={true} isSelected={pageNumber === i} {...props} pageNumber={i} />)
+					viewItemComponents.push(<PageShowItemMemo key={i} canInput={true} isSelected={pageNumber === i} {...props} pageNumber={i} />)
 					continue
 				}
 				if (isCouldAddBreakItem) {
 					isCouldAddBreakItem = false
-					viewItemComponents.push(<PageBreakItem key={i} />)
+					viewItemComponents.push(<PageBreakItemMemo key={i} />)
 				}
 			}
 		}
@@ -52,4 +62,4 @@ function PageRange(props: TPageRangeProps): React.ReactElement {
 	return <>{viewItemComponents}</>
 }
 
-export default PageRange
+export const PageRangeMemo = React.memo(PageRange)

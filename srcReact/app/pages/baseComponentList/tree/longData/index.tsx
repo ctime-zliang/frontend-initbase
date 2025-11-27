@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { createLongData } from './data'
-import { Tree } from '../../../../componnet/tree'
+import { TreeRootForward } from '../../../../componnet/tree'
 
 const clickAction = (a: any, b: any, c: any) => {
 	console.log(a, b, c)
@@ -19,7 +19,7 @@ export function TreeLongData(props: any): React.ReactElement {
 		<section style={{ padding: `10px 10px`, position: 'relative' }}>
 			<h3>$. 大数据展示{tips}</h3>
 			<div style={{ height: `${containerHeight}px`, overflow: 'auto' }}>
-				<Tree
+				<TreeRootForward
 					isVirtualList={isVirtualList}
 					containerHeight={`${containerHeight}px`}
 					contentUnderline={false}
@@ -29,7 +29,7 @@ export function TreeLongData(props: any): React.ReactElement {
 					onExpand={expandAction}
 					onClick={clickAction}
 					data={dataLine}
-				></Tree>
+				/>
 			</div>
 		</section>
 	)

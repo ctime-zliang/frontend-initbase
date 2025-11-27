@@ -1,7 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { defaultProfileFixed } from '../config/config'
-import { TFixedHeightListRowItemCallStyle, TFixedHeightListScrollingCallProps, TFixedHeightListScrollingFunctionProps } from '../types/types'
+import { TFixedHeightListRowItemCallStyle, TFixedHeightListScrollingFunctionProps } from '../types/types'
+
+export type TFixedHeightListScrollingCallProps = {
+	containerHeight: number
+	countTotal: number
+	estimatedRowHeight?: number
+	topBufferSize?: number
+	bottomBufferSize?: number
+	initContainerScrollTop?: number
+	onScroll?: ((y: number, x: number) => void) | null
+	children?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.FunctionComponent<any> | null
+}
 
 export function FixedHeightListScrolling(props: TFixedHeightListScrollingCallProps): React.ReactElement {
 	const globalProfile: TFixedHeightListScrollingFunctionProps = { ...defaultProfileFixed, ...props }

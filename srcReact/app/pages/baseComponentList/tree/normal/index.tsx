@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { dataLine } from './data'
-import { Tree } from '../../../../componnet/tree'
+import { TreeRootForward } from '../../../../componnet/tree'
 
 const clickAction = (a: any, b: any, c: any) => {
 	console.log(a, b, c)
@@ -13,7 +13,7 @@ export function TreeNormal(props: any): React.ReactElement {
 	return (
 		<section style={{ padding: `10px 10px`, position: 'relative' }}>
 			<h3>$. 常规模式</h3>
-			<Tree
+			<TreeRootForward
 				contentUnderline={false}
 				multiSelect={true}
 				showTagLine={true}
@@ -21,7 +21,7 @@ export function TreeNormal(props: any): React.ReactElement {
 				onExpand={expandAction}
 				onClick={clickAction}
 				data={dataLine}
-			></Tree>
+			/>
 		</section>
 	)
 }

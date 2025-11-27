@@ -87,15 +87,6 @@ export type TTreeRootPorps = {
 /**********************************************************************/
 /**********************************************************************/
 
-export type TLineComponentProps = {
-	lineKey: number
-	lineData: TComponentTreeRowData
-	profile: TTreeRootPorps
-	selectedKeys: Array<string | number>
-	contentClickAction: (a: TComponentTreeRowData) => void
-	expandAction?: ((a: TComponentTreeRowData) => void) | null
-}
-
 export type TComponentTreeRowData = {
 	id: string
 	expand: boolean | undefined | null

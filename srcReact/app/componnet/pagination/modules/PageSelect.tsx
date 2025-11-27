@@ -1,5 +1,10 @@
 import React from 'react'
-import { TPageSelectProps } from '../types/types'
+
+export type TPageSelectProps = {
+	selectValue: number
+	optionList: Array<number>
+	selectChangeAction: (e: React.FormEvent) => void
+}
 
 function PageSelect(props: TPageSelectProps): React.ReactElement {
 	const { selectValue, optionList, selectChangeAction } = props
@@ -20,4 +25,4 @@ function PageSelect(props: TPageSelectProps): React.ReactElement {
 	)
 }
 
-export default React.memo(PageSelect)
+export const PageSelectMemo = React.memo(PageSelect)

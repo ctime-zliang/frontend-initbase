@@ -1,16 +1,8 @@
 import React from 'react'
+import { TFixedHeightListScrollingCallProps } from '../modules/FixedHeightListScrolling'
+import { TVariableHeightListScrollingCallProps } from '../modules/VariableHeightListScrolling'
 
 export type TVariableHeightListScrollingProps = TVariableHeightListScrollingCallProps
-export type TVariableHeightListScrollingCallProps = {
-	containerHeight: number
-	countTotal: number
-	estimatedRowHeight?: number
-	topBufferSize?: number
-	bottomBufferSize?: number
-	initContainerScrollTop?: number
-	onScroll?: ((y: number, x: number) => void) | null
-	children?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.FunctionComponent<any> | null
-}
 export type TVariableHeightListScrollingFunctionProps = TVariableHeightListScrollingCallProps & {
 	rowCache: Array<TRowCache>
 	topBufferSize: number
@@ -24,16 +16,6 @@ export type TVariableHeightListRowItemCallStyle = {
 }
 
 export type TFixedHeightListScrollingProps = TFixedHeightListScrollingCallProps
-export type TFixedHeightListScrollingCallProps = {
-	containerHeight: number
-	countTotal: number
-	estimatedRowHeight?: number
-	topBufferSize?: number
-	bottomBufferSize?: number
-	initContainerScrollTop?: number
-	onScroll?: ((y: number, x: number) => void) | null
-	children?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.FunctionComponent<any> | null
-}
 export type TFixedHeightListScrollingFunctionProps = TFixedHeightListScrollingCallProps & {
 	rowCache: Array<TRowCache>
 	topBufferSize: number

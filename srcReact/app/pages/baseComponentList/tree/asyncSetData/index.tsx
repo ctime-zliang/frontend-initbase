@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { dataLine } from './data'
-import { Tree, TTreeDataItem } from '../../../../componnet/tree'
+import { TreeRootForward, TTreeDataItem } from '../../../../componnet/tree'
 
 const clickAction = (a: any, b: any, c: any) => {
 	console.log(a, b, c)
@@ -27,14 +27,14 @@ export function TreeAyncSetData(props: any): React.ReactElement {
 	return (
 		<section style={{ padding: `10px 10px`, position: 'relative' }}>
 			<h3>$. 异步设置数据</h3>
-			<Tree
+			<TreeRootForward
 				selectedIds={['002']}
 				contentUnderline={true}
 				showExpandBtn={false}
 				onExpand={expandAction}
 				onClick={clickAction}
 				data={data2}
-			></Tree>
+			/>
 		</section>
 	)
 }

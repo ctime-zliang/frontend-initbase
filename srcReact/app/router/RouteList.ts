@@ -8,6 +8,7 @@ import {
 	componentTreeRoute,
 	componentVirtualScrollingRoute,
 	componentContextmenuRoute,
+	componentAlertRoute,
 } from '../pages/baseComponentList/route'
 import { testpageCommonRoute, testPageErrorRoute } from '../pages/testpage/route'
 import { storeTestErrorRoute, storeTestEdaAbstractStoreCommonRoute, storeTestProxyStoreCommonRoute } from '../pages/storeTest/route'
@@ -49,6 +50,7 @@ export const createRoutes = (): Array<TRouteItem> => {
 				componentTreeRoute(),
 				componentVirtualScrollingRoute(),
 				componentContextmenuRoute(),
+				componentAlertRoute(),
 			],
 		},
 		{

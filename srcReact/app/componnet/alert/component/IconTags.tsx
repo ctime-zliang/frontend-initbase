@@ -1,8 +1,5 @@
 import React from 'react'
-
-export type TIconTagsProps = {
-	iconClassName?: string
-}
+import { TIconTagsProps } from '../types/type'
 
 export function IconTags(props: TIconTagsProps): React.ReactElement {
 	const { iconClassName = '' } = props
@@ -18,4 +15,4 @@ export function IconTags(props: TIconTagsProps): React.ReactElement {
 	)
 }
 
-export const IconTagsMemo = React.memo(IconTags)
+export default React.memo(IconTags)

@@ -1,5 +1,7 @@
 import React from 'react'
-import { TContextMenuItemContentProps } from '../types/type'
+import { TContextMenuItem } from '../types/type'
+
+export type TContextMenuItemContentProps = TContextMenuItem
 
 function MenuItemContent(props: TContextMenuItemContentProps): React.ReactElement {
 	if (props.isSetContentJSX) {
@@ -11,4 +13,4 @@ function MenuItemContent(props: TContextMenuItemContentProps): React.ReactElemen
 	return <div className="content-text-inns">{props.title as string}</div>
 }
 
-export default React.memo(MenuItemContent)
+export const MenuItemContentMemo = React.memo(MenuItemContent)

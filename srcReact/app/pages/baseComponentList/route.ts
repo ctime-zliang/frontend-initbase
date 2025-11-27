@@ -1,5 +1,6 @@
 import { TRouteItem } from '../../layout/Router'
 import { Error404RootMemo } from './404'
+import { AlertRootMemo } from './alert/Index'
 import { ContextmenuRootMemo } from './contextmenu/Index'
 import { PaginationRootMemo } from './pagination/Index'
 import { TreeRootMemo } from './tree/Index'
@@ -42,5 +43,13 @@ export const componentVirtualScrollingRoute = (): TRouteItem => {
 		path: '/virtualscrolling',
 		exact: true,
 		element: VirtualScrollingRootMemo,
+	}
+}
+
+export const componentAlertRoute = (): TRouteItem => {
+	return {
+		path: '/alert',
+		exact: true,
+		element: AlertRootMemo,
 	}
 }

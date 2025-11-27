@@ -1,10 +1,21 @@
 import React, { useCallback } from 'react'
-import CheckTags from '../component/CheckTags'
-import IconTags from '../component/IconTags'
 import { CMDLINK_DIVISION_TAG } from '../config/config'
-import { TContextMenuItemProps } from '../types/type'
 import { menuItemElementMouseOverEventHandler } from '../utils/menuItemEventHandler'
-import MenuItemContent from './MenuItemContent'
+import { MenuItemContentMemo } from './MenuItemContent'
+import { IconTagsMemo } from '../component/IconTags'
+import { CheckTagsMemo } from '../component/CheckTags'
+import { TMenuWrapperProps } from './MenuWrapper'
+import { TContextMenuItem, TContextMenuItemExtend } from '../types/type'
+
+export type TContextMenuItemProps = {
+	domId: string
+	panelMaxHeight: number
+	nowMenuItem: TContextMenuItem
+	isCreateSubMenu: boolean
+	commanLink?: string
+	createSubMenu?: (a: TMenuWrapperProps) => React.ReactElement
+	onClickAction?: (a: TContextMenuItemExtend, e: React.MouseEvent) => void
+}
 
 function MenuItem(props: TContextMenuItemProps): React.ReactElement {
 	const { domId, panelMaxHeight, commanLink = undefined, nowMenuItem, isCreateSubMenu, createSubMenu, onClickAction } = props
@@ -35,10 +46,10 @@ function MenuItem(props: TContextMenuItemProps): React.ReactElement {
 		>
 			<div className={'ctxmenu-content'} onClick={onMenuItemClickAction} data-cmdlink={cmdlink}>
 				<div className="content-prevtags" style={{ display: nowMenuItem.isHidePrevTag ? 'none' : 'flex' }}>
-					{nowMenuItem.checked ? <CheckTags /> : <IconTags iconClassName={nowMenuItem.iconClassName} />}
+					{nowMenuItem.checked ? <CheckTagsMemo /> : <IconTagsMemo iconClassName={nowMenuItem.iconClassName} />}
 				</div>
 				<div className="content-text">
-					<MenuItemContent {...nowMenuItem} />
+					<MenuItemContentMemo {...nowMenuItem} />
 				</div>
 				<div className="content-tips" style={{ display: nowMenuItem.isHideTips ? 'none' : 'flex' }}>
 					<div className="content-tips-inns">{nowMenuItem.tips}</div>
@@ -61,4 +72,4 @@ function MenuItem(props: TContextMenuItemProps): React.ReactElement {
 	)
 }
 
-export default React.memo(MenuItem)
+export const MenuItemMemo = React.memo(MenuItem)

@@ -48,6 +48,7 @@ export const createInitialState = (): TStore => {
 						path: '/baseComponentLib/virtualscrolling',
 					},
 					{ id: uuidv4(), title: 'Contextmenu', desc: 'Contextmenu component case test', path: '/baseComponentLib/contextmenu' },
+					{ id: uuidv4(), title: 'Alert', desc: 'Alert component case test', path: '/baseComponentLib/alert' },
 				],
 			},
 			{

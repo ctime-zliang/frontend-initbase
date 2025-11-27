@@ -20,7 +20,10 @@ export type TContextMenuItem = {
 
 export type TContextMenu = {
 	data: Array<TContextMenuItem>
-	position: TPosition
+	position: {
+		x: number
+		y: number
+	}
 	panelAlignment?: EContextPanelAlignment
 	panelMaxHeight?: number
 	onClick?: (menuItem: TContextMenuItemExtend, e: React.MouseEvent) => void
@@ -39,8 +42,6 @@ export type TContextMenuItemExtend = TContextMenuItem & {
 	cmdlink?: Array<string>
 }
 
-export type TCacheValue = TContextMenu & { id: string }
-
 export type TBoundingClientRectResultToJSONResult = {
 	left: number
 	top: number
@@ -50,43 +51,4 @@ export type TBoundingClientRectResultToJSONResult = {
 	height: number
 	x: number
 	y: number
-}
-
-export type TPosition = {
-	x: number
-	y: number
-}
-
-export type TContextMenuRootProps = TContextMenu & {
-	domId: string
-	unmount: () => void
-}
-
-export type TSeparatorProps = {
-	menuItem: TContextMenuItem
-}
-
-export type TMenuWrapperProps = {
-	domId: string
-	panelMaxHeight: number
-	commanLink?: string
-	subMenuItems?: Array<TContextMenuItem>
-	onClickAction?: (a: TContextMenuItemExtend, e: React.MouseEvent) => void
-	isSubMenu?: boolean
-}
-
-export type TContextMenuItemProps = {
-	domId: string
-	panelMaxHeight: number
-	nowMenuItem: TContextMenuItem
-	isCreateSubMenu: boolean
-	commanLink?: string
-	createSubMenu?: (a: TMenuWrapperProps) => React.ReactElement
-	onClickAction?: (a: TContextMenuItemExtend, e: React.MouseEvent) => void
-}
-
-export type TContextMenuItemContentProps = TContextMenuItem
-
-export type TIconTagsProps = {
-	iconClassName?: string
 }
