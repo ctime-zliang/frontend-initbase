@@ -124,9 +124,13 @@
 				color: #666666;
 				font-size: 16px;
 				overflow: hidden;
+				background-color: #ffffff;
 				.alertcompt-btntext {
 					position: relative;
 					z-index: 999999;
+				}
+				&:hover {
+					background-color: #f8f8f8;
 				}
 				&:first-child {
 					border-left: 0;
@@ -135,29 +139,12 @@
 					outline: 0;
 				}
 			}
-			.alertcompt-btn-active {
-				background-color: #ececec;
-			}
-			.alertcompt-btn-eventsno {
-				pointer-events: none;
+			.alertcompt-default-btn {
+				color: #222222;
+				opacity: 0.8;
 			}
 			.alertcompt-primary-btn {
 				color: rgb(32, 128, 240, 1);
-			}
-			.alertcompt-confirm-btn {
-				color: rgb(32, 128, 240, 1);
-			}
-			.alertcompt-cancel-btn {
-				color: #555555;
-			}
-			.alertcompt-default-btn {
-				color: #111111;
-			}
-			.alertcompt-dangrous-btn {
-				color: #ff0000;
-			}
-			.alertcompt-success-btn {
-				color: rgb(24, 160, 88, 1);
 			}
 			.alertcompt-warning-btn {
 				color: rgb(252, 176, 64, 1);

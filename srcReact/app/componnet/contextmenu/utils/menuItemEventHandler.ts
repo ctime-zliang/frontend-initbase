@@ -1,6 +1,5 @@
 import { ActiveCmdLinkCache, RuntimeCache, TCacheValue } from '../cache/cache'
-import { CMDLINK_DIVISION_TAG, PADDING_VIEWPORT_BOTTOM, PADDING_VIEWPORT_TOP } from '../config/config'
-import { EContextPanelAlignment } from '../config/enum'
+import { CMDLINK_DIVISION_TAG, EContextPanelAlignment, PADDING_VIEWPORT_BOTTOM, PADDING_VIEWPORT_TOP } from '../config/config'
 import { TBoundingClientRectResultToJSONResult } from '../types/type'
 import { updateActiveCmdLinkCache } from './cacheHandler'
 import { isMouseLeaveContainer } from './isMouseLeaveContainer'

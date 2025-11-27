@@ -1,6 +1,8 @@
 import React, { useRef } from 'react'
 import '../styles/index.less'
-import { TAlertOptions } from '../types/type'
+import { TAlertBtnItem, TAlertOptions } from '../types/type'
+import { AlertBtnMemo } from './AlertBtn'
+import { EAlertButtonType } from '../config/config'
 
 export type TAlertRootProps = TAlertOptions & {
 	domId: string
@@ -8,7 +10,7 @@ export type TAlertRootProps = TAlertOptions & {
 }
 
 export function AlertRoot(props: TAlertRootProps): React.ReactElement {
-	const { domId, title, content, unmount } = props
+	const { domId, title, btns, content, unmount } = props
 	const containerRef: { current: any } = useRef<HTMLElement>(null)
 	const titleString: string = (title || '').trim().toString()
 	const titleElementClassName: string =
@@ -16,12 +18,16 @@ export function AlertRoot(props: TAlertRootProps): React.ReactElement {
 	const contentString: string = (title || '').trim().toString()
 	const contentElementClassName: string =
 		contentString.length > 0 ? 'alertcompt-message-content alertcompt-message-content-visible' : 'alertcompt-message-content'
-	const onClickAction = (e: React.MouseEvent): void => {
+	const onClickAction = (btnIndex: number): void => {
+		const btnItem: TAlertBtnItem = btns[btnIndex]
+		if (!btnItem) {
+			return
+		}
+		btnItem.onClick && btnItem.onClick()
 		window.setTimeout((): void => {
 			unmount()
 		})
 	}
-
 	return (
 		<section ref={containerRef} className="alertcompt-container">
 			<div className="alertcompt-lock-wrapper"></div>
@@ -31,7 +37,11 @@ export function AlertRoot(props: TAlertRootProps): React.ReactElement {
 						<div className={titleElementClassName}>{title}</div>
 						<div className={contentElementClassName}>{content}</div>
 					</div>
-					<div className="alertcompt-btns-wrapper"></div>
+					<div className="alertcompt-btns-wrapper">
+						{btns.map((item: TAlertBtnItem, index: number): React.ReactElement => {
+							return <AlertBtnMemo key={index} btnIndex={index} text={item.text} type={item.type} onClick={onClickAction} />
+						})}
+					</div>
 				</div>
 			</div>
 		</section>

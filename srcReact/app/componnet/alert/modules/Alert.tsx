@@ -37,7 +37,7 @@ export class Alert {
 		const htmlRoot: HTMLElement = document.getElementById(domId) as HTMLElement
 		;(htmlRoot as any).root = root
 		if (htmlRoot) {
-			htmlRoot.addEventListener('click', rootElementClickEventHandler)
+			// htmlRoot.addEventListener('click', rootElementClickEventHandler)
 			htmlRoot.focus()
 		}
 	}

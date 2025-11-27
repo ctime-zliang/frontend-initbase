@@ -1,5 +1,5 @@
 import React from 'react'
-import { EContextMenuType, EContextPanelAlignment } from '../config/enum'
+import { EContextMenuType, EContextPanelAlignment } from '../config/config'
 
 export type TContextMenuItem = {
 	title?: string | React.ReactElement

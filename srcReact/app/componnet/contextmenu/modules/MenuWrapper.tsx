@@ -1,6 +1,5 @@
 import React, { MemoExoticComponent } from 'react'
-import { CMDLINK_DIVISION_TAG } from '../config/config'
-import { EContextMenuType } from '../config/enum'
+import { CMDLINK_DIVISION_TAG, EContextMenuType } from '../config/config'
 import { TContextMenuItem, TContextMenuItemExtend } from '../types/type'
 import { MenuItemMemo } from './MenuItem'
 import { SeparatorMemo } from './Separator'

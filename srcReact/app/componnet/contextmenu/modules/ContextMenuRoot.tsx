@@ -1,8 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef } from 'react'
 import { TBoundingClientRectResultToJSONResult, TContextMenuItem, TContextMenu } from '../types/type'
 import '../styles/index.less'
-import { PADDING_VIEWPORT_BOTTOM, PADDING_VIEWPORT_TOP } from '../config/config'
-import { EContextPanelAlignment } from '../config/enum'
+import { EContextPanelAlignment, PADDING_VIEWPORT_BOTTOM, PADDING_VIEWPORT_TOP } from '../config/config'
 import { MenuWrapperMemo } from './MenuWrapper'
 
 export type TContextMenuRootProps = TContextMenu & {
@@ -42,7 +41,6 @@ function ContextMenuRoot(props: TContextMenuRootProps): React.ReactElement {
 			containerRef.current.setAttribute('mouselave', 'true')
 		}
 	}
-
 	useLayoutEffect((): void => {
 		if (containerRef.current) {
 			const menuWrapper: HTMLElement = containerRef.current.firstElementChild
@@ -81,7 +79,6 @@ function ContextMenuRoot(props: TContextMenuRootProps): React.ReactElement {
 			containerRef.current.style.top = ctxmenuRect.top + 'px'
 		}
 	}, [])
-
 	return (
 		<div
 			ref={containerRef}
