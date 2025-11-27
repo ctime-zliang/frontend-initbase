@@ -26,10 +26,10 @@ export function LinkListRoot(props: TCommonComponentBaseProps): React.ReactEleme
 								<div key={sIndex + '' + index} className={styles['list-groupcontent']}>
 									<Link className={styles['link-item']} to={{ pathname: `${sItem.path}` }} state={{ showBackIcon: true }}>
 										<div className={styles['list-groupcontent-card']}>
-											<div className={styles['entry-title-wrapper']}>
+											<div className={styles['entry-title-wrapper']} title={sItem.title}>
 												<div className={styles['entry-title']}>{sItem.title}</div>
 											</div>
-											<div className={styles['entry-description-wrapper']}>
+											<div className={styles['entry-description-wrapper']} title={sItem.desc}>
 												<div className={styles['entry-description']}>{sItem.desc}</div>
 											</div>
 										</div>
