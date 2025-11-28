@@ -21,6 +21,17 @@ export class ConcurrencyTaskQueue {
 		this._allTasksFinishListeners = []
 	}
 
+	public reset(): void {
+		this._runingCount = 0
+		this._handleCount = 0
+		this._queue = []
+		this._results = []
+	}
+
+	public getTaskSize(): number {
+		return this._queue.length
+	}
+
 	public pushTask(taskItem: (taskIndex: number) => Promise<any>): void {
 		this._queue.push(taskItem)
 	}
@@ -28,13 +39,22 @@ export class ConcurrencyTaskQueue {
 	public addTaskStartListener(callback: (taskIndex: number) => void): void {
 		this._taskItemStartListeners.push(callback)
 	}
+	public clearTaskStartListeners(): void {
+		this._taskItemStartListeners.length = 0
+	}
 
 	public addTaskEndListener(callback: (result: any) => void): void {
 		this._taskItemEndListeners.push(callback)
 	}
+	public clearTaskEndListeners(): void {
+		this._taskItemEndListeners.length = 0
+	}
 
 	public addAllTasksFinishListener(callback: (results: Array<any>) => void): void {
 		this._allTasksFinishListeners.push(callback)
+	}
+	public clearAllTasksFinishListeners(): void {
+		this._allTasksFinishListeners.length = 0
 	}
 
 	public next(): void {

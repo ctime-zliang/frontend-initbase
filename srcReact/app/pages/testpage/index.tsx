@@ -15,7 +15,6 @@ function TestPageMain(props: TCommonComponentBaseProps): React.ReactElement {
 			</Helmet>
 			<section style={{ padding: `10px 10px`, position: 'relative' }}>
 				<h2 style={{ padding: `10px 10px`, margin: 0 }}>{MODULE_NAME}</h2>
-				<InsertList />
 			</section>
 		</>
 	)
