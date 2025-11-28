@@ -163,6 +163,7 @@ export class ListDragableUtils {
 		copyTargetElement.style.height = `${boundingClientRect.height}px`
 		copyTargetElement.style.margin = `0`
 		copyTargetElement.style.outline = `0`
+		copyTargetElement.style.fontSize = `14px`
 		document.body.appendChild(fragmentElement)
 		return suspensionContainerElement
 	}
