@@ -5,8 +5,8 @@ import { ROOT_PREFIEX_TAG, PADDING_VIEWPORT_TOP, PADDING_VIEWPORT_BOTTOM } from 
 import { TOpenContextMenu } from '../types/type'
 import {
 	rootElementBlurEventHandler,
-	rootElementKeydownEventHandler,
-	rootElementKeyupEventHandler,
+	rootElementKeyDownEventHandler,
+	rootElementKeyUpEventHandler,
 	unmountContextmenu,
 } from '../utils/rootElementEventHandler'
 import { ContextMenuRootMemo } from './ContextMenuRoot'
@@ -49,8 +49,8 @@ export class ContextMenu {
 		;(htmlRoot as any).root = root
 		if (htmlRoot) {
 			htmlRoot.addEventListener('blur', rootElementBlurEventHandler)
-			htmlRoot.addEventListener('keydown', rootElementKeydownEventHandler)
-			htmlRoot.addEventListener('keyup', rootElementKeyupEventHandler)
+			htmlRoot.addEventListener('keydown', rootElementKeyDownEventHandler)
+			htmlRoot.addEventListener('keyup', rootElementKeyUpEventHandler)
 			htmlRoot.focus()
 		}
 	}

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import styles from './index.module.less'
 import { ListDragableUtils } from '../../../../utils/dragableUtils/listDragableUtils'
 
-export function NormalList(): React.ReactElement {
+export function NormalListColumn(): React.ReactElement {
 	const dragableConatinerElementRef: { current: HTMLUListElement } = useRef<HTMLUListElement>(null!)
 	const listDragableUtilsInstanceRef: { current: ListDragableUtils } = useRef<ListDragableUtils>(null!)
 	const listDragInitRef: { current: boolean } = useRef<boolean>(false)

@@ -3,7 +3,7 @@ import ReactDOMClient from 'react-dom/client'
 import { ROOT_PREFIEX_TAG } from '../config/config'
 import { TAlertOptions } from '../types/type'
 import { AlertRoot } from './AlertRoot'
-import { rootElementClickEventHandler, unmountContextmenu } from '../utils/rootElementEventHandler'
+import { rootElementMouseDownEventHandler, unmountContextmenu } from '../utils/rootElementEventHandler'
 import { RuntimeCache } from '../cache/cache'
 
 let id: number = 0
@@ -37,7 +37,7 @@ export class Alert {
 		const htmlRoot: HTMLElement = document.getElementById(domId) as HTMLElement
 		;(htmlRoot as any).root = root
 		if (htmlRoot) {
-			// htmlRoot.addEventListener('click', rootElementClickEventHandler)
+			htmlRoot.addEventListener('mousedown', rootElementMouseDownEventHandler)
 			htmlRoot.focus()
 		}
 	}

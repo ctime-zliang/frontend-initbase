@@ -22,7 +22,7 @@ export function rootElementBlurEventHandler(e: FocusEvent): void {
 	}
 }
 
-export function rootElementKeydownEventHandler(e: KeyboardEvent): void {
+export function rootElementKeyDownEventHandler(e: KeyboardEvent): void {
 	const rootElement: HTMLElement = e.target as HTMLElement
 	const itemData: TContextMenu = RuntimeCache.get(rootElement.id) as TContextMenu
 	if (!itemData) {
@@ -89,7 +89,7 @@ export function rootElementKeydownEventHandler(e: KeyboardEvent): void {
 	itemData.onKeydown && itemData.onKeydown(e, unmount)
 }
 
-export function rootElementKeyupEventHandler(e: KeyboardEvent): void {
+export function rootElementKeyUpEventHandler(e: KeyboardEvent): void {
 	const rootElement: HTMLElement = e.target as HTMLElement
 	const itemData: TContextMenu = RuntimeCache.get(rootElement.id) as TContextMenu
 	if (!itemData) {
@@ -104,8 +104,8 @@ export function rootElementKeyupEventHandler(e: KeyboardEvent): void {
 export function unmountContextmenu(rootElement: HTMLElement): void {
 	const reactRoot = (rootElement as any).root
 	rootElement.removeEventListener('blur', rootElementBlurEventHandler)
-	rootElement.removeEventListener('keydown', rootElementKeydownEventHandler)
-	rootElement.removeEventListener('keyup', rootElementKeyupEventHandler)
+	rootElement.removeEventListener('keydown', rootElementKeyDownEventHandler)
+	rootElement.removeEventListener('keyup', rootElementKeyUpEventHandler)
 	reactRoot.unmount()
 	rootElement.remove()
 	RuntimeCache.delete(rootElement.id)

@@ -1,7 +1,8 @@
 import React from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useContentBgColor } from '../../../utils/hooks/useContentBgColor'
-import { NormalList } from './normalList/Index'
+import { NormalListColumn } from './normalListColumn/Index'
+import { NormalListGrid } from './normalListGrid/Index'
 
 function ListDragableRoot(props: any): React.ReactElement {
 	const MODULE_NAME: string = `Dragable`
@@ -13,7 +14,8 @@ function ListDragableRoot(props: any): React.ReactElement {
 			</Helmet>
 			<section style={{ padding: `10px 10px`, position: 'relative' }}>
 				<h2 style={{ padding: `10px 10px`, margin: 0 }}>{MODULE_NAME}</h2>
-				<NormalList />
+				<NormalListColumn />
+				<NormalListGrid />
 			</section>
 		</>
 	)

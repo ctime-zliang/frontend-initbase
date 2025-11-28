@@ -4,6 +4,7 @@ export type TAlertOptions = {
 	title: string
 	btns: Array<TAlertBtnItem>
 	content?: string
+	lockMaskVisible?: boolean
 }
 
 export type TOpenAlertOptions = TAlertOptions
