@@ -3,10 +3,10 @@ import ReactDOMClient, { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { HelmetProvider } from 'react-helmet-async'
-import App from '../App'
+import { App } from '../App'
 import { reduxStore } from '../store/reduxToolkit'
 import { resetFontsize } from '../utils/resetFontsize'
-import I18nProvider from '../i18n/I18nProvider'
+import { I18nProviderMemo } from '../i18n/I18nProvider'
 import { TapRipple } from '../utils/TapRipple'
 
 export class Environment {
@@ -36,13 +36,13 @@ export class Environment {
 		const __render_id__: number = Math.random()
 		ReactDOMClient.createRoot(document.getElementById('reactApp') as HTMLElement).render(
 			<Provider store={reduxStore}>
-				<I18nProvider>
+				<I18nProviderMemo>
 					<BrowserRouter>
 						<HelmetProvider>
 							<App __RenderProps__={{ __render_id__ }} reduxStore={reduxStore} />
 						</HelmetProvider>
 					</BrowserRouter>
-				</I18nProvider>
+				</I18nProviderMemo>
 			</Provider>
 		)
 	}

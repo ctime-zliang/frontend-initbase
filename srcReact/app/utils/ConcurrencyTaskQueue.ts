@@ -21,7 +21,10 @@ export class ConcurrencyTaskQueue {
 		this._allTasksFinishListeners = []
 	}
 
-	public reset(): void {
+	public resetStatus(): void {
+		if (this._runingCount > 0) {
+			return
+		}
 		this._runingCount = 0
 		this._handleCount = 0
 		this._queue = []

@@ -15,7 +15,7 @@ const Container = styled.section`
 	flex-wrap: nowrap;
 `
 
-export default function App(props: TCommonComponentBaseProps): React.ReactElement {
+export function App(props: TCommonComponentBaseProps): React.ReactElement {
 	console.log(`App ☆☆☆`, props)
 	const __app_id__: number = Math.random()
 	return (

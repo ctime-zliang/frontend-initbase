@@ -3,14 +3,9 @@ export type TTapRippleOptional = {
 }
 export class TapRipple {
 	private _name: string
-	private _optional: TTapRippleOptional
 	private _rippleAnimationEndActionScopeHandler: (e: AnimationEvent) => void
-	constructor(name: string, optional: TTapRippleOptional = {}) {
+	constructor(name: string) {
 		this._name = name
-		this._optional = {
-			rippleColor: `#dcdcdc`,
-			...optional,
-		}
 	}
 
 	public install(): void {
@@ -29,7 +24,19 @@ export class TapRipple {
 		}
 	}
 
-	public apply(insertContainerElement: HTMLElement, position: { x: number; y: number }): void {
+	public apply(
+		insertContainerElement: HTMLElement,
+		position: { x: number; y: number },
+		options?: {
+			rippleColor?: string
+		}
+	): void {
+		const optional: {
+			rippleColor: string
+		} = {
+			rippleColor: `#dcdcdc`,
+			...options,
+		}
 		const insertContainerElementClientWidth = insertContainerElement.offsetWidth
 		const spanElement = document.createElement('span')
 		const targetClientRect = insertContainerElement.getBoundingClientRect()
@@ -40,10 +47,11 @@ export class TapRipple {
 		} else {
 			insertContainerElement.appendChild(spanElement)
 		}
-		spanElement.classList.add('gesture-tap-ripple')
+		spanElement.classList.add('user-tap-ripple')
 		spanElement.addEventListener('animationend', this._rippleAnimationEndActionScopeHandler)
 		spanElement.style.cssText = `width: ${insertContainerElementClientWidth}px; height: ${insertContainerElementClientWidth}px; top: ${y}px; left: ${x}px`
-		spanElement.classList.add('gesture-tap-ripple-animation')
+		spanElement.classList.add('user-tap-ripple-animation')
+		spanElement.style.setProperty('--user-tap-ripple-bgcolor', optional.rippleColor)
 	}
 
 	private rippleAnimationEndAction(e: AnimationEvent): void {
@@ -54,26 +62,28 @@ export class TapRipple {
 
 	private createCSSText(): string {
 		const cssText: string = `
-            @keyframes GestureTapRippleAnimation {
+            @keyframes UserTapRippleAnimation {
                 100% {
                     -webkit-transform: scale(2);
                     transform: scale(2);
                     opacity: 0;
                 }
             }
-            .gesture-tap-ripple {
+            .user-tap-ripple {
+				--user-tap-ripple-bgcolor: #dcdcdc;
+				// ...
                 border-radius: 50%;
-                background-color: ${this._optional.rippleColor};
+                background-color: var(--user-tap-ripple-bgcolor);
                 -webkit-transform: scale(0);
                 transform: scale(0);
                 position: absolute;
                 opacity: 1;
                 pointer-events: none;
             }
-            .gesture-tap-ripple-animation {
-                -webkit-animation: GestureTapRippleAnimation 1.5s cubic-bezier(0.23, 1, 0.32, 1);
-                -moz-animation: GestureTapRippleAnimation 1.5s cubic-bezier(0.23, 1, 0.32, 1);
-                animation: GestureTapRippleAnimation 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+            .user-tap-ripple-animation {
+                -webkit-animation: UserTapRippleAnimation 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+                -moz-animation: UserTapRippleAnimation 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+                animation: UserTapRippleAnimation 1.5s cubic-bezier(0.23, 1, 0.32, 1);
             }
         `
 		return cssText

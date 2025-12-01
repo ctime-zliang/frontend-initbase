@@ -57,4 +57,4 @@ function I18nProvider(props: any): React.ReactElement {
 	return <I18nextProvider i18n={i18next}>{props.children}</I18nextProvider>
 }
 
-export default React.memo(I18nProvider)
+export const I18nProviderMemo = React.memo(I18nProvider)

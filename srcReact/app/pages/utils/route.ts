@@ -4,7 +4,7 @@ import { AsyncAnimatorRootMemo } from './asyncAnimator/Index'
 import { AsyncTimeoutRootMemo } from './asyncTimeout/Index'
 import { ConcurrencyControlRootMemo } from './concurrencyControl/Index'
 import { DiffJSONRootMemo } from './diffJSON/Index'
-import { ListDragableRootMemo } from './dragable/Index'
+import { ListDragable2RootMemo } from './dragable2/Index'
 import { GestureCaseRootMemo } from './gesture/Index'
 import { ProxyStateRootMemo } from './proxyState/Index'
 import { SetMessageTimeoutRootMemo } from './setMessageTimeout/Index'
@@ -65,11 +65,11 @@ export const setMessageTimeoutRoute = (): TRouteItem => {
 	}
 }
 
-export const listDragableRoute = (): TRouteItem => {
+export const listDragable2Route = (): TRouteItem => {
 	return {
-		path: '/listDragable',
+		path: '/listDragable2',
 		exact: true,
-		element: ListDragableRootMemo,
+		element: ListDragable2RootMemo,
 	}
 }
 

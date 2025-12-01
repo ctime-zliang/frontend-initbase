@@ -2,13 +2,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import styles from './index.module.less'
 import { Gesture } from '@/app/utils/gesture/Gesture'
 import { attachGesture, ListenerExtendPointerEvent } from '@/app/utils/gesture'
-import { TapRipple } from '@/app/utils/TapRipple'
 import { environment } from '@/app/environment/Environment'
 
 type TController = {
 	isInit: boolean
 	gestureInstance: Gesture
-	tapRippleInstance: TapRipple
 	tapClientX: number
 	tapClientY: number
 }
@@ -17,7 +15,6 @@ export function DoubleTapView(): React.ReactElement {
 	const controllerRef: { current: TController } = useRef<TController>({
 		isInit: false,
 		gestureInstance: null!,
-		tapRippleInstance: environment.tapRippleInstance,
 		tapClientX: -1,
 		tapClientY: -1,
 	})
@@ -40,7 +37,13 @@ export function DoubleTapView(): React.ReactElement {
 					if (gestureInteractiveElementRef.current) {
 						const pageX: number = evte instanceof MouseEvent ? evte.pageX : evte instanceof TouchEvent ? evte.changedTouches[0].pageX : 0
 						const pageY: number = evte instanceof MouseEvent ? evte.pageY : evte instanceof TouchEvent ? evte.changedTouches[0].pageY : 0
-						controllerRef.current.tapRippleInstance.apply(gestureInteractiveElementRef.current.parentElement!, { x: pageX, y: pageY })
+						environment.tapRippleInstance.apply(
+							gestureInteractiveElementRef.current.parentElement!,
+							{ x: pageX, y: pageY },
+							{
+								rippleColor: `rgba(206, 145, 120, 1.0)`,
+							}
+						)
 					}
 					setFlush((prev: number): number => {
 						return prev + 1

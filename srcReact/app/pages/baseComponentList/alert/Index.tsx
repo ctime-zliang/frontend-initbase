@@ -111,7 +111,7 @@ function AlertRoot(props: any): React.ReactElement {
 				<br />
 				<div>
 					<Button type="primary" onClick={(): void => onBtnClickAction('4')}>
-						测试按钮 - [确认] - [遮罩层透明]
+						测试按钮 - [确认] - [遮罩层全透明]
 					</Button>
 				</div>
 			</section>
