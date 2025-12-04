@@ -24,6 +24,7 @@ import {
 	setMessageTimeoutRoute,
 	utilsErrorRoute,
 } from '../pages/utils/route'
+import { projectionTestRoute, webglErrorRoute } from '../pages/webgl/route'
 
 export const createRoutes = (): Array<TRouteItem> => {
 	const routes: Array<TRouteItem> = [
@@ -66,6 +67,10 @@ export const createRoutes = (): Array<TRouteItem> => {
 				listDragable2Route(),
 				gestureCaseRoute(),
 			],
+		},
+		{
+			path: '/webgl/*',
+			routes: [webglErrorRoute(), projectionTestRoute()],
 		},
 		{
 			path: '/testpage/*',

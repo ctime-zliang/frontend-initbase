@@ -65,6 +65,10 @@ export const createInitialState = (): TStore => {
 				],
 			},
 			{
+				subject: 'WebGL',
+				list: [{ id: uuidv4(), title: 'WebGL Projection', desc: 'WebGL projection test', path: '/webgl/projectionTest' }],
+			},
+			{
 				subject: 'Test Page',
 				list: [{ id: uuidv4(), title: 'Common', desc: 'Common page', path: '/testpage/common' }],
 			},

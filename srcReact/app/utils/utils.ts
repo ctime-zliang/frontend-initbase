@@ -317,3 +317,19 @@ export function viewMatrix(containerElement: HTMLElement, data: Array<number>, r
 	const fragmentElement: DocumentFragment = document.createRange().createContextualFragment(htmlStrArr.join('\n'))
 	containerElement.appendChild(fragmentElement)
 }
+
+export function arrayCopy(
+	sourceArray: Array<number>,
+	sourceIndex: number,
+	resultArray: Array<number>,
+	resultIndex: number,
+	copyLength: number
+): void {
+	if (sourceArray.length >= sourceIndex + copyLength && resultArray.length >= resultIndex + copyLength) {
+		while (copyLength-- > 0) {
+			resultArray[resultIndex++] = sourceArray[sourceIndex++]
+		}
+		return
+	}
+	throw new Error('cannot read array out of range.')
+}

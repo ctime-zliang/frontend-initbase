@@ -40,7 +40,7 @@ export function createWebGLProgram(gl: WebGLRenderingContext, vertexShaderSource
 	return null
 }
 
-export function ven$getWebGLVariableLocation(
+export function getWebGLVariableLocation(
 	gl: WebGLRenderingContext,
 	program: WebGLProgram,
 	cfg: {
