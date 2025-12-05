@@ -17,7 +17,7 @@ export function NormalListGrid(): React.ReactElement {
 	}, [])
 	useEffect((): (() => void) => {
 		if (dragableConatinerElementRef.current && !listDragInitRef.current) {
-			listDragableUtilsInstanceRef.current = new ListDrag(dragableConatinerElementRef.current)
+			listDragableUtilsInstanceRef.current = new ListDrag(dragableConatinerElementRef.current, false)
 			listDragInitRef.current = true
 		}
 		return (): void => {
