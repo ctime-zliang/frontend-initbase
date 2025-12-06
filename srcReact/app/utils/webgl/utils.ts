@@ -112,13 +112,13 @@ export function initElementArrayBufferForLaterUse(gl: WebGLRenderingContext, dat
 export function initAttributeVariable(
 	gl: WebGLRenderingContext,
 	a_attribute: GLuint,
-	buffer: ArrayBuffer,
+	buffer: WebGLBuffer,
 	optional: {
 		size: number
-		type: GLenum
-		normalize: boolean
-		stride: number
-		offset: number
+		type?: GLenum
+		normalize?: boolean
+		stride?: number
+		offset?: number
 	},
 	bufferData: {
 		data?: ArrayBuffer

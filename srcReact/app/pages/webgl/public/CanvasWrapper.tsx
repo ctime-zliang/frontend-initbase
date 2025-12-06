@@ -1,73 +1,65 @@
 import { createWebGLProgram, getWebGLVariableLocation } from '@/app/utils/webgl/utils'
 import { Col, Row } from 'antd'
 import React, { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
-import { Program } from './Program'
+import { COMMON_FRAGMENT_SHADER, COMMON_VERTEX_SHADER, Program } from './Program'
+import { TComponentDataHandlerFormData } from './FormController'
 
-const COMMON_VERTEX_SHADER: string = `
-	precision mediump float;
-	varying vec4 v_Color;
-	// 顶点配置(组)
-	attribute vec3 a_Position;
-	attribute vec4 a_Color;
-	// 变换矩阵(组)
-	uniform mat4 u_ModelMatrix;
-	uniform mat4 u_ViewMatrix;
-	uniform mat4 u_ProjMatrix;
-	void main() {
-		gl_Position = u_ProjMatrix * u_ViewMatrix * u_ModelMatrix * vec4(a_Position, 1.0);
-		v_Color = a_Color;
-	}
-`
-const COMMON_FRAGMENT_SHADER: string = `
-	precision mediump float;
-	varying vec4 v_Color;
-	void main() {
-		gl_FragColor = v_Color;
-	}
-`
-
-type TComponentDataHandler = {
-	isInit: boolean
-	gl: WebGLRenderingContext
-	program: WebGLProgram
-	glAttributes: { [key: string]: GLint }
-	glUniforms: { [key: string]: WebGLUniformLocation | null }
+export type TCanvasWrapperComponentImperativeHandle = {
+	applyFormData: (key: string, value: any, formData: TComponentDataHandlerFormData) => void
 }
 
 function CanvasWrapper(props: any, ref: any): React.ReactElement {
 	const canvasElementRef: { current: HTMLCanvasElement } = useRef<HTMLCanvasElement>(null!)
-	const dataHandlerRef: { current: TComponentDataHandler } = useRef<TComponentDataHandler>({
-		isInit: false,
-		gl: null!,
-		program: null!,
-		glAttributes: {},
-		glUniforms: {},
-	})
 
 	useImperativeHandle(ref, () => {
 		return {
-			test(): void {},
+			applyFormData(key: string, value: any, formData: TComponentDataHandlerFormData): void {
+				console.log(`CanvasWrapper.applyFormData: `, key, value, formData)
+				Program.objecters = Program.createPresetObjecters(value)
+			},
 		}
 	})
 
 	useEffect((): (() => void) => {
-		if (!dataHandlerRef.current.isInit && canvasElementRef.current) {
-			dataHandlerRef.current.gl = canvasElementRef.current.getContext('webgl') as WebGLRenderingContext
-			dataHandlerRef.current.program = createWebGLProgram(dataHandlerRef.current.gl, COMMON_VERTEX_SHADER, COMMON_FRAGMENT_SHADER)!
-			const { glAttributes, glUniforms } = getWebGLVariableLocation(dataHandlerRef.current.gl, dataHandlerRef.current.program, {
-				glAttributes: ['a_Position', 'a_Color'],
-				glUniforms: ['u_ModelMatrix', 'u_ViewMatrix', 'u_ProjMatrix'],
+		if (!Program.isInit && canvasElementRef.current) {
+			Program.isInit = true
+			const gl: WebGLRenderingContext = canvasElementRef.current.getContext('webgl') as WebGLRenderingContext
+			Program.setProgramControllerStatus({
+				gl,
+				canvasWidth: canvasElementRef.current.offsetWidth,
+				canvasHeight: canvasElementRef.current.offsetHeight,
+				program: createWebGLProgram(gl, COMMON_VERTEX_SHADER, COMMON_FRAGMENT_SHADER)!,
 			})
-			dataHandlerRef.current.glAttributes = glAttributes
-			dataHandlerRef.current.glUniforms = glUniforms
-			Program.initProfile(dataHandlerRef.current.gl)
-			dataHandlerRef.current.isInit = true
-			console.log(dataHandlerRef.current)
+			const { glAttributes, glUniforms } = getWebGLVariableLocation(Program.deviceParams.gl, Program.deviceParams.program, {
+				glAttributes: ['a_Normal', 'a_ObjPosition', 'a_Color', 'a_textureCoord'],
+				glUniforms: [
+					'u_illuType',
+					'u_LightColor',
+					'u_LightPosition',
+					'u_LightDirection',
+					'u_AmbientLightColor',
+					'u_lightIntensityGain',
+					'u_NormalMatrix',
+					'u_ModelMatrix',
+					'u_ViewMatrix',
+					'u_ProjMatrix',
+					'u_Clicked',
+					'u_EyePosition',
+					'u_FogColor',
+					'u_FogDist',
+					'u_Sampler',
+				],
+			})
+			Program.setProgramControllerStatus({
+				glAttributes: glAttributes,
+				glUniforms: glUniforms,
+			})
+			Program.initCanvasStatus()
+			Program.isRender = true
+			Program.render()
 		}
 		return (): void => {
-			if (dataHandlerRef.current) {
-				dataHandlerRef.current = undefined!
-			}
+			Program.clearProgramControllerStatus()
 		}
 	}, [])
 

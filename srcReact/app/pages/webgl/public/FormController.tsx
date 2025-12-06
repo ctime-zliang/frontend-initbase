@@ -1,9 +1,11 @@
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
-import { CheckboxChangeEvent, Col, ColorPicker, Form, Radio, Row, Slider } from 'antd'
-import { Color } from 'antd/es/color-picker'
+import { CheckboxChangeEvent, Col, Form, Radio, Row, Select, Slider } from 'antd'
 import { SimpleDividingLine } from '@/app/componnet/simpleDividingLine'
+import { ELightIlluType, EProjectionType, ERotationCalculationType, TShaderParams } from './Program'
 
-type TComponentDataHandlerFormDataOptional = {
+export type TComponentDataHandlerFormDataOptional = {
+	presetModelType?: string
+	rotationCalculationType?: ERotationCalculationType
 	modelRotationX?: number
 	modelRotationY?: number
 	modelRotationZ?: number
@@ -17,19 +19,35 @@ type TComponentDataHandlerFormDataOptional = {
 	lookAtPositionX?: number
 	lookAtPositionY?: number
 	lookAtPositionZ?: number
-	lightColor?: string
+	lightColorR?: number
+	lightColorG?: number
+	lightColorB?: number
+	lightColorA?: number
 	lightIntensityGain?: number
 	lightIlluType?: ELightIlluType
-	ambientLightR?: number
-	ambientLightG?: number
-	ambientLightB?: number
-	ambientLightA?: number
+	lightPositionX?: number
+	lightPositionY?: number
+	lightPositionZ?: number
+	lightDirectX?: number
+	lightDirectY?: number
+	lightDirectZ?: number
+	ambientLightColorR?: number
+	ambientLightColorG?: number
+	ambientLightColorB?: number
+	ambientLightColorA?: number
 	projectionType?: EProjectionType
+	orthoProjectionLeft?: number
+	orthoProjectionRight?: number
+	orthoProjectionBottom?: number
+	orthoProjectionTop?: number
+	orthoProjectionNear?: number
+	orthoProjectionFar?: number
 	perspectiveProjectionFovy?: number
+	perspectiveProjectionAspect?: number
 	perspectiveProjectionNear?: number
 	perspectiveProjectionFar?: number
 }
-type TComponentDataHandlerFormData = {
+export type TComponentDataHandlerFormData = TShaderParams & {
 	modelRotationX: number
 	modelRotationY: number
 	modelRotationZ: number
@@ -37,27 +55,21 @@ type TComponentDataHandlerFormData = {
 	modelOffsetY: number
 	modelOffsetZ: number
 	modelScale: number
-	lookEyePositionX: number
-	lookEyePositionY: number
-	lookEyePositionZ: number
-	lookAtPositionX: number
-	lookAtPositionY: number
-	lookAtPositionZ: number
-	lightColor: string
-	lightIntensityGain: number
-	lightIlluType: ELightIlluType
-	ambientLightR: number
-	ambientLightG: number
-	ambientLightB: number
-	ambientLightA: number
-	projectionType: EProjectionType
-	perspectiveProjectionFovy: number
-	perspectiveProjectionNear: number
-	perspectiveProjectionFar: number
 }
+
 type TComponentDataHandler = {
 	formData: TComponentDataHandlerFormData
 }
+
+const modelTypeList: Array<{
+	label: string
+	value: string
+}> = [
+	{
+		label: 'Single Plane',
+		value: '1',
+	},
+]
 
 const formWidth: number = 800
 
@@ -73,14 +85,9 @@ const formItemValueShowColStyle: React.CSSProperties = {
 }
 const formItemValueShowColWidth: number = 4
 
-export enum ELightIlluType {
-	ParallelLight = 'ParallelLight',
-	SpotLight = 'SpotLight',
-}
-
-export enum EProjectionType {
-	PerspectiveProjection = 'PerspectiveProjection',
-	OrthographicProjection = 'OrthographicProjection',
+export type TFormControllerComponentImperativeHandle = {
+	updateFormData: (formData: TComponentDataHandlerFormDataOptional) => void
+	getFormData: () => TComponentDataHandlerFormData
 }
 
 function FormController(
@@ -94,6 +101,8 @@ function FormController(
 	const [flush, setFlush] = useState<number>(0)
 	const dataHandlerRef: { current: TComponentDataHandler } = useRef<TComponentDataHandler>({
 		formData: {
+			presetModelType: formData.presetModelType || '1',
+			rotationCalculationType: formData.rotationCalculationType || ERotationCalculationType.UseMatrix,
 			modelRotationX: formData.modelRotationX || 0,
 			modelRotationY: formData.modelRotationY || 0,
 			modelRotationZ: formData.modelRotationZ || 0,
@@ -103,21 +112,37 @@ function FormController(
 			modelScale: formData.modelScale || 1,
 			lookEyePositionX: formData.lookEyePositionX || 0,
 			lookEyePositionY: formData.lookEyePositionY || 0,
-			lookEyePositionZ: formData.lookEyePositionZ || 1,
+			lookEyePositionZ: formData.lookEyePositionZ || 0,
 			lookAtPositionX: formData.lookAtPositionX || 0,
 			lookAtPositionY: formData.lookAtPositionY || 0,
 			lookAtPositionZ: formData.lookAtPositionZ || 0,
-			lightColor: formData.lightColor || '#ffffff',
-			lightIntensityGain: formData.lightIntensityGain || 1,
+			lightColorR: formData.lightColorR || 1,
+			lightColorG: formData.lightColorG || 1,
+			lightColorB: formData.lightColorB || 1,
+			lightColorA: formData.lightColorA || 1,
+			lightIntensityGain: formData.lightIntensityGain || 0,
 			lightIlluType: formData.lightIlluType || ELightIlluType.ParallelLight,
-			ambientLightR: formData.ambientLightR || 0,
-			ambientLightG: formData.ambientLightG || 0,
-			ambientLightB: formData.ambientLightB || 0,
-			ambientLightA: formData.ambientLightA || 1,
+			lightPositionX: formData.lightPositionX || 0,
+			lightPositionY: formData.lightPositionY || 0,
+			lightPositionZ: formData.lightPositionZ || 0,
+			lightDirectX: formData.lightDirectX || 0,
+			lightDirectY: formData.lightDirectY || 0,
+			lightDirectZ: formData.lightDirectZ || 0,
+			ambientLightColorR: formData.ambientLightColorR || 0,
+			ambientLightColorG: formData.ambientLightColorG || 0,
+			ambientLightColorB: formData.ambientLightColorB || 0,
+			ambientLightColorA: formData.ambientLightColorA || 1,
 			projectionType: formData.projectionType || EProjectionType.PerspectiveProjection,
-			perspectiveProjectionFovy: 100,
-			perspectiveProjectionNear: 0.1,
-			perspectiveProjectionFar: 100,
+			orthoProjectionLeft: formData.orthoProjectionLeft || 0,
+			orthoProjectionRight: formData.orthoProjectionRight || 0,
+			orthoProjectionBottom: formData.orthoProjectionBottom || 0,
+			orthoProjectionTop: formData.orthoProjectionTop || 0,
+			orthoProjectionNear: formData.orthoProjectionNear || 0,
+			orthoProjectionFar: formData.orthoProjectionFar || 0,
+			perspectiveProjectionFovy: formData.perspectiveProjectionFovy || 0,
+			perspectiveProjectionAspect: formData.perspectiveProjectionAspect || 0,
+			perspectiveProjectionNear: formData.perspectiveProjectionNear || 0,
+			perspectiveProjectionFar: formData.perspectiveProjectionFar || 0,
 		},
 	})
 	const onFormInputAction = (key: keyof TComponentDataHandlerFormData, value: any): void => {
@@ -125,6 +150,13 @@ function FormController(
 			;(dataHandlerRef.current.formData[key] as any) = value
 			onChangeAction && onChangeAction(key, value)
 		}
+		setFlush((prev: number): number => {
+			return prev + 1
+		})
+	}
+	const onModelTypeChangeAction = (value: string) => {
+		dataHandlerRef.current.formData['presetModelType'] = value
+		onChangeAction && onChangeAction('presetModelType', value)
 		setFlush((prev: number): number => {
 			return prev + 1
 		})
@@ -155,6 +187,37 @@ function FormController(
 			disabled={false}
 			style={{ width: `${formWidth}px`, height: '100%', overflow: 'auto' }}
 		>
+			<Form.Item label="Preset Model Type" style={{ ...formItemLineStyle }}>
+				<Row>
+					<Col span={24 - formItemValueShowColWidth}>
+						<Select
+							defaultValue={modelTypeList[0].value}
+							style={{ width: '100%' }}
+							onChange={onModelTypeChangeAction}
+							options={[...modelTypeList]}
+						/>
+					</Col>
+				</Row>
+			</Form.Item>
+			<SimpleDividingLine lineColor="#666666" />
+			<Form.Item label="Model Rotation Type" style={{ ...formItemLineStyle }}>
+				<Row>
+					<Col span={24 - formItemValueShowColWidth}>
+						<Radio.Group
+							name="radiogroup"
+							defaultValue={dataHandlerRef.current.formData['rotationCalculationType']}
+							options={[
+								{ value: ERotationCalculationType.UseMatrix, label: 'Use Matrix' },
+								{ value: ERotationCalculationType.UseQuaternion, label: 'Use Quaternion' },
+							]}
+							onChange={(e: CheckboxChangeEvent): void => {
+								const inputElement: HTMLInputElement = e.nativeEvent.target as HTMLInputElement
+								onFormInputAction('rotationCalculationType', inputElement.value)
+							}}
+						/>
+					</Col>
+				</Row>
+			</Form.Item>
 			<Form.Item label="Model Rotation X" style={{ ...formItemLineStyle }}>
 				<Row>
 					<Col span={24 - formItemValueShowColWidth}>
@@ -287,8 +350,8 @@ function FormController(
 					<Col span={24 - formItemValueShowColWidth}>
 						<Slider
 							step={1}
-							min={-100}
-							max={100}
+							min={-500}
+							max={500}
 							onChange={(value: number): void => {
 								onFormInputAction('lookEyePositionX', value)
 							}}
@@ -305,8 +368,8 @@ function FormController(
 					<Col span={24 - formItemValueShowColWidth}>
 						<Slider
 							step={1}
-							min={-100}
-							max={100}
+							min={-500}
+							max={500}
 							onChange={(value: number): void => {
 								onFormInputAction('lookEyePositionY', value)
 							}}
@@ -323,8 +386,8 @@ function FormController(
 					<Col span={24 - formItemValueShowColWidth}>
 						<Slider
 							step={1}
-							min={-100}
-							max={100}
+							min={-500}
+							max={500}
 							onChange={(value: number): void => {
 								onFormInputAction('lookEyePositionZ', value)
 							}}
@@ -341,8 +404,8 @@ function FormController(
 					<Col span={24 - formItemValueShowColWidth}>
 						<Slider
 							step={1}
-							min={-100}
-							max={100}
+							min={-500}
+							max={500}
 							onChange={(value: number): void => {
 								onFormInputAction('lookAtPositionX', value)
 							}}
@@ -359,16 +422,16 @@ function FormController(
 					<Col span={24 - formItemValueShowColWidth}>
 						<Slider
 							step={1}
-							min={-100}
-							max={100}
+							min={-500}
+							max={500}
 							onChange={(value: number): void => {
-								onFormInputAction('lookEyePositionY', value)
+								onFormInputAction('lookAtPositionY', value)
 							}}
-							value={dataHandlerRef.current.formData['lookEyePositionY']}
+							value={dataHandlerRef.current.formData['lookAtPositionY']}
 						/>
 					</Col>
 					<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
-						<div>{dataHandlerRef.current.formData['lookEyePositionY']}</div>
+						<div>{dataHandlerRef.current.formData['lookAtPositionY']}</div>
 					</Col>
 				</Row>
 			</Form.Item>
@@ -377,32 +440,89 @@ function FormController(
 					<Col span={24 - formItemValueShowColWidth}>
 						<Slider
 							step={1}
-							min={-100}
-							max={100}
+							min={-500}
+							max={500}
 							onChange={(value: number): void => {
-								onFormInputAction('lookEyePositionZ', value)
+								onFormInputAction('lookAtPositionZ', value)
 							}}
-							value={dataHandlerRef.current.formData['lookEyePositionZ']}
+							value={dataHandlerRef.current.formData['lookAtPositionZ']}
 						/>
 					</Col>
 					<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
-						<div>{dataHandlerRef.current.formData['lookEyePositionZ']}</div>
+						<div>{dataHandlerRef.current.formData['lookAtPositionZ']}</div>
 					</Col>
 				</Row>
 			</Form.Item>
 			<SimpleDividingLine lineColor="#666666" />
-			<Form.Item label="Light Color" style={{ ...formItemLineStyle }}>
+			<Form.Item label="Light Color R" style={{ ...formItemLineStyle }}>
 				<Row>
 					<Col span={24 - formItemValueShowColWidth}>
-						<ColorPicker
-							defaultValue={dataHandlerRef.current.formData['lightColor']}
-							onChange={(value: Color, css: string): void => {
-								onFormInputAction('lightColor', css)
+						<Slider
+							step={0.01}
+							min={0}
+							max={1}
+							onChange={(value: number): void => {
+								onFormInputAction('lightColorR', value)
 							}}
+							value={dataHandlerRef.current.formData['lightColorR']}
 						/>
 					</Col>
 					<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
-						<div>{dataHandlerRef.current.formData['lightColor']}</div>
+						<div>{dataHandlerRef.current.formData['lightColorR']}</div>
+					</Col>
+				</Row>
+			</Form.Item>
+			<Form.Item label="Light Color G" style={{ ...formItemLineStyle }}>
+				<Row>
+					<Col span={24 - formItemValueShowColWidth}>
+						<Slider
+							step={0.01}
+							min={0}
+							max={1}
+							onChange={(value: number): void => {
+								onFormInputAction('lightColorG', value)
+							}}
+							value={dataHandlerRef.current.formData['lightColorG']}
+						/>
+					</Col>
+					<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
+						<div>{dataHandlerRef.current.formData['lightColorG']}</div>
+					</Col>
+				</Row>
+			</Form.Item>
+			<Form.Item label="Light Color B" style={{ ...formItemLineStyle }}>
+				<Row>
+					<Col span={24 - formItemValueShowColWidth}>
+						<Slider
+							step={0.01}
+							min={0}
+							max={1}
+							onChange={(value: number): void => {
+								onFormInputAction('lightColorB', value)
+							}}
+							value={dataHandlerRef.current.formData['lightColorB']}
+						/>
+					</Col>
+					<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
+						<div>{dataHandlerRef.current.formData['lightColorB']}</div>
+					</Col>
+				</Row>
+			</Form.Item>
+			<Form.Item label="Light Color A" style={{ ...formItemLineStyle }}>
+				<Row>
+					<Col span={24 - formItemValueShowColWidth}>
+						<Slider
+							step={0.01}
+							min={0}
+							max={1}
+							onChange={(value: number): void => {
+								onFormInputAction('lightColorA', value)
+							}}
+							value={dataHandlerRef.current.formData['lightColorA']}
+						/>
+					</Col>
+					<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
+						<div>{dataHandlerRef.current.formData['lightColorA']}</div>
 					</Col>
 				</Row>
 			</Form.Item>
@@ -412,7 +532,7 @@ function FormController(
 						<Slider
 							step={0.01}
 							min={0.01}
-							max={3}
+							max={10}
 							onChange={(value: number): void => {
 								onFormInputAction('lightIntensityGain', value)
 							}}
@@ -424,7 +544,7 @@ function FormController(
 					</Col>
 				</Row>
 			</Form.Item>
-			<Form.Item label="Light Intensity Gain" style={{ ...formItemLineStyle }}>
+			<Form.Item label="Light Illu Type" style={{ ...formItemLineStyle }}>
 				<Row>
 					<Col span={24 - formItemValueShowColWidth}>
 						<Radio.Group
@@ -442,61 +562,115 @@ function FormController(
 					</Col>
 				</Row>
 			</Form.Item>
-			<Form.Item label="Ambient Light R" style={{ ...formItemLineStyle }}>
+			<Form.Item label="Light Position X" style={{ ...formItemLineStyle }}>
 				<Row>
 					<Col span={24 - formItemValueShowColWidth}>
 						<Slider
-							step={0.01}
-							min={0}
-							max={1}
+							step={1}
+							min={-500}
+							max={500}
 							onChange={(value: number): void => {
-								onFormInputAction('ambientLightR', value)
+								onFormInputAction('lightPositionX', value)
 							}}
-							value={dataHandlerRef.current.formData['ambientLightR']}
+							value={dataHandlerRef.current.formData['lightPositionX']}
 						/>
 					</Col>
 					<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
-						<div>{dataHandlerRef.current.formData['ambientLightR']}</div>
+						<div>{dataHandlerRef.current.formData['lightPositionX']}</div>
 					</Col>
 				</Row>
 			</Form.Item>
-			<Form.Item label="Ambient Light G" style={{ ...formItemLineStyle }}>
+			<Form.Item label="Light Position Y" style={{ ...formItemLineStyle }}>
 				<Row>
 					<Col span={24 - formItemValueShowColWidth}>
 						<Slider
-							step={0.01}
-							min={0}
-							max={1}
+							step={1}
+							min={-500}
+							max={500}
 							onChange={(value: number): void => {
-								onFormInputAction('ambientLightG', value)
+								onFormInputAction('lightPositionY', value)
 							}}
-							value={dataHandlerRef.current.formData['ambientLightG']}
+							value={dataHandlerRef.current.formData['lightPositionY']}
 						/>
 					</Col>
 					<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
-						<div>{dataHandlerRef.current.formData['ambientLightG']}</div>
+						<div>{dataHandlerRef.current.formData['lightPositionY']}</div>
 					</Col>
 				</Row>
 			</Form.Item>
-			<Form.Item label="Ambient Light B" style={{ ...formItemLineStyle }}>
+			<Form.Item label="Light Position Z" style={{ ...formItemLineStyle }}>
 				<Row>
 					<Col span={24 - formItemValueShowColWidth}>
 						<Slider
-							step={0.01}
-							min={0}
-							max={1}
+							step={1}
+							min={-500}
+							max={500}
 							onChange={(value: number): void => {
-								onFormInputAction('ambientLightB', value)
+								onFormInputAction('lightPositionZ', value)
 							}}
-							value={dataHandlerRef.current.formData['ambientLightB']}
+							value={dataHandlerRef.current.formData['lightPositionZ']}
 						/>
 					</Col>
 					<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
-						<div>{dataHandlerRef.current.formData['ambientLightB']}</div>
+						<div>{dataHandlerRef.current.formData['lightPositionZ']}</div>
 					</Col>
 				</Row>
 			</Form.Item>
-			<Form.Item label="Ambient Light A" style={{ ...formItemLineStyle }}>
+			<Form.Item label="Light Direct X" style={{ ...formItemLineStyle }}>
+				<Row>
+					<Col span={24 - formItemValueShowColWidth}>
+						<Slider
+							step={0.1}
+							min={-10}
+							max={10}
+							onChange={(value: number): void => {
+								onFormInputAction('lightDirectX', value)
+							}}
+							value={dataHandlerRef.current.formData['lightDirectX']}
+						/>
+					</Col>
+					<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
+						<div>{dataHandlerRef.current.formData['lightDirectX']}</div>
+					</Col>
+				</Row>
+			</Form.Item>
+			<Form.Item label="Light Direct Y" style={{ ...formItemLineStyle }}>
+				<Row>
+					<Col span={24 - formItemValueShowColWidth}>
+						<Slider
+							step={0.1}
+							min={-10}
+							max={10}
+							onChange={(value: number): void => {
+								onFormInputAction('lightDirectY', value)
+							}}
+							value={dataHandlerRef.current.formData['lightDirectY']}
+						/>
+					</Col>
+					<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
+						<div>{dataHandlerRef.current.formData['lightDirectY']}</div>
+					</Col>
+				</Row>
+			</Form.Item>
+			<Form.Item label="Light Direct Z" style={{ ...formItemLineStyle }}>
+				<Row>
+					<Col span={24 - formItemValueShowColWidth}>
+						<Slider
+							step={0.1}
+							min={-10}
+							max={10}
+							onChange={(value: number): void => {
+								onFormInputAction('lightDirectZ', value)
+							}}
+							value={dataHandlerRef.current.formData['lightDirectZ']}
+						/>
+					</Col>
+					<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
+						<div>{dataHandlerRef.current.formData['lightDirectZ']}</div>
+					</Col>
+				</Row>
+			</Form.Item>
+			<Form.Item label="Ambient Light Color R" style={{ ...formItemLineStyle }}>
 				<Row>
 					<Col span={24 - formItemValueShowColWidth}>
 						<Slider
@@ -504,13 +678,67 @@ function FormController(
 							min={0}
 							max={1}
 							onChange={(value: number): void => {
-								onFormInputAction('ambientLightA', value)
+								onFormInputAction('ambientLightColorR', value)
 							}}
-							value={dataHandlerRef.current.formData['ambientLightA']}
+							value={dataHandlerRef.current.formData['ambientLightColorR']}
 						/>
 					</Col>
 					<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
-						<div>{dataHandlerRef.current.formData['ambientLightA']}</div>
+						<div>{dataHandlerRef.current.formData['ambientLightColorR']}</div>
+					</Col>
+				</Row>
+			</Form.Item>
+			<Form.Item label="Ambient Light Color G" style={{ ...formItemLineStyle }}>
+				<Row>
+					<Col span={24 - formItemValueShowColWidth}>
+						<Slider
+							step={0.01}
+							min={0}
+							max={1}
+							onChange={(value: number): void => {
+								onFormInputAction('ambientLightColorG', value)
+							}}
+							value={dataHandlerRef.current.formData['ambientLightColorG']}
+						/>
+					</Col>
+					<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
+						<div>{dataHandlerRef.current.formData['ambientLightColorG']}</div>
+					</Col>
+				</Row>
+			</Form.Item>
+			<Form.Item label="Ambient Light Color B" style={{ ...formItemLineStyle }}>
+				<Row>
+					<Col span={24 - formItemValueShowColWidth}>
+						<Slider
+							step={0.01}
+							min={0}
+							max={1}
+							onChange={(value: number): void => {
+								onFormInputAction('ambientLightColorB', value)
+							}}
+							value={dataHandlerRef.current.formData['ambientLightColorB']}
+						/>
+					</Col>
+					<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
+						<div>{dataHandlerRef.current.formData['ambientLightColorB']}</div>
+					</Col>
+				</Row>
+			</Form.Item>
+			<Form.Item label="Ambient Light Color A" style={{ ...formItemLineStyle }}>
+				<Row>
+					<Col span={24 - formItemValueShowColWidth}>
+						<Slider
+							step={0.01}
+							min={0}
+							max={1}
+							onChange={(value: number): void => {
+								onFormInputAction('ambientLightColorA', value)
+							}}
+							value={dataHandlerRef.current.formData['ambientLightColorA']}
+						/>
+					</Col>
+					<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
+						<div>{dataHandlerRef.current.formData['ambientLightColorA']}</div>
 					</Col>
 				</Row>
 			</Form.Item>
@@ -533,60 +761,103 @@ function FormController(
 					</Col>
 				</Row>
 			</Form.Item>
-			<Form.Item label="Perspective Projection Fovy" style={{ ...formItemLineStyle }}>
-				<Row>
-					<Col span={24 - formItemValueShowColWidth}>
-						<Slider
-							step={0.5}
-							min={0.1}
-							max={500}
-							onChange={(value: number): void => {
-								onFormInputAction('perspectiveProjectionFovy', value)
-							}}
-							value={dataHandlerRef.current.formData['perspectiveProjectionFovy']}
-						/>
-					</Col>
-					<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
-						<div>{dataHandlerRef.current.formData['perspectiveProjectionFovy']}</div>
-					</Col>
-				</Row>
-			</Form.Item>
-			<Form.Item label="Perspective Projection Near" style={{ ...formItemLineStyle }}>
-				<Row>
-					<Col span={24 - formItemValueShowColWidth}>
-						<Slider
-							step={0.5}
-							min={0.1}
-							max={500}
-							onChange={(value: number): void => {
-								onFormInputAction('perspectiveProjectionNear', value)
-							}}
-							value={dataHandlerRef.current.formData['perspectiveProjectionNear']}
-						/>
-					</Col>
-					<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
-						<div>{dataHandlerRef.current.formData['perspectiveProjectionNear']}</div>
-					</Col>
-				</Row>
-			</Form.Item>
-			<Form.Item label="Perspective Projection Far" style={{ ...formItemLineStyle }}>
-				<Row>
-					<Col span={24 - formItemValueShowColWidth}>
-						<Slider
-							step={0.5}
-							min={0.1}
-							max={500}
-							onChange={(value: number): void => {
-								onFormInputAction('perspectiveProjectionFar', value)
-							}}
-							value={dataHandlerRef.current.formData['perspectiveProjectionFar']}
-						/>
-					</Col>
-					<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
-						<div>{dataHandlerRef.current.formData['perspectiveProjectionFar']}</div>
-					</Col>
-				</Row>
-			</Form.Item>
+			{dataHandlerRef.current.formData['projectionType'] === EProjectionType.OrthographicProjection ? (
+				<>
+					<Form.Item label="Ortho Projection Near" style={{ ...formItemLineStyle }}>
+						<Row>
+							<Col span={24 - formItemValueShowColWidth}>
+								<Slider
+									step={1}
+									min={-500}
+									max={0}
+									onChange={(value: number): void => {
+										onFormInputAction('orthoProjectionNear', value)
+									}}
+									value={dataHandlerRef.current.formData['orthoProjectionNear']}
+								/>
+							</Col>
+							<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
+								<div>{dataHandlerRef.current.formData['orthoProjectionNear']}</div>
+							</Col>
+						</Row>
+					</Form.Item>
+					<Form.Item label="Ortho Projection Far" style={{ ...formItemLineStyle }}>
+						<Row>
+							<Col span={24 - formItemValueShowColWidth}>
+								<Slider
+									step={1}
+									min={1}
+									max={500}
+									onChange={(value: number): void => {
+										onFormInputAction('orthoProjectionFar', value)
+									}}
+									value={dataHandlerRef.current.formData['orthoProjectionFar']}
+								/>
+							</Col>
+							<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
+								<div>{dataHandlerRef.current.formData['orthoProjectionFar']}</div>
+							</Col>
+						</Row>
+					</Form.Item>
+				</>
+			) : (
+				<>
+					<Form.Item label="Perspective Projection Fovy" style={{ ...formItemLineStyle }}>
+						<Row>
+							<Col span={24 - formItemValueShowColWidth}>
+								<Slider
+									step={0.1}
+									min={1}
+									max={90}
+									onChange={(value: number): void => {
+										onFormInputAction('perspectiveProjectionFovy', value)
+									}}
+									value={dataHandlerRef.current.formData['perspectiveProjectionFovy']}
+								/>
+							</Col>
+							<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
+								<div>{dataHandlerRef.current.formData['perspectiveProjectionFovy']}</div>
+							</Col>
+						</Row>
+					</Form.Item>
+					<Form.Item label="Perspective Projection Near" style={{ ...formItemLineStyle }}>
+						<Row>
+							<Col span={24 - formItemValueShowColWidth}>
+								<Slider
+									step={1}
+									min={1}
+									max={100}
+									onChange={(value: number): void => {
+										onFormInputAction('perspectiveProjectionNear', value)
+									}}
+									value={dataHandlerRef.current.formData['perspectiveProjectionNear']}
+								/>
+							</Col>
+							<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
+								<div>{dataHandlerRef.current.formData['perspectiveProjectionNear']}</div>
+							</Col>
+						</Row>
+					</Form.Item>
+					<Form.Item label="Perspective Projection Far" style={{ ...formItemLineStyle }}>
+						<Row>
+							<Col span={24 - formItemValueShowColWidth}>
+								<Slider
+									step={1}
+									min={100}
+									max={10000}
+									onChange={(value: number): void => {
+										onFormInputAction('perspectiveProjectionFar', value)
+									}}
+									value={dataHandlerRef.current.formData['perspectiveProjectionFar']}
+								/>
+							</Col>
+							<Col span={formItemValueShowColWidth} style={{ ...formItemValueShowColStyle }}>
+								<div>{dataHandlerRef.current.formData['perspectiveProjectionFar']}</div>
+							</Col>
+						</Row>
+					</Form.Item>
+				</>
+			)}
 		</Form>
 	)
 }

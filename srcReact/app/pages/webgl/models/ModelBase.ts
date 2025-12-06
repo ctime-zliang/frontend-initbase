@@ -1,8 +1,10 @@
 import { Matrix4 } from '@/app/utils/algorithm/Matrix4'
+import { Quaternion } from '@/app/utils/algorithm/Quaternion'
 
-export class BaseModel {
-	private _vertexDatas: Float32Array
-	private _modelParam: any
+export abstract class BaseModel {
+	protected abstract _modelParam: any
+	private _vertexData: Float32Array
+	private _normalData: Float32Array
 	private _modeControl: any
 	private _modelRatation: {
 		x: number
@@ -20,8 +22,8 @@ export class BaseModel {
 		z: number
 	}
 	constructor() {
-		this._vertexDatas = null!
-		this._modelParam = null
+		this._vertexData = null!
+		this._normalData = null!
 		this._modeControl = {}
 		this._modelRatation = {
 			x: 0,
@@ -40,11 +42,18 @@ export class BaseModel {
 		}
 	}
 
-	public get modelParam(): any {
-		return this._modelParam
+	public get vertexData(): Float32Array {
+		return this._vertexData
 	}
-	public set modelParam(value: any) {
-		this._modelParam = value
+	public set vertexData(value: Float32Array) {
+		this._vertexData = value
+	}
+
+	public get normalData(): Float32Array {
+		return this._normalData
+	}
+	public set normalData(value: Float32Array) {
+		this._normalData = value
 	}
 
 	public get modeControl(): any {
@@ -74,17 +83,9 @@ export class BaseModel {
 	} {
 		return this._modelScale
 	}
-
-	public get vertexDatas(): Float32Array {
-		return this._vertexDatas
-	}
-	public set vertexDatas(value: Float32Array) {
-		this._vertexDatas = value
-	}
 }
 
 export class BaseBuffer {
-	private _featureBuffer: WebGLBuffer
 	private _vertexBuffer: WebGLBuffer
 	private _normalBuffer: WebGLBuffer
 	private _colorBuffer: WebGLBuffer
@@ -92,20 +93,12 @@ export class BaseBuffer {
 	private _texCoordBuffer: WebGLBuffer
 	private _modelMatrix: Matrix4
 	constructor() {
-		this._featureBuffer = null!
 		this._vertexBuffer = null!
 		this._normalBuffer = null!
 		this._colorBuffer = null!
 		this._indexBuffer = null!
 		this._texCoordBuffer = null!
 		this._modelMatrix = null!
-	}
-
-	public get featureBuffer(): WebGLBuffer {
-		return this._featureBuffer
-	}
-	public set featureBuffer(value: WebGLBuffer) {
-		this._featureBuffer = value
 	}
 
 	public get vertexBuffer(): WebGLBuffer {
@@ -148,6 +141,38 @@ export class BaseBuffer {
 	}
 	public set modelMatrix(value: Matrix4) {
 		this._modelMatrix = value
+	}
+}
+
+export class Objecter {
+	private _model: BaseModel
+	private _buffer: BaseBuffer
+	private _quaternion: Quaternion
+	constructor(model: BaseModel, buffer: BaseBuffer, quaternion: Quaternion = null!) {
+		this._model = model
+		this._buffer = buffer
+		this._quaternion = quaternion
+	}
+
+	public get model(): BaseModel {
+		return this._model
+	}
+	public set model(value: BaseModel) {
+		this._model = value
+	}
+
+	public get buffer(): BaseBuffer {
+		return this._buffer
+	}
+	public set buffer(value: BaseBuffer) {
+		this._buffer = value
+	}
+
+	public get quaternion(): Quaternion {
+		return this._quaternion
+	}
+	public set quaternion(value: Quaternion) {
+		this._quaternion = value
 	}
 }
 

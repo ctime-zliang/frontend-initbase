@@ -305,12 +305,13 @@ export class CanvasMatrix4 {
 	/**
 	 * @description 创建变换矩阵: 平移矩阵
 	 * @function setTranslate
-	 * @param {Vector3} directionVector3 位移(向量)
+	 * @param {number} x X 轴位移数量
+	 * @param {number} y Y 轴位移数量
+	 * @param {number} z Z 轴位移数量
 	 * @return {Matrix4}
 	 */
-	public static setTranslate(directionVector3: Vector3): Matrix4 {
+	public static setTranslate(x: number, y: number, z: number): Matrix4 {
 		const matrix4: Matrix4 = new Matrix4()
-		const { x, y, z } = directionVector3
 		matrix4.data[0] = 1
 		matrix4.data[4] = 0
 		matrix4.data[8] = 0
@@ -536,7 +537,7 @@ export class CanvasMatrix4 {
 		matrix4.data[13] = 0
 		matrix4.data[14] = 0
 		matrix4.data[15] = 1
-		return CanvasMatrix4.setTranslate(new Vector3(-eyeX, -eyeY, -eyeZ)).multiply4(matrix4)
+		return CanvasMatrix4.setTranslate(-eyeX, -eyeY, -eyeZ).multiply4(matrix4)
 	}
 
 	/**
