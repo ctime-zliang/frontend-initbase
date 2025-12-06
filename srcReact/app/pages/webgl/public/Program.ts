@@ -480,10 +480,10 @@ export class Program {
 	}
 
 	static render(): void {
-		const { gl, program } = Program.deviceParams
 		if (!Program.isRender) {
 			return
 		}
+		const { gl, program } = Program.deviceParams
 		if (!Program.objecters.length) {
 			window.requestAnimationFrame((timeStamp: number): void => {
 				Program.render()
@@ -557,5 +557,3 @@ export class Program {
 		return len
 	}
 }
-
-Program.initProgramControllerStatus()

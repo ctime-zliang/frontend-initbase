@@ -21,6 +21,7 @@ function CanvasWrapper(props: any, ref: any): React.ReactElement {
 	})
 
 	useEffect((): (() => void) => {
+		Program.initProgramControllerStatus()
 		if (!Program.isInit && canvasElementRef.current) {
 			Program.isInit = true
 			const gl: WebGLRenderingContext = canvasElementRef.current.getContext('webgl') as WebGLRenderingContext
