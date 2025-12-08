@@ -71,7 +71,7 @@ const modelTypeList: Array<{
 	},
 ]
 
-const formWidth: number = 800
+const formWidth: number = 550
 
 const formItemLineStyle: React.CSSProperties = {
 	margin: '0 0 5px 0',
