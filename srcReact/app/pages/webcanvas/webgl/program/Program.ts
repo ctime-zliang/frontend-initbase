@@ -337,7 +337,7 @@ export class Program {
 		const glAttributes: {
 			[key: string]: GLint
 		} = Program.shaderProfileInstance.getGLAttributes()
-		if (normalProfile) {
+		if (normalProfile && glAttributes.a_Normal) {
 			initAttributeVariable(
 				gl,
 				glAttributes.a_Normal,
@@ -350,7 +350,7 @@ export class Program {
 				}
 			)
 		}
-		if (texCoordProfile) {
+		if (texCoordProfile && glAttributes.a_textureCoord) {
 			initAttributeVariable(
 				gl,
 				glAttributes.a_textureCoord,

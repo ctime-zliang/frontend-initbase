@@ -15,6 +15,7 @@ export class Triangles extends BaseModel {
 			offsetZ,
 		}
 		this.vertexData = this.createVertexData()
+		this.normalData = this.createNormalData()
 	}
 
 	public get modelParam(): TSinglePlaneModelParam {
@@ -57,5 +58,17 @@ export class Triangles extends BaseModel {
 			-1.25, -1.0, 0.0, 0.4, 0.4, 1.0, 1.0, 
 			-0.25, -1.0, 0.0, 1.0, 0.4, 0.4, 1.0,
 		])
+	}
+
+	private createNormalData(): Float32Array {
+		// prettier-ignore
+		return new Float32Array([
+            1, 0, 0,
+            1, 0, 0,
+            1, 0, 0,
+            1, 0, 0,
+            1, 0, 0,
+            1, 0, 0,
+        ])
 	}
 }

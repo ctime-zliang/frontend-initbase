@@ -50,6 +50,9 @@ export function createObjecters(type: EPresetModelType): Array<Objecter> {
 			const model: Triangles = new Triangles()
 			const buffer: BaseBuffer = new BaseBuffer()
 			buffer.vertexBuffer = initArrayBufferForLaterUse(gl)!
+			buffer.normalBuffer = initArrayBufferForLaterUse(gl)!
+			buffer.colorBuffer = initArrayBufferForLaterUse(gl)!
+			buffer.texCoordBuffer = initArrayBufferForLaterUse(gl)!
 			objecters.push(new Objecter(model, buffer, Quaternion.initQuaternion()))
 			return objecters
 		}
