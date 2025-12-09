@@ -22,6 +22,11 @@ function CanvasWrapper(props: TProps, ref: any): React.ReactElement {
 					Program.render()
 					return
 				}
+				if (['rotationCalculationType'].includes(key)) {
+					Program.resetObjecterRotationControl()
+					Program.render()
+					return
+				}
 				if (
 					['modelRotationX', 'modelRotationY', 'modelRotationZ', 'modelOffsetX', 'modelOffsetY', 'modelOffsetZ', 'modelScale'].includes(key)
 				) {

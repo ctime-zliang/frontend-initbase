@@ -106,9 +106,9 @@ export class ProjectionCaseShaderProfile extends BaseShaderProfile {
 			/**
 			 * 四元数旋转
 			 */
-			const currentMatrixData: Array<number> = setting.modeControl.currentMatrixData
-			if (currentMatrixData) {
-				modelRotationMatrix4 = CanvasMatrix4.setFromArray(currentMatrixData)
+			const currentMatrix: Matrix4 = setting.modeControl.currentMatrix
+			if (currentMatrix) {
+				modelRotationMatrix4 = CanvasMatrix4.setFromArray(currentMatrix.data)
 			}
 		}
 		/**

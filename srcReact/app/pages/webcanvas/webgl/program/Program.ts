@@ -3,6 +3,11 @@ import { Objecter } from '../../public/models/ModelBase'
 import { BaseShaderProfile } from '../../public/shader/ShaderProfile'
 import { ELightIlluType, EProjectionType, ERotationCalculationType } from '../../public/config/config'
 import { createObjecters, createShaderProfile, EPresetModelType, EShaderProfileEnum } from '../utils/creator'
+import { Quaternion } from '@/app/utils/algorithm/Quaternion'
+import { Angles } from '@/app/utils/algorithm/Angles'
+import { Vector3 } from '@/app/utils/algorithm/Vector3'
+import { Matrix4 } from '@/app/utils/algorithm/Matrix4'
+import { CanvasMatrix4 } from '@/app/utils/algorithm/CanvasMatrix4'
 
 export type TProgramShaderParams = {
 	presetModelType: string
@@ -43,6 +48,7 @@ export type TProgramShaderParams = {
 }
 
 export class Program {
+	static timer: number = null!
 	static isInit: boolean = false
 	static isRender: boolean = false
 	static deviceParams: {
@@ -72,9 +78,9 @@ export class Program {
 			/**
 			 * 视点参数
 			 */
-			lookEyePositionX: 0,
-			lookEyePositionY: 0,
-			lookEyePositionZ: 120,
+			lookEyePositionX: -40,
+			lookEyePositionY: 30,
+			lookEyePositionZ: 50,
 			lookAtPositionX: 0,
 			lookAtPositionY: 0,
 			lookAtPositionZ: 0,
@@ -168,50 +174,117 @@ export class Program {
 	}
 
 	static setObjecterParams(key: string, value: any): void {
+		window.clearTimeout(Program.timer)
 		const objecters: Array<Objecter> = Program.objecters
 		switch (key) {
 			case 'modelRotationX': {
+				const len = Math.sqrt(+value * +value)
+				const ratationQuaternion =
+					len === 0 ? Quaternion.initQuaternion() : Quaternion.fromRotation(Angles.degreeToRadian(len), new Vector3(+value / len, 0, 0))
 				for (let i: number = 0; i < objecters.length; i++) {
-					objecters[i].model.modelRatation.x = value
+					const objecter: Objecter = objecters[i]
+					objecter.model.modeControl.currentQuaternion = Quaternion.multiplyQuaternions(
+						ratationQuaternion,
+						objecter.model.modeControl.lastQuaternion
+					)
+					objecter.model.modeControl.currentMatrix = new Matrix4(
+						Quaternion.makeRotationFromQuaternion(objecter.model.modeControl.currentQuaternion)
+					)
+					objecter.model.modelRatation.x = value
 				}
+				Program.timer = window.setTimeout((): void => {
+					for (let i: number = 0; i < objecters.length; i++) {
+						const objecter: Objecter = objecters[i]
+						objecter.model.modeControl.lastQuaternion = objecter.model.modeControl.currentQuaternion
+					}
+				}, 1 / 60)
 				break
 			}
 			case 'modelRotationY': {
+				const len = Math.sqrt(+value * +value)
+				const ratationQuaternion =
+					len === 0 ? Quaternion.initQuaternion() : Quaternion.fromRotation(Angles.degreeToRadian(len), new Vector3(0, +value / len, 0))
 				for (let i: number = 0; i < objecters.length; i++) {
-					objecters[i].model.modelRatation.y = value
+					const objecter: Objecter = objecters[i]
+					objecter.model.modeControl.currentQuaternion = Quaternion.multiplyQuaternions(
+						ratationQuaternion,
+						objecter.model.modeControl.lastQuaternion
+					)
+					objecter.model.modeControl.currentMatrix = new Matrix4(
+						Quaternion.makeRotationFromQuaternion(objecter.model.modeControl.currentQuaternion)
+					)
+					objecter.model.modelRatation.y = value
 				}
+				Program.timer = window.setTimeout((): void => {
+					for (let i: number = 0; i < objecters.length; i++) {
+						const objecter: Objecter = objecters[i]
+						objecter.model.modeControl.lastQuaternion = objecter.model.modeControl.currentQuaternion
+					}
+				}, 1 / 60)
 				break
 			}
 			case 'modelRotationZ': {
+				const len = Math.sqrt(+value * +value)
+				const ratationQuaternion =
+					len === 0 ? Quaternion.initQuaternion() : Quaternion.fromRotation(Angles.degreeToRadian(len), new Vector3(0, 0, +value / len))
 				for (let i: number = 0; i < objecters.length; i++) {
-					objecters[i].model.modelRatation.z = value
+					const objecter: Objecter = objecters[i]
+					objecter.model.modeControl.currentQuaternion = Quaternion.multiplyQuaternions(
+						ratationQuaternion,
+						objecter.model.modeControl.lastQuaternion
+					)
+					objecter.model.modeControl.currentMatrix = new Matrix4(
+						Quaternion.makeRotationFromQuaternion(objecter.model.modeControl.currentQuaternion)
+					)
+					objecter.model.modelRatation.z = value
 				}
+				Program.timer = window.setTimeout((): void => {
+					for (let i: number = 0; i < objecters.length; i++) {
+						const objecter: Objecter = objecters[i]
+						objecter.model.modeControl.lastQuaternion = objecter.model.modeControl.currentQuaternion
+					}
+				}, 1 / 60)
 				break
 			}
 			case 'modelOffsetX': {
 				for (let i: number = 0; i < objecters.length; i++) {
-					objecters[i].model.modelOffset.x = value
+					const objecter: Objecter = objecters[i]
+					objecter.model.modelOffset.x = value
 				}
 				break
 			}
 			case 'modelOffsetY': {
 				for (let i: number = 0; i < objecters.length; i++) {
-					objecters[i].model.modelOffset.y = value
+					const objecter: Objecter = objecters[i]
+					objecter.model.modelOffset.y = value
 				}
 				break
 			}
 			case 'modelOffsetZ': {
 				for (let i: number = 0; i < objecters.length; i++) {
-					objecters[i].model.modelOffset.z = value
+					const objecter: Objecter = objecters[i]
+					objecter.model.modelOffset.z = value
 				}
 				break
 			}
 			case 'modelScale': {
 				for (let i: number = 0; i < objecters.length; i++) {
-					objecters[i].model.modelScale.x = objecters[i].model.modelScale.y = objecters[i].model.modelScale.z = value
+					const objecter: Objecter = objecters[i]
+					objecter.model.modelScale.x = objecter.model.modelScale.y = objecter.model.modelScale.z = value
 				}
 				break
 			}
+		}
+	}
+
+	static resetObjecterRotationControl(): void {
+		const objecters: Array<Objecter> = Program.objecters
+		for (let i: number = 0; i < objecters.length; i++) {
+			const objecter: Objecter = objecters[i]
+			objecter.model.modelRatation.x = objecter.model.modelRatation.y = objecter.model.modelRatation.z = 0
+			objecter.model.modeControl.currentQuaternion = Quaternion.initQuaternion()
+			objecter.model.modeControl.lastQuaternion = Quaternion.initQuaternion()
+			objecter.model.modeControl.currentMatrix = CanvasMatrix4.initMatrix()
 		}
 	}
 
@@ -281,7 +354,7 @@ export class Program {
 				z: objecter.model.modelRatation.z,
 			},
 			modeControl: {
-				currentMatrixData: objecter.model.modeControl.currentMatrixData,
+				currentMatrix: objecter.model.modeControl.currentMatrix,
 			},
 			modelOffset: {
 				x: objecter.model.modelOffset.x,

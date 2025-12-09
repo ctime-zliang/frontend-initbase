@@ -1,5 +1,6 @@
 import { getWebGLVariableLocation } from '@/app/utils/webgl/utils'
 import { ELightIlluType, EProjectionType, ERotationCalculationType } from '../config/config'
+import { Matrix4 } from '@/app/utils/algorithm/Matrix4'
 
 export type TApplyShaderParamsSetting = {
 	projectionType: EProjectionType
@@ -61,7 +62,7 @@ export type TApplyMatrixParamsSetting = {
 		z: number
 	}
 	modeControl: {
-		currentMatrixData: Array<number>
+		currentMatrix: Matrix4
 	}
 	modelOffset: {
 		x: number

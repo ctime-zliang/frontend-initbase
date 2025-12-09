@@ -1,11 +1,16 @@
 import { Matrix4 } from '@/app/utils/algorithm/Matrix4'
 import { Quaternion } from '@/app/utils/algorithm/Quaternion'
 
+export type TModelControl = {
+	currentMatrix: Matrix4
+	currentQuaternion: Quaternion
+	lastQuaternion: Quaternion
+}
 export abstract class BaseModel {
 	protected abstract _modelParam: any
 	private _vertexData: Float32Array
 	private _normalData: Float32Array
-	private _modeControl: any
+	private _modeControl: TModelControl
 	private _modelRatation: {
 		x: number
 		y: number
@@ -24,7 +29,11 @@ export abstract class BaseModel {
 	constructor() {
 		this._vertexData = null!
 		this._normalData = null!
-		this._modeControl = {}
+		this._modeControl = {
+			currentMatrix: null!,
+			currentQuaternion: null!,
+			lastQuaternion: null!,
+		}
 		this._modelRatation = {
 			x: 0,
 			y: 0,
@@ -56,7 +65,7 @@ export abstract class BaseModel {
 		this._normalData = value
 	}
 
-	public get modeControl(): any {
+	public get modeControl(): TModelControl {
 		return this._modeControl
 	}
 

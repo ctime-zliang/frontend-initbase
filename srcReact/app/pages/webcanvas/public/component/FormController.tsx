@@ -59,6 +59,15 @@ function FormController(props: TProps, ref: any): React.ReactElement {
 			;(dataHandlerRef.current.formData[key] as any) = value
 			onChangeAction && onChangeAction(key as keyof TProgramShaderParams, value)
 		}
+		if (key === 'rotationCalculationType') {
+			dataHandlerRef.current.formData['modelRotationX'] =
+				dataHandlerRef.current.formData['modelRotationY'] =
+				dataHandlerRef.current.formData['modelRotationZ'] =
+					0
+			onChangeAction && onChangeAction('modelRotationX' as keyof TProgramShaderParams, 0)
+			onChangeAction && onChangeAction('modelRotationY' as keyof TProgramShaderParams, 0)
+			onChangeAction && onChangeAction('modelRotationZ' as keyof TProgramShaderParams, 0)
+		}
 		setFlush((prev: number): number => {
 			return prev + 1
 		})

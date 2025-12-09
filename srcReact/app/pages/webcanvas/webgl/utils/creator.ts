@@ -7,6 +7,7 @@ import { ComprehensiveCaseShaderProfile } from '../shader/ComprehensiveCase'
 import { ProjectionCaseShaderProfile } from '../shader/ProjectionCase'
 import { Quaternion } from '@/app/utils/algorithm/Quaternion'
 import { Triangles } from '../../public/models/Triangles'
+import { CanvasMatrix4 } from '@/app/utils/algorithm/CanvasMatrix4'
 
 export enum EShaderProfileEnum {
 	ComprehensiveCase = 'ComprehensiveCase',
@@ -36,6 +37,9 @@ export function createObjecters(type: EPresetModelType): Array<Objecter> {
 			const objecters: Array<Objecter> = []
 			const model: SinglePlane = new SinglePlane(50, 50, 0)
 			const buffer: BaseBuffer = new BaseBuffer()
+			model.modeControl.currentQuaternion = Quaternion.initQuaternion()
+			model.modeControl.lastQuaternion = Quaternion.initQuaternion()
+			model.modeControl.currentMatrix = CanvasMatrix4.initMatrix()
 			buffer.vertexBuffer = initArrayBufferForLaterUse(gl)!
 			buffer.normalBuffer = initArrayBufferForLaterUse(gl)!
 			buffer.colorBuffer = initArrayBufferForLaterUse(gl)!
@@ -49,6 +53,9 @@ export function createObjecters(type: EPresetModelType): Array<Objecter> {
 			const objecters: Array<Objecter> = []
 			const model: Triangles = new Triangles()
 			const buffer: BaseBuffer = new BaseBuffer()
+			model.modeControl.currentQuaternion = Quaternion.initQuaternion()
+			model.modeControl.lastQuaternion = Quaternion.initQuaternion()
+			model.modeControl.currentMatrix = CanvasMatrix4.initMatrix()
 			buffer.vertexBuffer = initArrayBufferForLaterUse(gl)!
 			buffer.normalBuffer = initArrayBufferForLaterUse(gl)!
 			buffer.colorBuffer = initArrayBufferForLaterUse(gl)!
