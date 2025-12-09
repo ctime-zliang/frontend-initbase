@@ -1,9 +1,9 @@
 import { Matrix4 } from '@/app/utils/algorithm/Matrix4'
-import { ELightIlluType, EProjectionType, ERotationCalculationType } from '../public/Program'
-import { BaseShaderProfile, TApplyMatrixParamsSetting, TApplyShaderParamsSetting } from '../public/ShaderProfile'
+import { BaseShaderProfile, TApplyMatrixParamsSetting, TApplyShaderParamsSetting } from '../../public/shader/ShaderProfile'
 import { CanvasMatrix4 } from '@/app/utils/algorithm/CanvasMatrix4'
 import { Vector3 } from '@/app/utils/algorithm/Vector3'
 import { Angles } from '@/app/utils/algorithm/Angles'
+import { ELightIlluType, EProjectionType, ERotationCalculationType } from '../../public/config/config'
 
 export class ComprehensiveCaseShaderProfile extends BaseShaderProfile {
 	constructor() {

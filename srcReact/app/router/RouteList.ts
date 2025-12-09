@@ -24,7 +24,7 @@ import {
 	setMessageTimeoutRoute,
 	utilsErrorRoute,
 } from '../pages/utils/route'
-import { projectionTestRoute, webglErrorRoute } from '../pages/webgl/route'
+import { comprehensiveTestRoute, webglErrorRoute } from '../pages/webcanvas/webgl/route'
 
 export const createRoutes = (): Array<TRouteItem> => {
 	const routes: Array<TRouteItem> = [
@@ -70,7 +70,7 @@ export const createRoutes = (): Array<TRouteItem> => {
 		},
 		{
 			path: '/webgl/*',
-			routes: [webglErrorRoute(), projectionTestRoute()],
+			routes: [webglErrorRoute(), comprehensiveTestRoute()],
 		},
 		{
 			path: '/testpage/*',

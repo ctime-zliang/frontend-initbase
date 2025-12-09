@@ -1,25 +1,10 @@
 import { createWebGLProgram, initAttributeVariable } from '@/app/utils/webgl/utils'
-import { Objecter } from '../models/ModelBase'
-import { ObjecterManager } from './ObjecterManager'
-import { BaseShaderProfile } from './ShaderProfile'
-import { ComprehensiveCaseShaderProfile } from '../shaders/ComprehensiveCase'
+import { Objecter } from '../../public/models/ModelBase'
+import { BaseShaderProfile } from '../../public/shader/ShaderProfile'
+import { ELightIlluType, EProjectionType, ERotationCalculationType } from '../../public/config/config'
+import { createObjecters, createShaderProfile, EPresetModelType, EShaderProfileEnum } from '../utils/creator'
 
-export enum ERotationCalculationType {
-	UseMatrix = 'UseMatrix',
-	UseQuaternion = 'UseQuaternion',
-}
-
-export enum ELightIlluType {
-	ParallelLight = 'ParallelLight',
-	SpotLight = 'SpotLight',
-}
-
-export enum EProjectionType {
-	PerspectiveProjection = 'PerspectiveProjection',
-	OrthographicProjection = 'OrthographicProjection',
-}
-
-export type TShaderParams = {
+export type TProgramShaderParams = {
 	presetModelType: string
 	rotationCalculationType: ERotationCalculationType
 	lookEyePositionX: number
@@ -68,7 +53,7 @@ export class Program {
 	} = null!
 	static objecters: Array<Objecter> = []
 	static glCount: number = 0
-	static shaderParams: TShaderParams = null!
+	static shaderParams: TProgramShaderParams = null!
 	static shaderProfileInstance: BaseShaderProfile
 
 	static initProgramControllerStatus(): void {
@@ -79,7 +64,7 @@ export class Program {
 			canvasHeight: 0,
 		}
 		Program.shaderParams = {
-			presetModelType: '1',
+			presetModelType: EPresetModelType.Triangles,
 			/**
 			 * 模型旋转类型
 			 */
@@ -131,6 +116,16 @@ export class Program {
 		Program.glCount = 0
 	}
 
+	static clearProgramControllerStatus(): void {
+		Program.isInit = false
+		Program.isRender = false
+		Program.deviceParams = null!
+		Program.objecters = []
+		Program.glCount = 0
+		Program.shaderParams = null!
+		Program.shaderProfileInstance = null!
+	}
+
 	static initContext(canvasElement: HTMLCanvasElement): void {
 		const gl: WebGLRenderingContext = canvasElement.getContext('webgl') as WebGLRenderingContext
 		Program.deviceParams.gl = gl
@@ -138,7 +133,7 @@ export class Program {
 		Program.deviceParams.canvasHeight = canvasElement.offsetHeight
 	}
 
-	static initShaderProfile(type: EShaderProfileEnum): void {
+	static setShaderProfile(type: EShaderProfileEnum): void {
 		Program.shaderProfileInstance = createShaderProfile(type)
 		Program.deviceParams.program = createWebGLProgram(
 			Program.deviceParams.gl,
@@ -148,7 +143,13 @@ export class Program {
 		Program.shaderProfileInstance.initWebGLProfile(Program.deviceParams.gl, Program.deviceParams.program)
 	}
 
-	static initCanvasStatus(): void {
+	static setPresetObjecters(type: EPresetModelType): void {
+		const objecters: Array<Objecter> = createObjecters(type)
+		Program.glCount = Program.getVertexSize(objecters)
+		Program.objecters = objecters
+	}
+
+	static setWebGLCanvasStatus(): void {
 		const { gl } = Program.deviceParams
 		gl.clearColor(0.0, 0.0, 0.0, 1.0)
 		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
@@ -158,6 +159,60 @@ export class Program {
 		gl.enable(gl.POLYGON_OFFSET_FILL)
 		gl.polygonOffset(1.0, 1.0)
 		gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+	}
+
+	static setShaderParams(key: keyof TProgramShaderParams, value: any): void {
+		if (typeof Program.shaderParams[key] !== 'undefined') {
+			;(Program.shaderParams as any)[key] = value
+		}
+	}
+
+	static setObjecterParams(key: string, value: any): void {
+		const objecters: Array<Objecter> = Program.objecters
+		switch (key) {
+			case 'modelRotationX': {
+				for (let i: number = 0; i < objecters.length; i++) {
+					objecters[i].model.modelRatation.x = value
+				}
+				break
+			}
+			case 'modelRotationY': {
+				for (let i: number = 0; i < objecters.length; i++) {
+					objecters[i].model.modelRatation.y = value
+				}
+				break
+			}
+			case 'modelRotationZ': {
+				for (let i: number = 0; i < objecters.length; i++) {
+					objecters[i].model.modelRatation.z = value
+				}
+				break
+			}
+			case 'modelOffsetX': {
+				for (let i: number = 0; i < objecters.length; i++) {
+					objecters[i].model.modelOffset.x = value
+				}
+				break
+			}
+			case 'modelOffsetY': {
+				for (let i: number = 0; i < objecters.length; i++) {
+					objecters[i].model.modelOffset.y = value
+				}
+				break
+			}
+			case 'modelOffsetZ': {
+				for (let i: number = 0; i < objecters.length; i++) {
+					objecters[i].model.modelOffset.z = value
+				}
+				break
+			}
+			case 'modelScale': {
+				for (let i: number = 0; i < objecters.length; i++) {
+					objecters[i].model.modelScale.x = objecters[i].model.modelScale.y = objecters[i].model.modelScale.z = value
+				}
+				break
+			}
+		}
 	}
 
 	static applyShaderParams(): void {
@@ -357,44 +412,11 @@ export class Program {
 		})
 	}
 
-	static clearProgramControllerStatus(): void {
-		Program.isInit = false
-		Program.isRender = false
-		Program.deviceParams = null!
-		Program.objecters = []
-		Program.glCount = 0
-		Program.shaderParams = null!
-		Program.shaderProfileInstance = null!
-	}
-
-	static createPresetObjecters(type: string): Array<Objecter> {
-		const { gl } = Program.deviceParams
-		switch (type) {
-			case '1': {
-				const objecters: Array<Objecter> = ObjecterManager.createSinglePlaneObjecters(gl)
-				Program.glCount = Program.getVertexSize(objecters)
-				return objecters
-			}
-		}
-		return []
-	}
-
 	static getVertexSize(objecters: Array<Objecter>) {
 		let len: number = 0
 		for (let i: number = 0; i < objecters.length; i++) {
 			len += objecters[i].model.vertexData.length
 		}
 		return len
-	}
-}
-
-export enum EShaderProfileEnum {
-	ComprehensiveCase = 'ComprehensiveCase',
-}
-export function createShaderProfile(type: EShaderProfileEnum): BaseShaderProfile {
-	switch (type) {
-		case EShaderProfileEnum.ComprehensiveCase: {
-			return new ComprehensiveCaseShaderProfile()
-		}
 	}
 }

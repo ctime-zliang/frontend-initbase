@@ -1,5 +1,5 @@
-import { ELightIlluType, EProjectionType, ERotationCalculationType } from './Program'
 import { getWebGLVariableLocation } from '@/app/utils/webgl/utils'
+import { ELightIlluType, EProjectionType, ERotationCalculationType } from '../config/config'
 
 export type TApplyShaderParamsSetting = {
 	projectionType: EProjectionType
