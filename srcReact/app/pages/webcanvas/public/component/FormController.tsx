@@ -41,6 +41,13 @@ export type TFormControllerComponentImperativeHandle = {
 type TComponentDataHandler = {
 	formData: TComponentDataHandlerFormData
 }
+type TComponentStatusHandler = {
+	statusData: {
+		lightPositionXDisabled: boolean
+		lightPositionYDisabled: boolean
+		lightPositionZDisabled: boolean
+	}
+}
 type TProps = {
 	modelTypeList: Array<{
 		label: string
@@ -53,6 +60,13 @@ function FormController(props: TProps, ref: any): React.ReactElement {
 	const [flush, setFlush] = useState<number>(0)
 	const dataHandlerRef: { current: TComponentDataHandler } = useRef<TComponentDataHandler>({
 		formData: Object.create(null!),
+	})
+	const statusHandlerRef: { current: TComponentStatusHandler } = useRef<TComponentStatusHandler>({
+		statusData: {
+			lightPositionXDisabled: false,
+			lightPositionYDisabled: false,
+			lightPositionZDisabled: false,
+		},
 	})
 	const onFormInputAction = (key: keyof TComponentDataHandlerFormData, value: any): void => {
 		if (typeof dataHandlerRef.current.formData[key] !== 'undefined') {
@@ -79,6 +93,10 @@ function FormController(props: TProps, ref: any): React.ReactElement {
 			return prev + 1
 		})
 	}
+	statusHandlerRef.current.statusData.lightPositionXDisabled =
+		statusHandlerRef.current.statusData.lightPositionYDisabled =
+		statusHandlerRef.current.statusData.lightPositionZDisabled =
+			dataHandlerRef.current.formData.lightIlluType === ELightIlluType.ParallelLight
 	useImperativeHandle(ref, (): TFormControllerComponentImperativeHandle => {
 		return {
 			updateFormData(formData: TComponentDataHandlerFormData) {
@@ -107,6 +125,7 @@ function FormController(props: TProps, ref: any): React.ReactElement {
 					justifyContent: 'center',
 					alignContent: 'center',
 					alignItems: 'center',
+					userSelect: 'none',
 				}}
 			>
 				loading...
@@ -123,6 +142,7 @@ function FormController(props: TProps, ref: any): React.ReactElement {
 				width: `${formProfile.clientWidth}px`,
 				height: '100%',
 				overflow: 'auto',
+				userSelect: 'none',
 			}}
 		>
 			<Form.Item label="Preset Model Type" style={{ ...formProfile.formItemLineStyle }}>
@@ -507,6 +527,7 @@ function FormController(props: TProps, ref: any): React.ReactElement {
 							step={1}
 							min={-500}
 							max={500}
+							disabled={statusHandlerRef.current.statusData.lightPositionXDisabled}
 							onChange={(value: number): void => {
 								onFormInputAction('lightPositionX', value)
 							}}
@@ -525,6 +546,7 @@ function FormController(props: TProps, ref: any): React.ReactElement {
 							step={1}
 							min={-500}
 							max={500}
+							disabled={statusHandlerRef.current.statusData.lightPositionYDisabled}
 							onChange={(value: number): void => {
 								onFormInputAction('lightPositionY', value)
 							}}
@@ -543,6 +565,7 @@ function FormController(props: TProps, ref: any): React.ReactElement {
 							step={1}
 							min={-500}
 							max={500}
+							disabled={statusHandlerRef.current.statusData.lightPositionZDisabled}
 							onChange={(value: number): void => {
 								onFormInputAction('lightPositionZ', value)
 							}}

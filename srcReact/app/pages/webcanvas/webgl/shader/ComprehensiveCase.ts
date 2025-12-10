@@ -105,7 +105,6 @@ export class ComprehensiveCaseShaderProfile extends BaseShaderProfile {
                         // 计算漫反射光和环境光的色值
                         vec3 diffuse = u_LightColor * v_Color.rgb * nDotL * u_lightIntensityGain;
                         gl_FragColor = vec4(diffuse + u_AmbientLightColor * v_Color.rgb, v_Color.a);
-                        gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
                         // vec3 ambientMixinColor = diffuse + u_AmbientLightColor * v_Color.rgb;
                         // vec3 fogMixinColor = mix(u_FogColor, vec3(ambientMixinColor), fogFactor);
                         // gl_FragColor = vec4(fogMixinColor, v_Color.a);
@@ -119,7 +118,6 @@ export class ComprehensiveCaseShaderProfile extends BaseShaderProfile {
                         // 计算漫反射光和环境光的色值
                         vec3 diffuse = u_LightColor * v_Color.rgb * nDotL * u_lightIntensityGain;
                         gl_FragColor = vec4(diffuse + u_AmbientLightColor * v_Color.rgb, v_Color.a);
-                        gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
                         // vec3 ambientMixinColor = diffuse + u_AmbientLightColor * v_Color.rgb;
                         // vec3 fogMixinColor = mix(u_FogColor, vec3(ambientMixinColor), fogFactor);
                         // gl_FragColor = vec4(fogMixinColor, v_Color.a);

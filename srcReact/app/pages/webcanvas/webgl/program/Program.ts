@@ -70,7 +70,7 @@ export class Program {
 			canvasHeight: 0,
 		}
 		Program.shaderParams = {
-			presetModelType: EPresetModelType.Triangles,
+			presetModelType: EPresetModelType.SinglePlane,
 			/**
 			 * 模型旋转类型
 			 */
@@ -78,9 +78,9 @@ export class Program {
 			/**
 			 * 视点参数
 			 */
-			lookEyePositionX: -40,
+			lookEyePositionX: 0,
 			lookEyePositionY: 30,
-			lookEyePositionZ: 50,
+			lookEyePositionZ: 80,
 			lookAtPositionX: 0,
 			lookAtPositionY: 0,
 			lookAtPositionZ: 0,
@@ -178,8 +178,8 @@ export class Program {
 		const objecters: Array<Objecter> = Program.objecters
 		switch (key) {
 			case 'modelRotationX': {
-				const len = Math.sqrt(+value * +value)
-				const ratationQuaternion =
+				const len: number = Math.sqrt(+value * +value)
+				const ratationQuaternion: Quaternion =
 					len === 0 ? Quaternion.initQuaternion() : Quaternion.fromRotation(Angles.degreeToRadian(len), new Vector3(+value / len, 0, 0))
 				for (let i: number = 0; i < objecters.length; i++) {
 					const objecter: Objecter = objecters[i]
@@ -201,8 +201,8 @@ export class Program {
 				break
 			}
 			case 'modelRotationY': {
-				const len = Math.sqrt(+value * +value)
-				const ratationQuaternion =
+				const len: number = Math.sqrt(+value * +value)
+				const ratationQuaternion: Quaternion =
 					len === 0 ? Quaternion.initQuaternion() : Quaternion.fromRotation(Angles.degreeToRadian(len), new Vector3(0, +value / len, 0))
 				for (let i: number = 0; i < objecters.length; i++) {
 					const objecter: Objecter = objecters[i]
@@ -224,8 +224,8 @@ export class Program {
 				break
 			}
 			case 'modelRotationZ': {
-				const len = Math.sqrt(+value * +value)
-				const ratationQuaternion =
+				const len: number = Math.sqrt(+value * +value)
+				const ratationQuaternion: Quaternion =
 					len === 0 ? Quaternion.initQuaternion() : Quaternion.fromRotation(Angles.degreeToRadian(len), new Vector3(0, 0, +value / len))
 				for (let i: number = 0; i < objecters.length; i++) {
 					const objecter: Objecter = objecters[i]
@@ -369,8 +369,33 @@ export class Program {
 		})
 	}
 
+	static onCanvasElementMouseDownMoveAction(ratioDistX: number, ratioDistY: number, ratationQuaternion: Quaternion): void {
+		const objecters: Array<Objecter> = Program.objecters
+		for (let i: number = 0; i < objecters.length; i++) {
+			const objecter: Objecter = objecters[i]
+			objecter.model.modeControl.currentQuaternion = Quaternion.multiplyQuaternions(
+				ratationQuaternion,
+				objecter.model.modeControl.lastQuaternion
+			)
+			objecter.model.modeControl.currentMatrix = new Matrix4(
+				Quaternion.makeRotationFromQuaternion(objecter.model.modeControl.currentQuaternion)
+			)
+			objecter.model.modelRatation.y += ratioDistX
+			objecter.model.modelRatation.x += ratioDistY
+		}
+		Program.isRender = true
+	}
+
+	static onCanvasElementMouseDownUpAction(): void {
+		const objecters: Array<Objecter> = Program.objecters
+		for (let i: number = 0; i < objecters.length; i++) {
+			const objecter: Objecter = objecters[i]
+			objecter.model.modeControl.lastQuaternion.resetBy(objecter.model.modeControl.currentQuaternion)
+		}
+		Program.isRender = true
+	}
+
 	static drawObjecters(objecters: Array<Objecter>, glCount: number): void {
-		const { gl } = Program.deviceParams
 		for (let i: number = 0; i < objecters.length; i++) {
 			const objecter: Objecter = objecters[i]
 			Program.applyObjecterMatrix(objecter)
@@ -384,7 +409,6 @@ export class Program {
 					buffer: objecter.buffer.normalBuffer,
 				},
 			})
-			// gl.drawArrays(gl.POINTS, 0, 1)
 		}
 	}
 

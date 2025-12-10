@@ -3,6 +3,7 @@ import React, { forwardRef, useEffect, useImperativeHandle, useRef } from 'react
 import { Program, TProgramShaderParams } from '../program/Program'
 import { TComponentDataHandlerFormData } from '../../public/component/FormController'
 import { EShaderProfileEnum } from '../utils/creator'
+import { Interaction } from '../program/Interaction'
 
 export type TCanvasWrapperComponentImperativeHandle = {
 	applyFormData: (key: keyof TProgramShaderParams, value: any, formData: TComponentDataHandlerFormData) => void
@@ -41,16 +42,22 @@ function CanvasWrapper(props: TProps, ref: any): React.ReactElement {
 	})
 	useEffect((): (() => void) => {
 		if (!Program.isInit && canvasElementRef.current) {
+			Interaction.initInteractionControllerStatus(canvasElementRef.current.getBoundingClientRect())
+			// Interaction.bindEvent(canvasElementRef.current)
+			// Interaction.mouseMoveAction = Program.onCanvasElementMouseDownMoveAction.bind(Program)
+			// Interaction.mouseUpAction = Program.onCanvasElementMouseDownUpAction.bind(Program)
 			Program.isInit = true
 			Program.initProgramControllerStatus()
 			Program.initContext(canvasElementRef.current)
-			Program.setShaderProfile(EShaderProfileEnum.ProjectionCase)
+			Program.setShaderProfile(EShaderProfileEnum.ComprehensiveCase)
 			Program.setWebGLCanvasStatus()
 			Program.isRender = true
 			Program.render()
 			onComponentInited && onComponentInited()
 		}
 		return (): void => {
+			Interaction.clearInteractionControllerStatus()
+			// Interaction.unBindEvent(canvasElementRef.current)
 			Program.clearProgramControllerStatus()
 		}
 	}, [])

@@ -16,8 +16,8 @@ function ComprehensiveTest(): React.ReactElement {
 		}
 	}
 	const modelTypeList: Array<{ label: string; value: string }> = [
-		{ label: 'Triangles', value: EPresetModelType.Triangles },
 		{ label: 'Single Plane', value: EPresetModelType.SinglePlane },
+		{ label: 'Triangles', value: EPresetModelType.Triangles },
 	]
 	const onComponentInitedAction = (): void => {
 		formControllerComponentRef.current.updateFormData({
