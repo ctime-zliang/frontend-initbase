@@ -9,6 +9,21 @@ export async function sleep(delay: number = 500, ...args: Array<any>): Promise<A
 	})
 }
 
+export function getHashIden(length: number = 36): string {
+	const s: Array<string> = []
+	const HEX_DIGITS: string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+	for (let i: number = 0; i < length; i++) {
+		s[i] = HEX_DIGITS.substr(Math.floor(Math.random() * 0x10), 1)
+	}
+	s[14] && (s[14] = String(getRandomInArea(1, 9)))
+	s[19] && (s[19] = HEX_DIGITS.substr(((+s[19] as number) & 0x3) | 0x8, 1))
+	s[8] && (s[8] = String(getRandomInArea(1, 9)))
+	s[13] && (s[13] = String(getRandomInArea(1, 9)))
+	s[18] && (s[18] = String(getRandomInArea(1, 9)))
+	s[23] && (s[23] = String(getRandomInArea(1, 9)))
+	return s.join('')
+}
+
 /**
  * 同步阻塞
  */
@@ -164,93 +179,6 @@ export function importScript(src: string): void {
 }
 
 /**
- * 设置图片自适应容器
- * 		效果参考 CSS 规则 object-fit: contain | cover
- */
-export type TZoomImageByContainerResult = {
-	adaptBenchmark: 'WIDTH' | 'HEIGHT'
-	offset: number
-	fitType: 'contain' | 'cover'
-	scaledWidth: number
-	scaledHeight: number
-	naturalWidth: number
-	naturalHeight: number
-	containerWidth: number
-	containerHeight: number
-}
-export function zoomImageByContainer(
-	naturalWidth: number,
-	naturalHeight: number,
-	containerWidth: number,
-	containerHeight: number,
-	fitType: 'contain' | 'cover'
-) {
-	const result: TZoomImageByContainerResult = {
-		adaptBenchmark: undefined!,
-		offset: 0,
-		fitType,
-		scaledWidth: 0,
-		scaledHeight: 0,
-		naturalWidth,
-		naturalHeight,
-		containerWidth,
-		containerHeight,
-	}
-	if (!['cover', 'contain'].includes(result.fitType)) {
-		throw new Error(`error fit-type for zoom image.`)
-	}
-	if (naturalWidth <= 0 || naturalHeight <= 0) {
-		throw new Error(`error image rect data.`)
-	}
-	const imageRatio: number = naturalWidth / naturalHeight
-	const containerRatio: number = containerWidth / containerHeight
-	if (result.fitType === 'contain') {
-		if (imageRatio > containerRatio) {
-			result.adaptBenchmark = 'WIDTH'
-			result.scaledWidth = containerWidth
-			result.scaledHeight = containerWidth / imageRatio
-			result.offset = (result.containerHeight - result.scaledHeight) / 2
-		} else {
-			result.adaptBenchmark = 'HEIGHT'
-			result.scaledHeight = containerHeight
-			result.scaledWidth = containerHeight * imageRatio
-			result.offset = (result.containerWidth - result.scaledWidth) / 2
-		}
-	} else if (result.fitType === 'cover') {
-		if (imageRatio > containerRatio) {
-			result.adaptBenchmark = 'HEIGHT'
-			result.scaledHeight = containerHeight
-			result.scaledWidth = containerHeight * imageRatio
-			result.offset = (result.containerWidth - result.scaledWidth) / 2
-		} else {
-			result.adaptBenchmark = 'WIDTH'
-			result.scaledWidth = containerWidth
-			result.scaledHeight = containerWidth / imageRatio
-			result.offset = (result.containerHeight - result.scaledHeight) / 2
-		}
-	}
-	return result
-}
-export function createTransformString(benchmark: 'WIDTH' | 'HEIGHT', offset: number): { left: number | string; top: number | string } {
-	if (benchmark === 'WIDTH') {
-		return {
-			left: 0,
-			top: `${offset}px`,
-		}
-	}
-	if (benchmark === 'HEIGHT') {
-		return {
-			left: `${offset}px`,
-			top: 0,
-		}
-	}
-	return {
-		left: 0,
-		top: 0,
-	}
-}
-
-/**
  * 打开系统文件选择对话框选择文件
  *      返回文件对象数组
  */
@@ -281,11 +209,11 @@ export async function selectPlatformFiles(
 				}
 				resolve({ code: 0, data: { files: iFiles, overs: jFiles }, msg: '' })
 			} else {
-				resolve({ code: -1, data: null, msg: 'no file selected.' })
+				resolve({ code: -1002, data: null, msg: 'no file selected.' })
 			}
 		})
 		inputElement.addEventListener('cancel', function (): void {
-			resolve({ code: -1, data: null, msg: 'cancel file selection.' })
+			resolve({ code: -1001, data: null, msg: 'cancel file selection.' })
 		})
 		inputElement.click()
 	})

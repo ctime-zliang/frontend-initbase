@@ -82,9 +82,6 @@ export class AsyncTimeout {
 				successed = false
 				isTimeout = error && error.__$$innner_tag__ === TIMEOUT_TAG ? true : false
 			}
-			if (this._isCanceled) {
-				return
-			}
 			const timeStamp: number = new Date().getTime()
 			for (let taskItem of this._taskEndExecListeners) {
 				taskItem(successed, result, {
@@ -95,6 +92,9 @@ export class AsyncTimeout {
 					isTimeout,
 					intervalDelay: this._intervalDelay,
 				})
+			}
+			if (this._isCanceled) {
+				return
 			}
 			if (successed) {
 				this._isRuning = false

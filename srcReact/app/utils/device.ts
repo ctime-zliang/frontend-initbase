@@ -1,13 +1,7 @@
-/**
- * 获取设备 DPR
- */
 export function getDPR(): number {
 	return window.devicePixelRatio || 1
 }
 
-/**
- * 获取设备 DPI
- */
 export function getDPI(): [number, number] {
 	const DPI: [number, number] = new Array(2) as [number, number]
 	const DPR: number = getDPR()
@@ -20,9 +14,6 @@ export function getDPI(): [number, number] {
 	return DPI
 }
 
-/**
- * 获取设备 DPI
- */
 export function getAbsoluteDPI(): [number, number] {
 	const DPI: [number, number] = new Array(2) as [number, number]
 	const tmpNode: HTMLElement = document.createElement('div')
@@ -32,4 +23,41 @@ export function getAbsoluteDPI(): [number, number] {
 	DPI[1] = parseInt(String(tmpNode.offsetHeight))
 	;(tmpNode.parentNode as HTMLElement).removeChild(tmpNode)
 	return DPI
+}
+
+export function isMobile(): boolean {
+	return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+}
+
+export function isIOS(): boolean {
+	return /iPad|iPhone|iPod/.test(navigator.userAgent)
+}
+
+export function isAndroid(): boolean {
+	return /Android/.test(navigator.userAgent)
+}
+
+export function isWeChat(): boolean {
+	return /MicroMessenger/i.test(navigator.userAgent)
+}
+
+export type TDeviceInfo = {
+	isMobile: boolean
+	isIOS: boolean
+	isAndroid: boolean
+	isWeChat: boolean
+	userAgent: string
+	screenWidth: number
+	screenHeight: number
+}
+export function getDeviceInfo(): TDeviceInfo {
+	return {
+		isMobile: isMobile(),
+		isIOS: isIOS(),
+		isAndroid: isAndroid(),
+		isWeChat: isWeChat(),
+		userAgent: navigator.userAgent,
+		screenWidth: window.screen.width,
+		screenHeight: window.screen.height,
+	}
 }
