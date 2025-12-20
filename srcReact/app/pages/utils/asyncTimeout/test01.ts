@@ -25,6 +25,7 @@ export function test01(): void {
 	asyncTimeout.addTaskEndListener(
 		(
 			successed: boolean,
+			timeout,
 			result: any,
 			optional: { attempt: number; timeStamp: number; maxRetries: number; isTimeout: boolean; timeout: number; intervalDelay: number }
 		) => {
@@ -32,7 +33,7 @@ export function test01(): void {
 			if (successed) {
 				message = `任务执行成功, 已获取到结果, 操作即将退出.`
 			} else {
-				if (optional.isTimeout) {
+				if (timeout) {
 					message = `第 ${optional.attempt + 1}/${optional.maxRetries} 次执行任务等待耗时已大于设置的超时时间 ${optional.timeout}ms`
 				} else {
 					message = `第 ${optional.attempt + 1}/${optional.maxRetries} 次执行任务的获取结果异常`

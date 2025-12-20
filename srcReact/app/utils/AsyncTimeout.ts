@@ -1,6 +1,7 @@
 type TTaskStartExecListener = (optional: { attempt: number; timeStamp: number; maxRetries: number; timeout: number; intervalDelay: number }) => void
 type TTaskEndExecListener = (
 	finished: boolean,
+	timeout: boolean,
 	result: any,
 	optional: { attempt: number; timeStamp: number; maxRetries: number; isTimeout: boolean; timeout: number; intervalDelay: number }
 ) => void
@@ -84,7 +85,7 @@ export class AsyncTimeout {
 			}
 			const timeStamp: number = new Date().getTime()
 			for (let taskItem of this._taskEndExecListeners) {
-				taskItem(successed, result, {
+				taskItem(successed, isTimeout, result, {
 					attempt,
 					timeStamp,
 					maxRetries: this._maxRetries,

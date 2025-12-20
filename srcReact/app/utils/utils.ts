@@ -187,14 +187,26 @@ export async function selectPlatformFiles(
 		itemMaxSize?: number
 		accept?: string
 		multiple?: boolean
-	} = {}
+	} = {},
+	appendElement?: HTMLElement | HTMLBodyElement
 ): Promise<{ code: number; data: { files: Array<File>; overs: Array<File> } | null; msg: string }> {
 	return new Promise((resolve): void => {
 		const itemMaxSize: number = options.itemMaxSize || 50 * 1024 * 1024
 		const inputElement = document.createElement('input')
+		inputElement.style.position = 'absolute'
+		inputElement.style.left = `0`
+		inputElement.style.top = `0`
+		inputElement.style.zIndex = `-999`
+		inputElement.style.visibility = 'hidden'
+		inputElement.style.width = `1px`
+		inputElement.style.height = `1px`
+		inputElement.style.outline = `0`
 		inputElement.type = 'file'
 		inputElement.accept = options.accept || '*'
 		inputElement.multiple = options.multiple || false
+		if (appendElement) {
+			appendElement.appendChild(inputElement)
+		}
 		inputElement.addEventListener('change', function (e: Event): void {
 			const files: ArrayLike<File> = (e.target as any).files
 			const iFiles: Array<File> = []
@@ -216,7 +228,38 @@ export async function selectPlatformFiles(
 			resolve({ code: -1001, data: null, msg: 'cancel file selection.' })
 		})
 		inputElement.click()
+		if (appendElement) {
+			inputElement.remove()
+		}
 	})
+}
+
+/**
+ * 解析 URL 参数
+ */
+export function parseURLParams(url: string): { [key: string]: any } {
+	const params: { [key: string]: any } = {}
+	let queryString: string = url.split('?')[1]
+	if (!queryString) {
+		return params
+	}
+	queryString = queryString.split('#')[0]
+	let pairs: Array<string> = queryString.split('&')
+	for (let i: number = 0; i < pairs.length; i++) {
+		let pair: string = pairs[i]
+		let index: number = pair.indexOf('=')
+		let key: string = undefined!
+		let value: any = undefined!
+		if (index === -1) {
+			key = decodeURIComponent(pair)
+			value = ''
+			continue
+		}
+		key = decodeURIComponent(pair.substring(0, index))
+		value = decodeURIComponent(pair.substring(index + 1))
+		params[key] = value
+	}
+	return params
 }
 
 export function viewMatrix(containerElement: HTMLElement, data: Array<number>, row: number, col: number, title?: string): void {
