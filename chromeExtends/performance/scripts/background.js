@@ -30,9 +30,14 @@ const cpuUsageManager = {
 		cpuUsageManager.lastCpuInfo = cpuInfo
 		return usage
 	},
-	/****************************************************************************************************/
-	/****************************************************************************************************/
-	calculateCoreUsage(oldSample, newSample) {
+	calculateAverageUsage(oldProcessors, newProcessors) {
+		let totalUsage = 0
+		for (let i = 0; i < oldProcessors.length; i++) {
+			totalUsage += cpuUsageManager.calculateCoreItemUsage(oldProcessors[i].usage, newProcessors[i].usage)
+		}
+		return totalUsage / oldProcessors.length / 100
+	},
+	calculateCoreItemUsage(oldSample, newSample) {
 		const totalDiff = newSample.total - oldSample.total
 		const idleDiff = newSample.idle - oldSample.idle
 		if (totalDiff === 0) {
@@ -40,13 +45,6 @@ const cpuUsageManager = {
 		}
 		const usage = ((totalDiff - idleDiff) / totalDiff) * 100
 		return Math.round(usage * 100) / 100
-	},
-	calculateAverageUsage(oldProcessors, newProcessors) {
-		let totalUsage = 0
-		for (let i = 0; i < oldProcessors.length; i++) {
-			totalUsage += cpuUsageManager.calculateCoreUsage(oldProcessors[i].usage, newProcessors[i].usage)
-		}
-		return totalUsage / oldProcessors.length / 100
 	},
 }
 

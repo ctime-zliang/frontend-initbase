@@ -1,5 +1,10 @@
 ;(globalScope => {
 	/**
+	 * 配置项
+	 * 		[文本字体大小, RADIO 外圆环半径, RADIO 中心实心圆半径, RADIO 外圆环与文本的距离]
+	 */
+	const COMMON_SETTING = [12, 6, 2, 4]
+	/**
 	 * 画布尺寸
 	 */
 	const CANVAS_RECT = [125, 100]
@@ -38,8 +43,20 @@
             }
         `,
 	}
-
-	const cacheProfile = {}
+	const cacheProfile = {
+		containerElement: null,
+		mainCanvasElement: null,
+		/* ... */
+		radioList: [],
+		rowRectList: [],
+		/* ... */
+		isShowUserViewPanel: false,
+		mode: 0,
+		/* ... */
+		ctx: null,
+		/* ... */
+		tabId: undefined,
+	}
 
 	/****************************************************************************************************/
 	/****************************************************************************************************/
@@ -77,12 +94,9 @@
 				{ id: String(Math.random()), label: 'Standard Info', value: 1, isSelected: cacheProfile.mode === 1, isHover: false },
 				{ id: String(Math.random()), label: 'Extend Info', value: 2, isSelected: cacheProfile.mode === 2, isHover: false },
 			]
-			cacheProfile.radioRectList = []
+			cacheProfile.rowRectList = []
 		},
 		setProfile() {
-			if (typeof cacheProfile.isShowUserViewPanel === 'undefined') {
-				cacheProfile.isShowUserViewPanel = false
-			}
 			cacheProfile.mode = +globalScope.localStorage.getItem('_performance_mode')
 			cacheProfile.ctx = null
 			if (cacheProfile.mainCanvasElement) {
@@ -102,8 +116,8 @@
 		},
 		getSelectedIndex([iClientX, iClientY]) {
 			let [findIndex, findId] = [0, null]
-			while (findIndex <= cacheProfile.radioRectList.length - 1) {
-				const rectItem = cacheProfile.radioRectList[findIndex]
+			while (findIndex <= cacheProfile.rowRectList.length - 1) {
+				const rectItem = cacheProfile.rowRectList[findIndex]
 				if (
 					iClientX >= rectItem.sx &&
 					iClientX <= rectItem.sx + rectItem.w &&
@@ -117,25 +131,17 @@
 			}
 			return findId ? findIndex : -1
 		},
-		setRectListHoverStatus(index) {
+		setTargetRowItemStatus(index, prop, state) {
 			for (let i = 0; i < cacheProfile.radioList.length; i++) {
-				cacheProfile.radioList[i].isHover = false
+				cacheProfile.radioList[i][prop] = !state
 				if (i === index) {
-					cacheProfile.radioList[i].isHover = true
-				}
-			}
-		},
-		setRectListSelectStatus(index) {
-			for (let i = 0; i < cacheProfile.radioList.length; i++) {
-				cacheProfile.radioList[i].isSelected = false
-				if (i === index) {
-					cacheProfile.radioList[i].isSelected = true
+					cacheProfile.radioList[i][prop] = state
 				}
 			}
 		},
 	}
 
-	const bindEvent = () => {
+	const eventManager = () => {
 		chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 			if (message.action === 'SYS_PAGE_LOADED') {
 				cacheProfile.tabId = message.data.tabId
@@ -158,8 +164,8 @@
 				if (hoverIndex >= 0) {
 					const modeValue = cacheProfile.radioList[hoverIndex].value
 					globalScope.localStorage.setItem('_performance_mode', modeValue)
-					operaManager.setRectListSelectStatus(hoverIndex)
-					drawManager.update()
+					operaManager.setTargetRowItemStatus(hoverIndex, 'isSelected', true)
+					drawManager.$update()
 					chrome.runtime.sendMessage({
 						action: 'USR_CHANGE_MODE',
 						data: { modeValue },
@@ -175,34 +181,40 @@
 		}
 		const containerMouseMoveHandler = evte => {
 			const hoverIndex = operaManager.getSelectedIndex(operaManager.getRelativeClient(evte.clientX, evte.clientY))
-			operaManager.setRectListHoverStatus(hoverIndex)
-			drawManager.update()
+			operaManager.setTargetRowItemStatus(hoverIndex, 'isHover', true)
+			drawManager.$update()
 			cacheProfile.containerElement.style.cursor = hoverIndex >= 0 ? 'pointer' : 'default'
 		}
 		cacheProfile.containerElement.addEventListener('mousemove', containerMouseMoveHandler)
 	}
 
 	const drawManager = {
-		update() {
+		$update() {
 			cacheProfile.ctx.clearRect(0, 0, CANVAS_RECT[0], CANVAS_RECT[1])
 			cacheProfile.ctx.lineWidth = 1
 			cacheProfile.ctx.textBaseline = 'top'
-			const rect1 = drawManager.drawRadioGroupElement('Mode', {
-				x: 5,
-				y: 10,
-				radioList: [...cacheProfile.radioList],
-			})
-			cacheProfile.radioRectList = [].concat(rect1)
+			cacheProfile.rowRectList = [].concat(drawManager.drawRadioGroupElement('Mode', { x: 5, y: 10 }))
 		},
-		/****************************************************************************************************/
-		/****************************************************************************************************/
-		drawRadioElement(optional) {
-			const { x = 0, y = 0, label = '', isHover = false, isSelected = false } = optional
-			const fontSize = 12
-			const [outerCircleRadius, centerCircleRadius] = [6, 2]
-			const outerCircle = [x + outerCircleRadius, y + outerCircleRadius, outerCircleRadius]
-			const centerCircle = [x + outerCircleRadius, y + outerCircleRadius, centerCircleRadius]
-			cacheProfile.ctx.font = `${fontSize}px arial, sans-serif`
+		drawRadioGroupElement(title, optional) {
+			const { x = 0, y = 0 } = optional
+			cacheProfile.ctx.font = `14px arial, sans-serif`
+			cacheProfile.ctx.fillStyle = '#ffffff'
+			cacheProfile.ctx.fillText(title, x, y)
+			const radioLineLeftPadding = 15
+			const rowRectList = []
+			for (let i = 0; i < cacheProfile.radioList.length; i++) {
+				rowRectList.push({
+					...drawManager.drawRadioElement({ ...cacheProfile.radioList[i], x: x + radioLineLeftPadding, y: y + 22 + 24 * i }),
+					id: cacheProfile.radioList[i].id,
+				})
+			}
+			return rowRectList
+		},
+		drawRadioElement(radioRowItem) {
+			const { x = 0, y = 0, label = '', isHover = false, isSelected = false } = radioRowItem
+			const outerCircle = [x + COMMON_SETTING[1], y + COMMON_SETTING[1], COMMON_SETTING[1]]
+			const centerCircle = [x + COMMON_SETTING[1], y + COMMON_SETTING[1], COMMON_SETTING[2]]
+			cacheProfile.ctx.font = `${COMMON_SETTING[0]}px arial, sans-serif`
 			cacheProfile.ctx.strokeStyle = cacheProfile.ctx.fillStyle = isHover ? `#efefef` : isSelected ? `#dfdfdf` : `#cfcfcf`
 			cacheProfile.ctx.lineWidth = 2
 			cacheProfile.ctx.beginPath()
@@ -214,33 +226,16 @@
 				cacheProfile.ctx.stroke()
 				cacheProfile.ctx.fill()
 			}
-			const labelDistRadio = 4
-			cacheProfile.ctx.fillText(label, x + outerCircle[2] * 2 + labelDistRadio, y + 1)
+			cacheProfile.ctx.fillText(label, x + outerCircle[2] * 2 + COMMON_SETTING[3], y + 1)
 			return {
 				sx: x,
 				sy: y,
-				w: outerCircleRadius * 2 + labelDistRadio + cacheProfile.ctx.measureText(label).width,
-				h: Math.max(outerCircleRadius * 2, fontSize),
+				w: COMMON_SETTING[1] * 2 + COMMON_SETTING[3] + cacheProfile.ctx.measureText(label).width,
+				h: Math.max(COMMON_SETTING[1] * 2, COMMON_SETTING[0]),
 			}
-		},
-		drawRadioGroupElement(title, optional) {
-			const { x = 0, y = 0, radioList = [] } = optional
-			cacheProfile.ctx.font = `14px arial, sans-serif`
-			cacheProfile.ctx.fillStyle = '#ffffff'
-			cacheProfile.ctx.fillText(title, x, y)
-			const radioLineLeftPadding = 15
-			const radioRectList = []
-			for (let i = 0; i < radioList.length; i++) {
-				radioRectList.push({
-					...drawManager.drawRadioElement({ ...radioList[i], x: x + radioLineLeftPadding, y: y + 22 + 24 * i }),
-					id: radioList[i].id,
-				})
-			}
-			return radioRectList
 		},
 	}
 
-	/****************************************************************************************************/
 	/****************************************************************************************************/
 	/****************************************************************************************************/
 	/****************************************************************************************************/
@@ -248,17 +243,16 @@
 	const refresh = () => {
 		operaManager.setProfile()
 		operaManager.setData()
-		drawManager.update()
+		drawManager.$update()
 	}
-
-	const main = () => {
+	const load = () => {
 		initManager.initViewStyle()
 		initManager.initViewElement()
 		initManager.initDomElementHandler()
-		bindEvent()
+		eventManager()
+		refresh()
 	}
-
 	globalScope.addEventListener('DOMContentLoaded', () => {
-		globalScope.setTimeout(main, 100)
+		globalScope.setTimeout(load, 100)
 	})
 })(window.top)
