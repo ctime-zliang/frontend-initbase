@@ -4,37 +4,97 @@ const path = require('path')
 const htmlInject = require('./plugins/htmlInject')
 const stylePlugin = require('esbuild-style-plugin')
 
-console.log(process.cwd())
-class DevelopmentBuidler {
-	constructor() {
+class BuidlerService {
+	constructor(name, optional = {}) {
+		this._name = name
+		this._ctx = null
 		this._startTime = Date.now()
+		this._optional = {
+			isEnableDevServer: false,
+			entryPoints: [],
+			outputBasePath: './dist',
+			publicPath: './',
+			isWriteToDisk: true,
+			isHTMLInject: true,
+			devServerHost: '127.0.0.1',
+			devServerPort: 0,
+			devServerFallback: '',
+			htmlTemplatePath: '',
+			htmlInjetPluginOptional: {},
+			...optional,
+		}
 	}
 
 	async start() {
 		try {
-			await this.prepareDist()
-			this.ctx = await esbuild.context(this.getBuildConfig())
-			await this.initialBuild()
-			await this.startWatching()
-			await this.startServer()
+			await this._environmentInit()
+			const config = await this._createBudilConfig()
+			this._ctx = await esbuild.context(config)
+			await this._initialBuild()
+			await this._setWatching()
+			if (this._optional.isEnableDevServer) {
+				await this._createServer()
+			}
 		} catch (error) {
-			console.error('❌ 开发服务器启动失败:', error)
+			console.error(`[${this._name}] ❌ [${new Date().toLocaleTimeString()}] 构建服务出错:`, error)
 			process.exit(1)
 		}
 	}
 
-	getBuildConfig() {
+	async _environmentInit() {
+		await fs.emptyDir(this._optional.outputBasePath)
+		console.log(`[${this._name}] 📁 [${new Date().toLocaleTimeString()}] 输出目录: ${this._optional.outputBasePath} 已就绪.`)
+	}
+
+	async _initialBuild() {
+		console.log(`[${this._name}] 🚀 [${new Date().toLocaleTimeString()}] 构建服务正在初始化...`)
+		await this._ctx.rebuild()
+	}
+
+	async _setWatching() {
+		await this._ctx.watch()
+		console.log(`[${this._name}] 👀 [${new Date().toLocaleTimeString()}] 开始监听文件变化...`)
+	}
+
+	async _createBudilConfig() {
+		console.log(`[${this._name}] 🚀 [${new Date().toLocaleTimeString()}] 正在初始化配置...`)
+		const plugins = []
+		if (this._optional.isHTMLInject) {
+			plugins.push(htmlInject(this._optional.htmlTemplatePath, this._optional.htmlInjetPluginOptional))
+		}
+		plugins.push(
+			stylePlugin({
+				cssModules: {
+					pattern: '[name]__[local]___[hash:base64:5]',
+				},
+				less: {
+					javascriptEnabled: true,
+				},
+			})
+		)
+		plugins.push({
+			name: `dev-server-plugin`,
+			setup: build => {
+				build.onEnd(result => {
+					this._onBuildEnd(result)
+				})
+				build.onStart(() => {
+					this._startTime = Date.now()
+					console.log(`[${this._name}] 🔨 [${new Date().toLocaleTimeString()}] 开始构建...`)
+				})
+			},
+		})
 		return {
-			entryPoints: ['./srcReact/client/index.tsx'],
+			entryPoints: this._optional.entryPoints,
 			bundle: true,
-			outdir: './dist/srcReact',
+			outdir: this._optional.outputBasePath,
 			format: 'iife',
 			platform: 'browser',
 			target: 'es2015',
 			assetNames: 'assets/[name]-[hash]',
 			chunkNames: '[name]-[hash]',
-			publicPath: '/',
-			write: true,
+			publicPath: this._optional.publicPath,
+			write: this._optional.isWriteToDisk,
 			loader: {
 				'.ts': 'ts',
 				'.tsx': 'tsx',
@@ -55,80 +115,53 @@ class DevelopmentBuidler {
 				'process.env.NODE_ENV': '"development"',
 				global: 'window',
 			},
-			plugins: [
-				htmlInject(),
-				stylePlugin({
-					cssModules: {
-						pattern: '[name]__[local]___[hash:base64:5]',
-					},
-					less: {
-						javascriptEnabled: true,
-					},
-				}),
-				this.getWatchPlugin(),
-			],
+			plugins,
 		}
 	}
 
-	getWatchPlugin() {
-		return {
-			name: 'dev-server-plugin',
-			setup: build => {
-				build.onEnd(result => {
-					this.onBuildEnd(result)
-				})
-
-				build.onStart(() => {
-					console.log('🔨 开始构建...')
-				})
-			},
-		}
-	}
-
-	onBuildEnd(result) {
+	_onBuildEnd(result) {
 		const time = new Date().toLocaleTimeString()
-		const duration = Date.now() - this.startTime
+		const duration = Date.now() - this._startTime
 		if (result.errors.length > 0) {
-			console.log(`❌ [${time}] 构建失败`)
+			console.log(`[${this._name}] ❌ [${time}] 构建失败 | 运行时间: ${duration}ms`)
 			result.errors.forEach((error, index) => {
-				console.log(`  ${index + 1}. ${error.text}`)
+				console.log(`\t\t${index + 1}. ${error.text}`)
 			})
 		} else {
 			const files = Object.keys(result.metafile.outputs)
-			const jsFiles = files.filter(f => f.endsWith('.js'))
-			const cssFiles = files.filter(f => f.endsWith('.css'))
-			console.log(`✅ [${time}] 构建成功`)
-			console.log(`   📦 JS: ${jsFiles.length} 个, CSS: ${cssFiles.length} 个`)
-			console.log(`   ⏱️  运行时间: ${duration}ms`)
+			const jsFiles = files.filter(f => {
+				return f.endsWith('.js')
+			})
+			const cssFiles = files.filter(f => {
+				return f.endsWith('.css')
+			})
+			console.log(`[${this._name}] ✅ [${time}] 构建成功 | 运行时间: ${duration}ms`)
+			console.log(`\t\t📦 JS: ${jsFiles.length} 个, CSS: ${cssFiles.length} 个`)
 		}
 		this.startTime = Date.now()
 	}
 
-	async prepareDist() {
-		await fs.emptyDir('./dist/srcReact')
-		console.log('📁 输出目录已准备')
-	}
-
-	async initialBuild() {
-		console.log('🚀 执行初始构建...')
-		await this.ctx.rebuild()
-	}
-
-	async startWatching() {
-		await this.ctx.watch()
-		console.log('👀 开始监听文件变化...')
-	}
-
-	async startServer() {
-		const result = await this.ctx.serve({
-			servedir: './dist/srcReact',
-			port: 12001,
-			host: '127.0.0.1',
-			fallback: './dist/srcReact/index.html',
+	async _createServer() {
+		const result = await this._ctx.serve({
+			servedir: this._optional.outputBasePath,
+			port: this._optional.devServerPort,
+			host: this._optional.devServerHost,
+			fallback: this._optional.devServerFallback,
 		})
-		console.log(`🌐 开发服务器: http://${result.hosts[0]}:${result.port}`)
+		console.log(`[${this._name}] 🌐 [${new Date().toLocaleTimeString()}] 开发服务: http://${result.hosts[0]}:${result.port}`)
 	}
 }
 
-const builder = new DevelopmentBuidler()
-builder.start().catch(console.error)
+const bs = new BuidlerService('Frontend-Initbase', {
+	isEnableDevServer: true,
+	entryPoints: ['./srcReact/client/index.tsx'],
+	outputBasePath: './dist/srcReact',
+	publicPath: './',
+	isWriteToDisk: true,
+	isHTMLInject: true,
+	devServerHost: '127.0.0.1',
+	devServerPort: 11001,
+	devServerFallback: './dist/srcReact/index.html',
+	htmlTemplatePath: path.resolve('./srcReact/app/template/index.html'),
+})
+bs.start().catch(console.error)
