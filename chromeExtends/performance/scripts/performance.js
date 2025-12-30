@@ -478,7 +478,16 @@
 			}
 			viewDataManager.data.totalJSHeapSizeRatioList = []
 			const maxValue = Math.max(...cacheProfile.totalJSHeapSizeValueList)
-			const maxValueExtend = maxValue <= 500 ? 500 : maxValue + 500
+			let maxValueExtend = 0
+			if (maxValue >= 1000) {
+				maxValueExtend = maxValue + 500
+			} else if (maxValue >= 500 && maxValue < 1000) {
+				maxValueExtend = maxValue + 300
+			} else if (maxValue >= 300 && maxValue < 500) {
+				maxValueExtend = maxValue + 200
+			} else {
+				maxValueExtend = maxValue + 100
+			}
 			for (let i = 0; i < cacheProfile.totalJSHeapSizeValueList.length; i++) {
 				viewDataManager.data.totalJSHeapSizeRatioList[i] = cacheProfile.totalJSHeapSizeValueList[i] / maxValueExtend
 			}
