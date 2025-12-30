@@ -60,7 +60,7 @@ class BuidlerService {
 		console.log(`[${this._name}] 🚀 [${new Date().toLocaleTimeString()}] 正在初始化配置...`)
 		const plugins = []
 		if (this._optional.isHTMLInject) {
-			plugins.push(htmlInject(this._optional.htmlTemplatePath, this._optional.htmlInjetPluginOptional))
+			plugins.push(htmlInject(this._optional.publicPath, this._optional.htmlTemplatePath, this._optional.htmlInjetPluginOptional))
 		}
 		plugins.push(
 			stylePlugin({

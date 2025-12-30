@@ -1,7 +1,7 @@
 const fs = require('fs-extra')
 const path = require('path')
 
-module.exports = function (templatePath, optional = {}) {
+module.exports = function (publicPath, templatePath, optional = {}) {
 	const jsFilesFilter =
 		optional.jsFilesFilter ||
 		(jsFile => {
@@ -34,13 +34,13 @@ module.exports = function (templatePath, optional = {}) {
 				const linkTagList = []
 				for (let i = 0; i < cssFiles.length; i++) {
 					if (cssFilesFilter(cssFiles[i])) {
-						linkTagList.push(`<link rel="stylesheet" href="/${cssFiles[i]}">`)
+						linkTagList.push(`<link rel="stylesheet" href="${publicPath}${cssFiles[i]}">`)
 					}
 				}
 				const scriptTagList = []
 				for (let i = 0; i < jsFiles.length; i++) {
 					if (jsFilesFilter(jsFiles[i])) {
-						scriptTagList.push(`<script src="/${jsFiles[i]}"></script>`)
+						scriptTagList.push(`<script src="${publicPath}${jsFiles[i]}"></script>`)
 					}
 				}
 				if (html.includes('</head>')) {
