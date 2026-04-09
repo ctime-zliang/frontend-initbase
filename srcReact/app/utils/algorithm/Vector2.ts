@@ -55,7 +55,7 @@ export class Vector2 extends Vector {
 		return x1 * y2 - x2 * y1
 	}
 	/**
-	 * 求向量(x2 - x1, y2 - y1) 与向量(x3 - x2, y3 - y2) 的叉乘
+	 * 求向量 (x2 - x1, y2 - y1) 与向量 (x3 - x2, y3 - y2) 的叉乘
 	 *
 	 * (x1, y1)
 	 * |
