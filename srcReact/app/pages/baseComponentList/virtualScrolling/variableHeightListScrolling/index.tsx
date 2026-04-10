@@ -1,5 +1,5 @@
 import React from 'react'
-import { VariableHeightListRowItemStyle, VariableHeightListScrolling } from '../../../../componnet/virtualScrolling'
+import { VariableHeightListScrolling } from '../../../../componnet/variableHeightVirtualScrolling'
 
 export function getRandomInArea(min: number = 0, max: number = Number.MAX_SAFE_INTEGER): number {
 	return Math.floor(Math.random() * (max - min + 1)) + min
@@ -18,7 +18,7 @@ for (let id: number = 0; id < dataLength; ++id) {
 }
 
 function RowItem(props: any): React.ReactElement {
-	const { index, styleObject } = props as { index: number; styleObject: VariableHeightListRowItemStyle }
+	const { index, styleObject } = props as { index: number; styleObject: React.CSSProperties }
 	const rowItemStyle: React.CSSProperties = { ...styleObject, padding: '5px 0' }
 	return (
 		<div

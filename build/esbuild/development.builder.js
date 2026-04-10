@@ -156,7 +156,7 @@ const bs = new BuidlerService('Frontend-Initbase', {
 	isEnableDevServer: true,
 	entryPoints: ['./srcReact/client/index.tsx'],
 	outputBasePath: './dist/srcReact',
-	publicPath: './',
+	publicPath: '/',
 	isWriteToDisk: true,
 	isHTMLInject: true,
 	devServerHost: '127.0.0.1',

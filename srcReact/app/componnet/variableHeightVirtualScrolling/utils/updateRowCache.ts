@@ -1,4 +1,4 @@
-import { TBoundingClientRectResult, TRowCache } from '../types/types'
+import { TRowCache } from '../types/types'
 
 export function initRowCache(estimatedRowHeight: number, countTotal: number, rowCache: Array<TRowCache>): Array<TRowCache> {
 	rowCache.length = 0
@@ -20,8 +20,7 @@ export function updateRowCacheByContentItemElement(children: Array<HTMLElement>,
 		if (!element) {
 			return
 		}
-		const clientRect: TBoundingClientRectResult = element.getBoundingClientRect()
-		const { height } = clientRect
+		const { height } = element.getBoundingClientRect()
 		const index: number = Number(element.id.split('-')[1])
 		const diffHeight: number = rowCache[index].height - height
 		if (diffHeight) {
@@ -46,7 +45,6 @@ export function updateRowCacheByContentItemElement(children: Array<HTMLElement>,
 			itemData.diffHeight = 0
 		}
 	}
-
 	const height: number = rowCache[rowCache.length - 1].bottom
 	callback && callback(height)
 }

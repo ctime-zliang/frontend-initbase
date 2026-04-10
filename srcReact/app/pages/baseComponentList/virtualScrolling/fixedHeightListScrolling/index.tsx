@@ -1,5 +1,5 @@
 import React from 'react'
-import { FixedHeightListRowItemStyle, FixedHeightListScrolling } from '../../../../componnet/virtualScrolling'
+import { FixedHeightListScrolling } from '../../../../componnet/fixedHeightVirtualScrolling'
 
 export function getRandomInArea(min: number = 0, max: number = Number.MAX_SAFE_INTEGER): number {
 	return Math.floor(Math.random() * (max - min + 1)) + min
@@ -18,7 +18,7 @@ for (let id: number = 0; id < dataLength; ++id) {
 }
 
 function RowItem(props: any): React.ReactElement {
-	const { index, styleObject, rowHeight } = props as { index: number; styleObject: FixedHeightListRowItemStyle; rowHeight: number }
+	const { index, styleObject, rowHeight } = props as { index: number; styleObject: React.CSSProperties; rowHeight: number }
 	const rowItemStyle: React.CSSProperties = {
 		...styleObject,
 		lineHeight: rowHeight + 'px',

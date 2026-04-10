@@ -80,7 +80,7 @@ export type TTreeRootPorps = {
 	/**
 	 * 虚拟滚动 时执行函数
 	 */
-	onVirtualScroll?: ((y: number, x: number) => void) | null
+	onVirtualScroll?: ((e: React.SyntheticEvent, y: number, x: number) => void) | null
 }
 
 /**********************************************************************/

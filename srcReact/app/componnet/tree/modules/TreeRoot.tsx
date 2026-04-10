@@ -3,8 +3,8 @@ import '../styles/index.less'
 import { TComponentTreeRowData, TTreeDataItemID, TTreeRootPorps } from '../types/types'
 import { handleFormatData } from '../utils/filter'
 import { defaultProfile, DEFAULT_ITEMHIEGHT } from '../config/config'
-import { FixedHeightListScrolling } from '../../virtualScrolling'
 import { TreeLineMemo } from './TreeLine'
+import { FixedHeightListScrolling } from '../../fixedHeightVirtualScrolling'
 
 function TreeRoot(props: TTreeRootPorps, ref: any): React.ReactElement {
 	const globalProfile: TTreeRootPorps = {
