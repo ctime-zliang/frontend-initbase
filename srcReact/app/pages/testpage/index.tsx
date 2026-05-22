@@ -1,10 +1,9 @@
-import { TCommonComponentBaseProps } from '../../types/comm.types'
 import React, { useState, useMemo, useCallback, useEffect } from 'react'
 import InsertList from './insertList/Index'
 import { Helmet } from 'react-helmet-async'
 import { MatrixTest } from './matrix/Index'
 
-function TestPageMain(props: TCommonComponentBaseProps): React.ReactElement {
+function TestPageMain(props: Partial<any>): React.ReactElement {
 	const MODULE_NAME: string = `Test Page`
 	useEffect((): void => {
 		console.log('===>>>> Test Page Common Mounted.')

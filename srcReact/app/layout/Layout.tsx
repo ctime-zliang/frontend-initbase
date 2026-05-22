@@ -2,9 +2,8 @@ import React from 'react'
 import { PageContentRoot } from './pageContent/Index'
 import { PageHeaderRoot } from './pageHeader/Index'
 import { PageFooterRoot } from './pageFooter/Index'
-import { TCommonComponentBaseProps } from '../types/comm.types'
 
-function Layout(props: TCommonComponentBaseProps): React.ReactElement {
+function Layout(props: Partial<any>): React.ReactElement {
 	console.log(`Layout ☆☆☆`, props)
 	return (
 		<>

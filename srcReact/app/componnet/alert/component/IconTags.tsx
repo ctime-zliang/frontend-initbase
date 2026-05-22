@@ -1,5 +1,8 @@
 import React from 'react'
-import { TIconTagsProps } from '../types/type'
+
+export type TIconTagsProps = {
+	iconClassName?: string
+}
 
 export function IconTags(props: TIconTagsProps): React.ReactElement {
 	const { iconClassName = '' } = props

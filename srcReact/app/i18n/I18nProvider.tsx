@@ -10,6 +10,11 @@ import zhCN from './locales/zh_cn/translation.json'
 import enUS from './locales/en_us/translation.json'
 import { getLanguageSetting } from '../store/global/selectors'
 
+export enum ELanguageSetting {
+	ZHCN = 'zh_cn',
+	ENUS = 'en_us',
+}
+
 const DEFAULT_NAMESPACE: string = 'DEFAULT_NAMESPACE'
 const i18n = i18next
 	.use(i18nextXHRBackend)
@@ -20,8 +25,8 @@ const i18n = i18next
 			// crossDomain: true
 		},
 		debug: false,
-		lng: 'en_us',
-		fallbackLng: 'en_us',
+		lng: ELanguageSetting.ENUS,
+		fallbackLng: ELanguageSetting.ENUS,
 		defaultNS: DEFAULT_NAMESPACE,
 		ns: [DEFAULT_NAMESPACE],
 		partialBundledLanguages: true,
@@ -35,7 +40,7 @@ const i18n = i18next
 		},
 	})
 
-i18next.languages = ['zh_cn', 'en_us']
+i18next.languages = [ELanguageSetting.ZHCN, ELanguageSetting.ENUS]
 
 export const i18Next = i18next
 
@@ -43,7 +48,7 @@ export const i18Next = i18next
 /************************************ ************************************/
 /************************************ ************************************/
 
-function I18nProvider(props: any): React.ReactElement {
+function I18nProvider(props: Partial<any>): React.ReactElement {
 	const languageSetting: string = useSelector(getLanguageSetting)
 	const [isInitial, setIsInitial] = useState<boolean>(true)
 	// console.log(`I18nProvider 🌙🌙🌙`, props, languageSetting)

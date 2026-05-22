@@ -1,6 +1,5 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { TCommonComponentBaseProps } from '../types/comm.types'
 import { LayoutMemo } from './Layout'
 
 export type TRouteItem = {
@@ -19,7 +18,7 @@ export type TRouteItem = {
 	[key: string]: any
 }
 
-const createRouteComponentList = (routes: Array<TRouteItem>, profile: PlainObject, props: TCommonComponentBaseProps): Array<React.ReactElement> => {
+const createRouteComponentList = (routes: Array<TRouteItem>, profile: PlainObject, props: Partial<any>): Array<React.ReactElement> => {
 	return routes.map((item: TRouteItem, index: number): React.ReactElement => {
 		if (item && item.routes) {
 			return (
@@ -48,6 +47,6 @@ const createRouteComponentList = (routes: Array<TRouteItem>, profile: PlainObjec
 	})
 }
 
-export function renderRoutes(routes: Array<TRouteItem>, profile: PlainObject, props: TCommonComponentBaseProps): React.ReactElement {
+export function renderRoutes(routes: Array<TRouteItem>, profile: PlainObject, props: Partial<any>): React.ReactElement {
 	return <Routes>{createRouteComponentList(routes, profile, props)}</Routes>
 }

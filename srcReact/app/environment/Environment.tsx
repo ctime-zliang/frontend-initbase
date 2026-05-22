@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOMClient, { createRoot } from 'react-dom/client'
+import ReactDOMClient from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { HelmetProvider } from 'react-helmet-async'

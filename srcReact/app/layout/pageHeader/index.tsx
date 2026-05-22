@@ -3,14 +3,13 @@ import { Layout, Button } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import logoImage from '../../assets/images/log.jpg'
-import { TCommonComponentBaseProps } from '../../types/comm.types'
 import { TStore as TGlobalStore } from '../../store/global/store'
 import { TReduxToolkitActionCommonResult, TCombineStore } from '../../store/public/types'
 import { EStoreModuleKey } from '../../store/public/config'
 import './index.less'
 import { changeLanguageSettingAction } from '../../store/global/slice'
 
-export function PageHeaderRoot(props: TCommonComponentBaseProps): React.ReactElement {
+export function PageHeaderRoot(props: Partial<any>): React.ReactElement {
 	// console.log(`PageHeaderRoot ☆☆☆`, props)
 	const { g_languageSetting, g_headLoadStatus } = useSelector((store: TCombineStore): TGlobalStore => {
 		return store[EStoreModuleKey.global]

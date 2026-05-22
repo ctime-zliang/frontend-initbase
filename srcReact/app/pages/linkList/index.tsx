@@ -4,11 +4,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import styles from './index.module.less'
 import { Link } from 'react-router-dom'
 import { TStore as TGlobalStore, TLinkListItem } from '../../store/global/store'
-import { TCommonComponentBaseProps } from '../../types/comm.types'
 import { TCombineStore } from '../../store/public/types'
 import { EStoreModuleKey } from '../../store/public/config'
 
-export function LinkListRoot(props: TCommonComponentBaseProps): React.ReactElement {
+export function LinkListRoot(props: Partial<any>): React.ReactElement {
 	const MODULE_NAME: string = `Entry Link List`
 	const { linkData } = useSelector((store: TCombineStore): TGlobalStore => {
 		return store[EStoreModuleKey.global]

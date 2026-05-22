@@ -1,7 +1,3 @@
-export type TCommonComponentBaseProps = {
-	[key: string]: any
-}
-
 export type TBoundingClientRectResult = {
 	width: number
 	height: number
