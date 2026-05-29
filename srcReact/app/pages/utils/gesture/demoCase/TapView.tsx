@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import styles from './index.module.less'
 import { Gesture } from '@/app/utils/gesture/Gesture'
 import { attachGesture, ListenerExtendPointerEvent } from '@/app/utils/gesture'
-import { environment } from '@/app/environment/Environment'
+import { environment } from '@/app/constant/Environment'
 
 type TController = {
 	isInit: boolean

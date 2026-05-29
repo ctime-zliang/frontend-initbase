@@ -11,7 +11,12 @@ import {
 	componentAlertRoute,
 } from '../pages/baseComponentList/route'
 import { testpageCommonRoute, testPageErrorRoute } from '../pages/testpage/route'
-import { storeTestErrorRoute, storeTestEdaAbstractStoreCommonRoute, storeTestProxyStoreCommonRoute } from '../pages/storeTest/route'
+import {
+	storeTestErrorRoute,
+	storeTestWatchStoreCommonRoute,
+	storeTestProxyStoreCommonRoute,
+	storeTestWatchStoreCommonRoute2,
+} from '../pages/storeTest/route'
 import { TRouteItem } from '../layout/Router'
 import {
 	asyncAnimatorRoute,
@@ -41,7 +46,7 @@ export const createRoutes = (): Array<TRouteItem> => {
 		},
 		{
 			path: '/storetest/*',
-			routes: [storeTestErrorRoute(), storeTestEdaAbstractStoreCommonRoute(), storeTestProxyStoreCommonRoute()],
+			routes: [storeTestErrorRoute(), storeTestWatchStoreCommonRoute(), storeTestProxyStoreCommonRoute(), storeTestWatchStoreCommonRoute2()],
 		},
 		{
 			path: '/baseComponentLib/*',

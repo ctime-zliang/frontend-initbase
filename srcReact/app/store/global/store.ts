@@ -29,11 +29,17 @@ export const createInitialState = (): TStore => {
 				list: [
 					{
 						id: uuidv4(),
-						title: 'EdaAbstractStore State Manager',
-						desc: 'EdaAbstractStore manager case test',
-						path: '/storetest/edaStore',
+						title: 'WatchStore State Manager',
+						desc: 'WatchStore manager case test',
+						path: '/storetest/watchStore',
 					},
 					{ id: uuidv4(), title: 'ProxyStore State Manager', desc: 'ProxyStore manager case test', path: '/storetest/proxyStore' },
+					{
+						id: uuidv4(),
+						title: 'WatchStore State Manager 2',
+						desc: 'WatchStore manager case test 2',
+						path: '/storetest/watchStore2',
+					},
 				],
 			},
 			{
