@@ -240,26 +240,28 @@
 	}
 
 	const eventManager = () => {
-		chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-			if (message.action === 'USR_CHANGE_MODE') {
-				if (MODES.includes(+message.data.modeValue)) {
-					try {
-						globalScope.localStorage.setItem('_performance_mode', ((RUN_PROFILE[0] = +message.data.modeValue), RUN_PROFILE[0]))
-					} catch (e) {}
-					refresh()
+		if (globalThis.chrome) {
+			globalThis.chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+				if (message.action === 'USR_CHANGE_MODE') {
+					if (MODES.includes(+message.data.modeValue)) {
+						try {
+							globalScope.localStorage.setItem('_performance_mode', ((RUN_PROFILE[0] = +message.data.modeValue), RUN_PROFILE[0]))
+						} catch (e) {}
+						refresh()
+					}
+					return
 				}
-				return
-			}
-			if (message.action === 'USR_GET_SYSINFO') {
-				const AREA_RECT = ELEMENTS_RECT[RUN_PROFILE[0]]
-				samplingCallbackManager.calcSystemInfoCommonData(message.data)
-				samplingCallbackManager.calcSystemCpuUsageRatioPolylineData(AREA_RECT[6][1], AREA_RECT[6][3])
-				samplingCallbackManager.calcSystemMemoryUsageRatioPolylineData(AREA_RECT[8][1], AREA_RECT[8][3])
-				operaManager.spliceOverSize('cpuUsageRatioCycleAverageList')
-				operaManager.spliceOverSize('memoryUsageRatioCycleAverageList')
-				return
-			}
-		})
+				if (message.action === 'USR_GET_SYSINFO') {
+					const AREA_RECT = ELEMENTS_RECT[RUN_PROFILE[0]]
+					samplingCallbackManager.calcSystemInfoCommonData(message.data)
+					samplingCallbackManager.calcSystemCpuUsageRatioPolylineData(AREA_RECT[6][1], AREA_RECT[6][3])
+					samplingCallbackManager.calcSystemMemoryUsageRatioPolylineData(AREA_RECT[8][1], AREA_RECT[8][3])
+					operaManager.spliceOverSize('cpuUsageRatioCycleAverageList')
+					operaManager.spliceOverSize('memoryUsageRatioCycleAverageList')
+					return
+				}
+			})
+		}
 		const containerMouseEnterHandler = evte => {
 			cacheProfile.panelRect = cacheProfile.containerElement.getBoundingClientRect()
 			globalScope.setTimeout(() => {
@@ -384,7 +386,9 @@
 			operaManager.spliceOverSize('totalJSHeapSizeValueList')
 			if (needRfreshView) {
 				if (cacheProfile.refreshViewDiffTime2 >= RUN_PROFILE[2]) {
-					chrome.runtime.sendMessage({ action: 'USR_GET_SYSINFO' })
+					if (globalThis.chrome) {
+						globalThis.chrome.runtime.sendMessage({ action: 'USR_GET_SYSINFO' })
+					}
 					cacheProfile.prevRefreshViewTimeStamp2 = nowStamp
 				}
 				viewDataManager.$update()

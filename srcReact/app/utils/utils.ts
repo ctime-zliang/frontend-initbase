@@ -304,3 +304,42 @@ export function arrayCopy(
 	}
 	throw new Error('cannot read array out of range.')
 }
+
+export const formatDate = (date = new Date(), format: string = 'yyyy-MM-dd HH:ii:ss'): string => {
+	let o: { [key: string]: any } = {
+		'M+': date.getMonth() + 1,
+		'd+': date.getDate(),
+		'H+': date.getHours(),
+		'h+': date.getHours(),
+		'i+': date.getMinutes(),
+		's+': date.getSeconds(),
+		'q+': Math.floor((date.getMonth() + 3) / 3),
+		S: date.getMilliseconds(),
+	}
+	if (/(y+)/.test(format)) {
+		format = format.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
+	}
+	for (let k in o) {
+		if (new RegExp('(' + k + ')').test(format)) {
+			format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length))
+		}
+	}
+	return format
+}
+
+export function formatDate2(date: Date | number, format = 'YYYY-MM-DD HH:mm:ss'): string {
+	const d: Date = typeof date === 'number' ? new Date(date) : date
+	const year: number = d.getFullYear()
+	const month: string = String(d.getMonth() + 1).padStart(2, '0')
+	const day: string = String(d.getDate()).padStart(2, '0')
+	const hours: string = String(d.getHours()).padStart(2, '0')
+	const minutes: string = String(d.getMinutes()).padStart(2, '0')
+	const seconds: string = String(d.getSeconds()).padStart(2, '0')
+	return format
+		.replace('YYYY', String(year))
+		.replace('MM', month)
+		.replace('DD', day)
+		.replace('HH', hours)
+		.replace('mm', minutes)
+		.replace('ss', seconds)
+}

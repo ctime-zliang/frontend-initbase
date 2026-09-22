@@ -16,15 +16,25 @@ export function throttleStamp(fn: (...args: Array<any>) => void, delay: number =
 /**
  * throttle 节流
  */
-export function throttleTimeout(fn: (...args: Array<any>) => void, delay: number = 500): () => void {
-	let timer: number = null!
-	return function (): void {
-		if (!timer) {
-			timer = window.setTimeout((): void => {
-				timer = null!
-				// @ts-ignore
-				fn.apply(this, arguments)
-			}, delay)
+export function throttleTimeout<T extends (...args: any[]) => any>(fn: T, delay: number): T {
+	let lastCall = 0
+	let timer: ReturnType<typeof setTimeout> | null = null
+	return ((...args: any[]) => {
+		const now = Date.now()
+		const remaining = delay - (now - lastCall)
+		if (remaining <= 0) {
+			if (timer) {
+				clearTimeout(timer)
+				timer = null
+			}
+			lastCall = now
+			fn(...args)
+		} else if (!timer) {
+			timer = setTimeout(() => {
+				lastCall = Date.now()
+				timer = null
+				fn(...args)
+			}, remaining)
 		}
-	}
+	}) as T
 }
