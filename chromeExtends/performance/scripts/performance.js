@@ -240,7 +240,7 @@
 	}
 
 	const eventManager = () => {
-		if (globalThis.chrome) {
+		if (globalThis.chrome && globalThis.chrome.runtime) {
 			globalThis.chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 				if (message.action === 'USR_CHANGE_MODE') {
 					if (MODES.includes(+message.data.modeValue)) {
@@ -386,7 +386,7 @@
 			operaManager.spliceOverSize('totalJSHeapSizeValueList')
 			if (needRfreshView) {
 				if (cacheProfile.refreshViewDiffTime2 >= RUN_PROFILE[2]) {
-					if (globalThis.chrome) {
+					if (globalThis.chrome && globalThis.chrome.runtime) {
 						globalThis.chrome.runtime.sendMessage({ action: 'USR_GET_SYSINFO' })
 					}
 					cacheProfile.prevRefreshViewTimeStamp2 = nowStamp
